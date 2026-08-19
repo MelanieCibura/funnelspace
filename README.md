@@ -20,3 +20,29 @@ The design medium is **HTML/CSS/JS** — these are prototypes, not production co
 
 The `Webseite Funnelspace` project files (HTML prototypes, assets, components) live directly in the
 repository root — this README sits alongside them.
+
+Only the six designs marked 🟢 are kept, plus exactly the CSS, components, fonts and images they
+reference:
+
+| Page | Loads |
+| --- | --- |
+| `kalender 🟢.html` | `site.css`, `colors_and_type.css`, `Nav.jsx`, `Footer.jsx` |
+| `automationen 🟢.html` | + `automationen.css` |
+| `conversation-ai 🟢.html` | + `conversation-ai.css` |
+| `email-marketing 🟢.html` | + `email-marketing.css`, `EmailMarketing.jsx` |
+| `ki-builder-v2 🟢.html` | + `image-slot.js` |
+| `voice-ai-v3 🟢.html` | — |
+
+## Running it
+
+```sh
+npm install
+npm run dev      # overview of all six prototypes at http://localhost:5173
+npm run build    # static output in dist/
+```
+
+The prototypes are **standalone HTML** — they pull React 18 and Babel standalone from a CDN and
+compile their `.jsx` in the browser at runtime. Vite therefore does not bundle them: the dev server
+serves them as-is, and `vite.config.ts` copies them verbatim into `dist/` on build. `index.html` and
+`src/main.tsx` are only a thin overview shell around them; editing a prototype means editing its
+HTML file directly.
