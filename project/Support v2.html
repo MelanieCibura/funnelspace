@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Support — Funnelspace</title>
+<meta name="description" content="Wir sind da, wenn du uns brauchst: 24/7 Live-Chat, wöchentliche Zoom-Calls, Community, Helpcenter, Academy und E-Mail-Support — ohne Aufpreis." />
+<link rel="stylesheet" href="colors_and_type.css" />
+<link rel="stylesheet" href="site.css" />
+<style>
+.sh{padding:80px 40px 56px}
+.sh__inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
+.sh__eyebrow{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-3);margin-bottom:18px}
+.sh h1{font-family:var(--font-display);font-size:clamp(40px,4.8vw,66px);font-weight:700;line-height:1.04;letter-spacing:-.03em;text-wrap:balance}
+.sh h1 em{font-style:normal;background:var(--fs-lime);color:var(--fs-lime-ink);padding:0 8px;border-radius:6px}
+.sh__lead{margin-top:20px;font-size:19px;line-height:1.55;color:var(--fg-2);max-width:520px}
+.sh__cta{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.sh__proof{display:flex;gap:18px;flex-wrap:wrap;margin-top:26px;font-size:13px;color:var(--fg-3)}
+.sh__proof span{display:flex;align-items:center;gap:7px}
+.sh__proof>span::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--fs-lime-deep)}
+.sh__art{background:var(--fs-white);background-image:radial-gradient(var(--fs-gray-300) 1px,transparent 1.2px);background-size:10px 10px;border:1px solid var(--border-1);border-radius:var(--radius-xl);padding:28px;display:grid;place-items:center}
+.sh__art img{width:100%;max-width:440px;height:auto;display:block}
+.srt{padding:0 40px}
+.srt__inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border-1);border:1px solid var(--border-1);border-radius:var(--radius-lg);overflow:hidden}
+.srt__i{background:var(--fs-white);padding:22px 24px}
+.srt__i>b{display:block;font-family:var(--font-display);font-size:30px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.srt__i>span{display:block;margin-top:7px;font-size:13px;color:var(--fg-3);line-height:1.4}
+.ssec{padding:88px 40px}
+.ssec--alt{background:var(--fs-white)}
+.ssec__inner{max-width:1280px;margin:0 auto}
+.ssec__head{max-width:660px;margin-bottom:44px}
+.ssec__head--c{text-align:center;margin-left:auto;margin-right:auto}
+.ssec__eyebrow{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-3);margin-bottom:14px}
+.ssec__head h2{font-family:var(--font-display);font-size:clamp(30px,3.2vw,44px);font-weight:700;letter-spacing:-.03em;line-height:1.1;text-wrap:balance}
+.ssec__head p{margin-top:14px;font-size:17px;color:var(--fg-2);line-height:1.55}
+.cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.ccard{display:flex;flex-direction:column;gap:14px;background:var(--fs-white);border:1px solid var(--border-1);border-radius:var(--radius-lg);padding:24px;text-decoration:none;color:inherit;transition:transform var(--dur-med) var(--ease-out),box-shadow var(--dur-med) var(--ease-out),border-color var(--dur-med) var(--ease-out)}
+.ccard:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--fs-gray-300)}
+.ccard__art{width:100%;aspect-ratio:16/10;background:var(--fs-paper);background-image:radial-gradient(var(--fs-gray-300) 1px,transparent 1.2px);background-size:8px 8px;border-radius:var(--radius-md);display:grid;place-items:center;overflow:hidden}
+.ccard__art img{max-height:80%;max-width:72%;object-fit:contain}
+.ccard__top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ccard h3{font-family:var(--font-display);font-size:20px;font-weight:700;letter-spacing:-.02em}
+.ctag{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:var(--radius-pill);background:var(--fs-gray-100);color:var(--fs-ink-soft)}
+.ctag--live{background:var(--fs-lime);color:var(--fs-lime-ink)}
+.ccard__sub{font-size:13px;font-weight:700;color:var(--fg-3);margin-top:-6px}
+.ccard p{font-size:14px;line-height:1.55;color:var(--fg-2)}
+.ccard__foot{margin-top:auto;padding-top:14px;border-top:1px solid var(--border-1);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.ccard__link{font-size:13px;font-weight:700;color:var(--fs-ink);display:inline-flex;align-items:center;gap:6px;transition:gap var(--dur-fast) var(--ease-out)}
+.ccard:hover .ccard__link{gap:10px}
+.ccard__when{font-family:var(--font-mono,monospace);font-size:11px;letter-spacing:.04em;color:var(--fg-3);white-space:nowrap}
+.zoom{padding:88px 40px;background:var(--fs-ink);position:relative;overflow:hidden}
+.zoom::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(215,240,120,.06) 1px,transparent 1.2px);background-size:8px 8px}
+.zoom__inner{max-width:1280px;margin:0 auto;position:relative;display:grid;grid-template-columns:.95fr 1.05fr;gap:64px;align-items:center}
+.zoom__eyebrow{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fs-lime);margin-bottom:14px}
+.zoom h2{font-family:var(--font-display);font-size:clamp(30px,3.2vw,44px);font-weight:700;letter-spacing:-.03em;color:#fff;line-height:1.08;text-wrap:balance}
+.zoom p{margin-top:16px;font-size:17px;line-height:1.6;color:rgba(255,255,255,.65);max-width:520px}
+.zoom__btns{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.zrows{display:flex;flex-direction:column;gap:8px}
+.zrow{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:16px 20px;border-radius:var(--radius-md);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+.zrow__day{font-family:var(--font-mono,monospace);font-size:12px;letter-spacing:.06em;color:var(--fs-lime);white-space:nowrap}
+.zrow__name{font-family:var(--font-display);font-weight:700;font-size:15px;color:#fff}
+.zrow__desc{font-size:13px;color:rgba(255,255,255,.55);margin-top:3px;line-height:1.45}
+.zrow__time{font-family:var(--font-mono,monospace);font-size:12px;color:rgba(255,255,255,.5);white-space:nowrap}
+.self{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.selfcard{background:var(--fs-paper);border:2px solid var(--border-strong);border-radius:var(--radius-lg);padding:30px 28px;display:flex;flex-direction:column;gap:16px}
+.selfcard h3{font-family:var(--font-display);font-size:24px;font-weight:700;letter-spacing:-.02em}
+.selfcard>p{font-size:15px;line-height:1.55;color:var(--fg-2)}
+.selflist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:1px;background:var(--border-1);border:1px solid var(--border-1);border-radius:var(--radius-md);overflow:hidden}
+.selflist a{background:var(--fs-white);padding:13px 16px;font-size:14px;color:var(--fg-1);text-decoration:none;display:flex;justify-content:space-between;gap:12px;align-items:center;transition:background var(--dur-fast)}
+.selflist a:hover{background:var(--fs-gray-100);color:var(--fs-ink)}
+.selflist a>span{font-family:var(--font-mono,monospace);font-size:11px;color:var(--fg-3)}
+.selfcard .btn{align-self:flex-start;margin-top:auto}
+.d4y{max-width:1280px;margin:0 auto;background:var(--fs-lime);border-radius:var(--radius-xl);padding:52px 56px;display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center}
+.d4y__eyebrow{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fs-lime-ink);opacity:.7;margin-bottom:12px}
+.d4y h2{font-family:var(--font-display);font-size:clamp(28px,3vw,40px);font-weight:700;letter-spacing:-.03em;color:var(--fs-lime-ink);text-wrap:balance;line-height:1.1}
+.d4y p{margin-top:14px;font-size:16px;line-height:1.6;color:var(--fs-lime-ink);opacity:.78;max-width:620px}
+.faq{max-width:820px;margin:0 auto}
+.faq__item{border-bottom:1px solid var(--border-1)}
+.faq__item:first-child{border-top:1px solid var(--border-1)}
+.faq__btn{width:100%;background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;text-align:left;font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--fs-ink);letter-spacing:-.01em}
+.faq__icon{width:28px;height:28px;border-radius:50%;background:var(--fs-gray-100);flex-shrink:0;display:grid;place-items:center;color:var(--fs-ink);transition:background var(--dur-fast),transform var(--dur-med) var(--ease-out)}
+.faq__icon svg{width:14px;height:14px}
+.faq__item.open .faq__icon{background:var(--fs-lime);transform:rotate(45deg)}
+.faq__body{font-size:15px;color:var(--fg-2);line-height:1.65;overflow:hidden;max-height:0;transition:max-height var(--dur-slow) var(--ease-out),padding var(--dur-slow) var(--ease-out)}
+.faq__item.open .faq__body{max-height:420px;padding-bottom:24px}
+a{color:var(--fs-ink)}
+a:hover{color:var(--fs-lime-ink)}
+@media(max-width:1024px){.sh__inner,.zoom__inner{grid-template-columns:1fr;gap:40px}.cgrid{grid-template-columns:1fr 1fr}.srt__inner{grid-template-columns:1fr 1fr}.self{grid-template-columns:1fr}.d4y{grid-template-columns:1fr;padding:40px 32px}}
+@media(max-width:768px){.sh{padding:56px 22px 40px}.srt{padding:0 22px}.ssec{padding:60px 22px}.zoom{padding:64px 22px}.cgrid,.srt__inner{grid-template-columns:1fr}.nav__links{display:none}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="Nav.jsx"></script>
+<script type="text/babel" src="Footer.jsx"></script>
+<script type="text/babel">
+const Ico = ({d,size=15}) => <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">{d}</svg>;
+const IArrow = () => <Ico d={<><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></>} />;
+const IPlus = () => <Ico size={14} d={<><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></>} />;
+
+const CHANNELS = [
+  { img:'crm.png', tag:'24/7', live:true, title:'Live-Chat', sub:'Rund um die Uhr Unterstützung', when:'sofort',
+    body:'Der Chat sitzt direkt in deinem Dashboard. Ob nachts vor dem Launch oder mitten am Arbeitstag — du schreibst, wir antworten. Kein Ticket-Formular, kein Warteraum.',
+    link:{href:'https://login.funnelspace.com', label:'Chat im Dashboard öffnen'} },
+  { img:'calendar.png', tag:'Wöchentlich', title:'Live-Zoom-Calls', sub:'Persönlicher Support', when:'jede Woche',
+    body:'Im wöchentlichen Call stellst du deine Frage direkt und teilst deinen Bildschirm. Praxisnahe Tipps von Leuten, die selbst Funnels bauen — und von anderen Teilnehmern.',
+    link:{href:'#calls', label:'Zu den Call-Terminen'} },
+  { img:'mitgliederbereich.png', tag:'Community', title:'Support-Community', sub:'Gemeinsam wachsen', when:'immer offen',
+    body:'Tausch dich mit anderen Nutzern aus, teile Setups und hol dir Feedback zu deinem Funnel. Oft ist deine Frage dort schon beantwortet — inklusive Screenshots.',
+    link:{href:'https://member.funnelspace.com/communities/groups/funnelspace/', label:'Zur Community'} },
+  { img:'blog.png', tag:'Selbsthilfe', title:'Helpcenter', sub:'Antworten auf Knopfdruck', when:'400+ Artikel',
+    body:'Detaillierte Anleitungen mit Screenshots zu jedem Modul: Domain verbinden, Zahlung einrichten, Automation bauen. Schritt für Schritt, ohne Vorwissen.',
+    link:{href:'https://help.funnelspace.com/', label:'Helpcenter öffnen'} },
+  { img:'webinare.png', tag:'Academy', title:'Schulungsvideos', sub:'Lerne in deinem Tempo', when:'On demand',
+    body:'Von der Einrichtung bis zur fortgeschrittenen Launch-Strategie: kurze Videos, in der Reihenfolge, in der du sie brauchst. Inklusive Vorlagen zum Nachbauen.',
+    link:{href:'#', label:'Zur Academy'} },
+  { img:'email.png', tag:'E-Mail', title:'E-Mail-Support', sub:'Direkt in deinem Postfach', when:'< 24 h',
+    body:'Für komplexere Anliegen — Abrechnung, Migration, technische Details. Du bekommst eine ausführliche Antwort, keine Textbaustein-Mail.',
+    link:{href:'mailto:support@funnelspace.com', label:'support@funnelspace.com'} },
+];
+
+const CALLS = [
+  { day:'Di', name:'Technik-Call', desc:'Domains, Zahlungsanbieter, Integrationen — wir schauen live in dein Konto.', time:'10:00 Uhr' },
+  { day:'Do', name:'Funnel-Feedback', desc:'Zeig deinen Funnel, bekomm konkrete Verbesserungen statt Theorie.', time:'18:00 Uhr' },
+  { day:'Fr', name:'Onboarding-Call', desc:'Für neue Nutzer: Konto einrichten, erster Funnel, erste Sequenz.', time:'11:00 Uhr' },
+];
+
+const TOPICS = [
+  { t:'Eigene Domain verbinden', k:'Setup' },
+  { t:'Stripe & PayPal einrichten', k:'Zahlung' },
+  { t:'Kontakte importieren', k:'CRM' },
+  { t:'Erste E-Mail-Automation bauen', k:'E-Mail' },
+  { t:'Mitgliederbereich anlegen', k:'Kurse' },
+];
+
+const COURSES = [
+  { t:'Schnellstart: erster Funnel in 60 Minuten', k:'8 Videos' },
+  { t:'E-Mail-Marketing von Grund auf', k:'12 Videos' },
+  { t:'Launch-Strategie mit Evergreen-Webinar', k:'9 Videos' },
+  { t:'CRM & Pipeline sauber aufsetzen', k:'6 Videos' },
+  { t:'Automationen, die wirklich laufen', k:'11 Videos' },
+];
+
+const FAQS = [
+  { q:'Ist der Support im Preis enthalten?', a:'Ja. Live-Chat, Zoom-Calls, Community, Helpcenter und Academy sind für alle Funnelspace-Nutzer enthalten — ohne Zusatzkosten und ohne Support-Paket obendrauf.' },
+  { q:'Was ist, wenn ich nicht weiterkomme oder Hilfe brauche?', a:'Kein Problem. Schreib in den Chat oder per E-Mail. Zusätzlich stehen dir Anleitungen, die Academy, unsere Community und die wöchentlichen Technik-Calls zur Verfügung — damit du jederzeit die Hilfe bekommst, die du brauchst.' },
+  { q:'Wie schnell bekomme ich eine Antwort?', a:'Im Live-Chat sofort, rund um die Uhr. E-Mail-Anfragen beantworten wir innerhalb von 24 Stunden, meist deutlich schneller. Komplexe Themen klären wir gern im nächsten Zoom-Call — dort schauen wir direkt gemeinsam in dein Konto.' },
+  { q:'Gibt es Support auf Deutsch?', a:'Ja. Funnelspace ist eine deutsche Plattform: Support, Community, Calls und Academy sind komplett auf Deutsch.' },
+  { q:'Ist Funnelspace für Anfänger geeignet?', a:'Ja, absolut. Mit Vorlagen, Onboarding-Call und Schritt-für-Schritt-Anleitungen kommst du auch ohne technisches Vorwissen zum ersten Funnel.' },
+  { q:'Kann mir jemand die Einrichtung komplett abnehmen?', a:'Ja — über unseren Done4You-Service. Wir bauen Funnels, E-Mail-Automationen und CRM-Prozesse für dich auf. Auch der Umzug aus deinem alten Tool läuft über uns.' },
+];
+
+const Hero = () => (
+  <section className="sh">
+    <div className="sh__inner">
+      <div>
+        <div className="sh__eyebrow">Support</div>
+        <h1>Wir sind da, <em>wenn du uns brauchst.</em></h1>
+        <p className="sh__lead">Sechs Wege zur Antwort — vom 24/7 Live-Chat bis zum persönlichen Zoom-Call, in dem wir gemeinsam in dein Konto schauen. Alles inklusive.</p>
+        <div className="sh__cta">
+          <a href="#kanaele" className="btn btn--primary btn-lg">Support-Kanäle ansehen</a>
+          <a href="https://help.funnelspace.com/" className="btn btn--ghost btn-lg">Zum Helpcenter</a>
+        </div>
+        <div className="sh__proof">
+          <span>Auf Deutsch</span>
+          <span>Ohne Zusatzkosten</span>
+          <span>Von Leuten, die selbst Funnels bauen</span>
+        </div>
+      </div>
+      <div className="sh__art"><img src="assets/illustrations/mitgliederbereich.png" alt="" /></div>
+    </div>
+  </section>
+);
+
+const ResponseTimes = () => (
+  <section className="srt">
+    <div className="srt__inner">
+      <div className="srt__i"><b>24/7</b><span>Live-Chat im Dashboard, auch nachts und am Wochenende</span></div>
+      <div className="srt__i"><b>&lt; 24 h</b><span>Antwortzeit per E-Mail, meist deutlich schneller</span></div>
+      <div className="srt__i"><b>3×</b><span>Live-Zoom-Calls pro Woche mit dem Team</span></div>
+      <div className="srt__i"><b>400+</b><span>Anleitungen und Schulungsvideos auf Deutsch</span></div>
+    </div>
+  </section>
+);
+
+const Channels = () => (
+  <section className="ssec" id="kanaele">
+    <div className="ssec__inner">
+      <div className="ssec__head">
+        <div className="ssec__eyebrow">Deine Support-Kanäle</div>
+        <h2>Hilfe, wie sie zu dir passt</h2>
+        <p>Sofort im Chat, persönlich im Call oder in deinem Tempo per Video. Such dir den Weg aus, der für deine Frage der kürzeste ist.</p>
+      </div>
+      <div className="cgrid">
+        {CHANNELS.map(c => (
+          <a key={c.title} className="ccard" href={c.link.href}>
+            <div className="ccard__art"><img src={`assets/illustrations/${c.img}`} alt="" /></div>
+            <div className="ccard__top">
+              <h3>{c.title}</h3>
+              <span className={`ctag${c.live ? ' ctag--live' : ''}`}>{c.tag}</span>
+            </div>
+            <div className="ccard__sub">{c.sub}</div>
+            <p>{c.body}</p>
+            <div className="ccard__foot">
+              <span className="ccard__link">{c.link.label} <IArrow /></span>
+              <span className="ccard__when">{c.when}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+const Calls = () => (
+  <section className="zoom" id="calls">
+    <div className="zoom__inner">
+      <div>
+        <div className="zoom__eyebrow">Live-Zoom-Calls</div>
+        <h2>Dreimal pro Woche jemand, der mit dir reinschaut</h2>
+        <p>Kamera an ist optional, Bildschirm teilen erlaubt. Du bringst deine Frage mit, wir lösen sie direkt im Call — und alle anderen lernen mit.</p>
+        <div className="zoom__btns">
+          <a href="#" className="btn btn--primary btn-lg">Zum nächsten Call anmelden</a>
+          <a href="#" className="btn btn--ghost btn-lg" style={{borderColor:'rgba(255,255,255,.28)',color:'#fff'}}>Aufzeichnungen ansehen</a>
+        </div>
+      </div>
+      <div className="zrows">
+        {CALLS.map(c => (
+          <div className="zrow" key={c.name}>
+            <div className="zrow__day">{c.day}</div>
+            <div>
+              <div className="zrow__name">{c.name}</div>
+              <div className="zrow__desc">{c.desc}</div>
+            </div>
+            <div className="zrow__time">{c.time}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+const SelfHelp = () => (
+  <section className="ssec ssec--alt">
+    <div className="ssec__inner">
+      <div className="ssec__head">
+        <div className="ssec__eyebrow">Selbst nachlesen</div>
+        <h2>Die meisten Fragen sind schon beantwortet</h2>
+        <p>Helpcenter für die schnelle Antwort, Academy für den Aufbau. Beides auf Deutsch, beides inklusive.</p>
+      </div>
+      <div className="self">
+        <div className="selfcard">
+          <h3>Helpcenter</h3>
+          <p>Kurze Anleitungen mit Screenshots — für alles, was du einmal einrichtest und dann vergessen kannst.</p>
+          <ul className="selflist">
+            {TOPICS.map(t => <li key={t.t}><a href="https://help.funnelspace.com/">{t.t} <span>{t.k}</span></a></li>)}
+          </ul>
+          <a href="https://help.funnelspace.com/" className="btn btn--ink">Alle Artikel ansehen</a>
+        </div>
+        <div className="selfcard">
+          <h3>Academy</h3>
+          <p>Kurse in der Reihenfolge, in der du sie brauchst. Mit Vorlagen, die du direkt in dein Konto übernimmst.</p>
+          <ul className="selflist">
+            {COURSES.map(t => <li key={t.t}><a href="#">{t.t} <span>{t.k}</span></a></li>)}
+          </ul>
+          <a href="#" className="btn btn--ink">Zur Academy</a>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+const Done4You = () => (
+  <section className="ssec">
+    <div className="d4y">
+      <div>
+        <div className="d4y__eyebrow">Du brauchst individuelle Unterstützung?</div>
+        <h2>Done4You statt Do-it-yourself</h2>
+        <p>Wir bauen dir maßgeschneiderte Funnels, E-Mail-Automationen, CRM-Prozesse und Mitgliederbereiche — mit Strategie, Struktur und System. Ob Leadgenerierung, Launch oder Umzug aus dem alten Tool: wir machen’s für dich.</p>
+      </div>
+      <div><a href="services.html" className="btn btn--ink btn-lg">Zum Agentur-Service</a></div>
+    </div>
+  </section>
+);
+
+const FAQ = () => {
+  const [open, setOpen] = React.useState(0);
+  return (
+    <section className="ssec ssec--alt">
+      <div className="ssec__inner">
+        <div className="ssec__head ssec__head--c">
+          <div className="ssec__eyebrow">FAQ</div>
+          <h2>Häufige Fragen zum Support</h2>
+        </div>
+        <div className="faq">
+          {FAQS.map((f,i) => (
+            <div className={`faq__item${open===i ? ' open' : ''}`} key={i}>
+              <button className="faq__btn" onClick={() => setOpen(open===i ? null : i)}>
+                {f.q}
+                <span className="faq__icon"><IPlus /></span>
+              </button>
+              <div className="faq__body">{f.a}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const App = () => (
+  <>
+    <Nav />
+    <main>
+      <Hero />
+      <ResponseTimes />
+      <Channels />
+      <Calls />
+      <SelfHelp />
+      <Done4You />
+      <FAQ />
+    </main>
+    <CtaBand />
+    <Footer />
+  </>
+);
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ask AI — Funnelspace</title>
+<meta name="description" content="Ask AI ist die KI in Funnelspace, die nicht nur antwortet, sondern baut: Funnels, E-Mails, Automationen und CRM-Einträge. Mit eigenen Skills, Konnektoren und Browser Control." />
+<link rel="stylesheet" href="colors_and_type.css" />
+<link rel="stylesheet" href="site.css" />
+<link rel="stylesheet" href="ask-ai.css" />
+</head>
+<body class="aa-body">
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="Nav.jsx"></script>
+<script type="text/babel" src="Footer.jsx"></script>
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+const Icon = ({ d, size = 20 }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">{d}</svg>
+);
+const ICheck = (p) => <Icon size={14} {...p} d={<polyline points="20 6 9 17 4 12"/>} />;
+const IFunnel = (p) => <Icon {...p} d={<polygon points="22 3 2 3 10 12.5 10 21 14 19 14 12.5 22 3"/>} />;
+const IMail = (p) => <Icon {...p} d={<><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></>} />;
+const IUsers = (p) => <Icon {...p} d={<><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></>} />;
+const IZap = (p) => <Icon {...p} d={<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>} />;
+const ICal = (p) => <Icon {...p} d={<><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></>} />;
+const IPen = (p) => <Icon {...p} d={<><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></>} />;
+const IBook = (p) => <Icon {...p} d={<><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></>} />;
+const IGlobe = (p) => <Icon {...p} d={<><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18z"/></>} />;
+const IPlug = (p) => <Icon {...p} d={<><path d="M9 2v6"/><path d="M15 2v6"/><path d="M6 8h12v3a6 6 0 0 1-12 0z"/><path d="M12 17v5"/></>} />;
+const IShield = (p) => <Icon {...p} d={<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>} />;
+const IEye = (p) => <Icon {...p} d={<><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></>} />;
+const IStop = (p) => <Icon {...p} d={<rect x="5" y="5" width="14" height="14" rx="2"/>} />;
+const IList = (p) => <Icon {...p} d={<><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></>} />;
+const IPointer = (p) => <Icon size={16} {...p} d={<><path d="M4 2l7 18 2.5-7.5L21 10z" fill="currentColor" stroke="none"/></>} />;
+const IChart = (p) => <Icon {...p} d={<><line x1="4" y1="20" x2="4" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="20" y1="20" x2="20" y2="14"/></>} />;
+const ITag = (p) => <Icon {...p} d={<><path d="M20.6 13.4 12 22l-9-9V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/></>} />;
+
+/* ── Demo: Ask AI führt aus ──────────────────────── */
+const RUNS = [
+  { k:'funnel', q:'Bau mir einen Funnel für mein Webinar am 12. März — Anmeldung, Danke-Seite, Erinnerungen.',
+    steps:[
+      { t:'Skill „Launch-Playbook" geladen', s:'Struktur, Timings und Tonalität aus deinem eigenen Skill', tag:'Skill', i:<IBook size={13}/> },
+      { t:'Funnel „Webinar März" angelegt', s:'Anmeldeseite, Danke-Seite, Replay-Seite — mit deinem Branding', tag:'Funnel', i:<IFunnel size={13}/> },
+      { t:'Texte geschrieben und eingesetzt', s:'Headline, Bulletpoints, Formularfelder, Rechtstexte verlinkt', tag:'Content', i:<IPen size={13}/> },
+      { t:'Kalender-Slot + .ics vorbereitet', s:'12. März, 19:00 Uhr, Zeitzone Europe/Berlin', tag:'Kalender', i:<ICal size={13}/> },
+      { t:'Automation mit 4 Erinnerungen aktiviert', s:'24 Std., 1 Std., Start, No-Show-Replay', tag:'Automation', i:<IZap size={13}/> },
+    ],
+    res:{ n:'Funnel „Webinar März" · Entwurf live', d:'5 Schritte in 1:12 Min. — vor Veröffentlichung wartet er auf deine Freigabe', b:'Ansehen' } },
+  { k:'crm', q:'Wer aus den Leads vom letzten Monat hat noch nicht gekauft? Schreib denen was Passendes.',
+    steps:[
+      { t:'CRM durchsucht', s:'214 Kontakte seit 01.02. · 168 ohne Kauf · 41 mit Webinar-Teilnahme', tag:'CRM', i:<IUsers size={13}/> },
+      { t:'Segment „Warm, ohne Kauf" erstellt', s:'Tag gesetzt, Segment aktualisiert sich automatisch weiter', tag:'Segment', i:<ITag size={13}/> },
+      { t:'Stripe-Daten gegengeprüft', s:'Konnektor: 6 Käufe außerhalb von Funnelspace erkannt und ausgeschlossen', tag:'Konnektor', i:<IPlug size={13}/> },
+      { t:'3 Mail-Varianten in deiner Stimme geschrieben', s:'Skill „Meine Schreibstimme" · A/B-Test auf den Betreff', tag:'E-Mail', i:<IMail size={13}/> },
+    ],
+    res:{ n:'Kampagne an 162 Kontakte · bereit zum Senden', d:'Versand startet erst, wenn du auf „Freigeben" klickst', b:'Prüfen' } },
+  { k:'browser', q:'Zieh mir die Preise der drei Wettbewerber und leg eine Vergleichsseite an.',
+    steps:[
+      { t:'Browser Control gestartet', s:'Drei Seiten geöffnet, Cookie-Banner weggeklickt', tag:'Browser', i:<IGlobe size={13}/> },
+      { t:'Preistabellen ausgelesen', s:'3 Anbieter · 11 Tarife · Stand heute, mit Screenshot als Beleg', tag:'Recherche', i:<IEye size={13}/> },
+      { t:'Vergleich gebaut und bewertet', s:'Nur belegbare Angaben, Lücken sind als „unklar" markiert', tag:'Analyse', i:<IChart size={13}/> },
+      { t:'Landingpage „Vergleich" angelegt', s:'Tabelle, FAQ und CTA im Funnel-Builder — als Entwurf', tag:'Funnel', i:<IFunnel size={13}/> },
+    ],
+    res:{ n:'Vergleichsseite · Entwurf mit Quellenliste', d:'Jede Zahl verlinkt auf den Screenshot, aus dem sie stammt', b:'Öffnen' } },
+];
+
+const Demo = () => {
+  const [k, setK] = useState('funnel');
+  const [n, setN] = useState(0);
+  const run = RUNS.find(r => r.k === k);
+  useEffect(() => {
+    setN(0);
+    const ids = run.steps.map((_, i) => setTimeout(() => setN(i + 1), 650 + i * 900));
+    return () => ids.forEach(clearTimeout);
+  }, [k]);
+  const done = n >= run.steps.length;
+  return (
+    <div className="aa-panel">
+      <div className="aa-panel__bar">
+        <div className="aa-panel__dots"><span/><span/><span/></div>
+        <div className="aa-panel__name">Ask AI · dein Workspace</div>
+        <div className="aa-panel__state">{done ? 'fertig' : <>Läuft <i/></>}</div>
+      </div>
+      <div className="aa-panel__body">
+        <div className="aa-prompts">
+          {RUNS.map(r => (
+            <button key={r.k} aria-pressed={r.k === k} onClick={() => setK(r.k)}>
+              {r.k === 'funnel' ? 'Funnel bauen' : r.k === 'crm' ? 'Leads nachfassen' : 'Wettbewerb prüfen'}
+            </button>
+          ))}
+        </div>
+        <div className="aa-ask">
+          <div className="aa-ask__av">DU</div>
+          <div className="aa-ask__txt">{run.q}</div>
+        </div>
+        <div className="aa-run" key={k}>
+          <div className="aa-run__lbl">Ask AI arbeitet</div>
+          {run.steps.slice(0, Math.max(n, 1)).map((s, i) => (
+            <div key={i} className={`aa-step${i < n - 1 || done ? ' aa-step--done' : ''}`} style={{animationDelay:'0ms'}}>
+              <div className="aa-step__ico">{i < n - 1 || done ? <ICheck/> : s.i}</div>
+              <div><div className="aa-step__t">{s.t}</div><div className="aa-step__s">{s.s}</div></div>
+              <div className="aa-step__tag">{s.tag}</div>
+            </div>
+          ))}
+          {done && (
+            <div className="aa-result">
+              <div><div className="aa-result__n">{run.res.n}</div><div className="aa-result__d">{run.res.d}</div></div>
+              <div className="aa-result__btn">{run.res.b}</div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Hero = () => (
+  <section className="aa-hero">
+    <div className="aa-hero__inner">
+      <div>
+        <span className="aa-chip">Funnelspace · Ask AI</span>
+        <h1>Die KI, die nicht nur antwortet, sondern <em>baut</em>.</h1>
+        <p className="aa-hero__lead">Ask AI sitzt in jedem Bereich von Funnelspace und hat Schreibrechte: Funnels, E-Mails, Automationen, Kontakte, Termine. Du beschreibst das Ziel — sie legt es an. Mit eigenen Skills, Konnektoren nach außen und Browser Control für alles, was im Web passiert.</p>
+        <div className="aa-hero__cta">
+          <a href="#signup" className="btn btn--primary btn-lg">14 Tage kostenlos testen</a>
+          <a href="#skills" className="btn btn--ghost btn-lg">Was sie kann</a>
+        </div>
+        <div className="aa-hero__meta">
+          <span>Schreibrechte in allen Modulen</span>
+          <span>Eigene Skills</span>
+          <span>Browser Control</span>
+          <span>DSGVO · Hosting in DE</span>
+        </div>
+      </div>
+      <Demo />
+    </div>
+  </section>
+);
+
+/* ── Skills ──────────────────────────────────────── */
+const SKILLS = [
+  { i:<IPen/>, n:'Meine Schreibstimme', d:'Lade fünf deiner besten Mails hoch. Ask AI zieht daraus Tonalität, Satzlänge und Lieblingswörter — und schreibt ab dann so.', c:'Trainiert aus 12 Dokumenten · aktiv in E-Mail, Funnel, Blog' },
+  { i:<IBook/>, n:'Launch-Playbook', d:'Dein Ablauf für jeden Launch: Phasen, Timings, welche Mail wann rausgeht, welches Angebot wann öffnet.', c:'Wird bei jedem neuen Funnel automatisch vorgeschlagen' },
+  { i:<ITag/>, n:'Angebots-Logik', d:'Preise, Bundles, Rabattregeln, was du nie rabattierst. Ask AI hält sich daran — auch nachts um drei.', c:'7 Regeln · 3 Ausnahmen · gilt für alle Module' },
+  { i:<IUsers/>, n:'Kunden-Wissen', d:'Deine Zielgruppe, ihre Einwände, deine Fallbeispiele. Landet in jedem Text, ohne dass du es nochmal erklärst.', c:'Wissensdatenbank · 34 Einträge' },
+  { i:<IList/>, n:'Team-Standards', d:'Freigabewege, Namenskonventionen, Pflichtfelder im CRM. Skills gelten für alle im Workspace gleich.', c:'Vom Team geteilt · Rollen-Rechte' },
+  { new:true, n:'Eigenen Skill anlegen', d:'Ein Skill ist eine Anleitung in deinen Worten, plus Dateien und Beispiele. Kein Prompt-Engineering, keine Extra-Lizenz.', c:'Text schreiben · Dateien anhängen · speichern' },
+];
+const Skills = () => (
+  <section className="aa-sec aa-sec--alt" id="skills">
+    <div className="aa-in">
+      <div className="aa-head">
+        <div className="aa-eyebrow">Skills</div>
+        <h2>Bring ihr <em>dein</em> Business bei. Einmal.</h2>
+        <p>Ein Skill ist Wissen, das bleibt: deine Stimme, deine Preise, dein Launch-Ablauf. Statt jedes Mal denselben Kontext in ein Chatfenster zu tippen, legst du ihn einmal ab — und jede Antwort, jeder Text, jede Automation nutzt ihn.</p>
+      </div>
+      <div className="aa-skills">
+        {SKILLS.map(s => (
+          <article key={s.n} className={`aa-skill${s.new ? ' aa-skill--new' : ''}`}>
+            <div className="aa-skill__h">
+              {!s.new && <div className="aa-skill__ico">{s.i}</div>}
+              <b>{s.n}</b>
+            </div>
+            <p>{s.d}</p>
+            <div className="aa-skill__code">{s.c}</div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+/* ── Konnektoren ─────────────────────────────────── */
+const CONN = [
+  ['St','Stripe','Zahlungen, Abos, Rückerstattungen'],
+  ['Pa','PayPal','Zahlungseingänge und Abgleich'],
+  ['Gc','Google Kalender','Beidseitige Termin-Synchronisation'],
+  ['Gs','Google Sheets','Listen lesen, Ergebnisse zurückschreiben'],
+  ['Sl','Slack','Benachrichtigungen und Freigaben im Kanal'],
+  ['Wc','WooCommerce','Bestellungen und Kunden ins CRM'],
+  ['Ma','Meta Ads','Kampagnendaten und Lead-Formulare'],
+  ['Ga','Google Ads','Kosten je Lead direkt am Funnel'],
+  ['Zo','Zoom','Webinar-Teilnahme zurück in die Automation'],
+  ['Dl','DATEV-Export','Belege sauber an die Buchhaltung'],
+  ['Wh','Webhooks','Ein- und ausgehend, für alles andere'],
+  ['Ap','API','REST-Zugriff auf jedes Objekt'],
+];
+const Connectors = () => (
+  <section className="aa-sec aa-sec--ink">
+    <div className="aa-in">
+      <div className="aa-head">
+        <div className="aa-eyebrow">Konnektoren</div>
+        <h2>Sie darf auch <em>außerhalb</em> von Funnelspace nachsehen.</h2>
+        <p>Ask AI liest und schreibt über Konnektoren in deine angebundenen Tools. Du entscheidest je Konnektor, ob sie nur lesen oder auch handeln darf.</p>
+      </div>
+      <div className="aa-conn">
+        {CONN.map(([m,n,d]) => (
+          <div key={n} className="aa-conn__i">
+            <div className="aa-conn__m">{m}</div>
+            <div><div className="aa-conn__n">{n}</div><div className="aa-conn__d">{d}</div></div>
+          </div>
+        ))}
+      </div>
+      <p className="aa-conn__note">Innerhalb von Funnelspace braucht es gar keinen Konnektor: Funnel, CRM, E-Mail, Kalender und Mitgliederbereich teilen sich eine Datenbank. Ask AI arbeitet dort direkt.</p>
+    </div>
+  </section>
+);
+
+/* ── Browser Control ─────────────────────────────── */
+const BC = [
+  { url:'https://wettbewerber-a.de/preise', log:'Preistabelle gefunden — 4 Tarife werden ausgelesen', cur:[62,44], halo:[40,32,180,54] },
+  { url:'https://portal.dienstleister.de/formular', log:'Formular ausgefüllt — Absenden wartet auf deine Freigabe', cur:[210,150], halo:[190,138,120,38] },
+  { url:'https://verzeichnis.de/anbieter?stadt=hamburg', log:'27 Einträge übernommen — Dubletten gegen CRM geprüft', cur:[120,232], halo:[40,214,300,44] },
+];
+const Browser = () => {
+  const [i, setI] = useState(0);
+  useEffect(() => { const id = setInterval(() => setI(x => (x + 1) % BC.length), 3200); return () => clearInterval(id); }, []);
+  const s = BC[i];
+  return (
+    <div className="aa-browser">
+      <div className="aa-browser__bar">
+        <div className="aa-panel__dots"><span/><span/><span/></div>
+        <div className="aa-browser__url">{s.url}</div>
+        <div className="aa-browser__pill">Ask AI steuert</div>
+      </div>
+      <div className="aa-browser__view">
+        <div className="aa-sk" style={{height:'22px',width:'46%'}} />
+        <div className="aa-sk" style={{height:'10px',width:'72%'}} />
+        <div className="aa-browser__row">
+          <div className="aa-sk" style={{height:'54px',flex:1}} />
+          <div className="aa-sk" style={{height:'54px',flex:1}} />
+          <div className="aa-sk" style={{height:'54px',flex:1}} />
+        </div>
+        <div className="aa-sk" style={{height:'10px',width:'88%'}} />
+        <div className="aa-sk" style={{height:'10px',width:'64%'}} />
+        <div className="aa-browser__row">
+          <div className="aa-sk" style={{height:'38px',flex:2}} />
+          <div className="aa-sk" style={{height:'38px',flex:1}} />
+        </div>
+        <div className="aa-sk" style={{height:'44px',width:'100%'}} />
+        <div className="aa-halo" style={{left:s.halo[0],top:s.halo[1],width:s.halo[2],height:s.halo[3]}} />
+        <div className="aa-cursor" style={{left:s.cur[0],top:s.cur[1]}}><IPointer/></div>
+      </div>
+      <div className="aa-browser__log"><b>{String(i+1).padStart(2,'0')}</b>{s.log}</div>
+    </div>
+  );
+};
+
+const USES = [
+  ['01','Recherche mit Beleg','Preise, Angebote, Öffnungszeiten, Wettbewerbsseiten — mit Screenshot und Quelle zu jeder Zahl.'],
+  ['02','Portale ohne Schnittstelle','Wenn ein Tool keine API hat, bedient Ask AI es wie ein Mensch: einloggen, ausfüllen, exportieren.'],
+  ['03','Daten holen und einsortieren','Listen aus dem Web landen als saubere Kontakte im CRM — inklusive Dublettenprüfung.'],
+  ['04','Prüfen, was du live gestellt hast','Ask AI ruft deine eigenen Seiten auf, klickt den Funnel durch und meldet tote Links oder kaputte Formulare.'],
+];
+const BrowserSec = () => (
+  <section className="aa-sec">
+    <div className="aa-in">
+      <div className="aa-head">
+        <div className="aa-eyebrow">Browser Control</div>
+        <h2>Und wenn es keine Schnittstelle gibt, <em>klickt sie selbst</em>.</h2>
+        <p>Ask AI öffnet einen echten Browser im Hintergrund, navigiert, füllt aus, liest aus. Du siehst jeden Schritt live, kannst jederzeit übernehmen oder stoppen — und alles, was sie tut, steht danach im Protokoll.</p>
+      </div>
+      <div className="aa-split">
+        <div>
+          <div className="aa-uses">
+            {USES.map(([n,t,d]) => (
+              <div key={n} className="aa-use">
+                <div className="aa-use__n">{n}</div>
+                <div><b>{t}</b><span>{d}</span></div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <Browser />
+      </div>
+    </div>
+  </section>
+);
+
+/* ── Überall im Tool ─────────────────────────────── */
+const PLACES = [
+  { k:'Im Funnel-Builder', t:'Seiten, die schon stehen', d:'Abschnitte anlegen, Texte umschreiben, mobile Ansicht aufräumen, A/B-Variante erzeugen.', q:'„Mach die Anmeldeseite kürzer und zieh das Formular nach oben."' },
+  { k:'Im CRM', t:'Ordnung, die bleibt', d:'Segmente bauen, Felder pflegen, Dubletten zusammenführen, Pipelines aktualisieren.', q:'„Alle Kontakte aus dem Webinar in die Pipeline „Coaching", Phase 1."' },
+  { k:'In der E-Mail', t:'Von Idee zu Versand', d:'Sequenzen entwerfen, Betreffzeilen testen, Ergebnisse lesen und nachschärfen.', q:'„Schreib Mail 3 neu — weniger Druck, mehr Fallbeispiel."' },
+  { k:'In Automationen', t:'Abläufe statt Anleitung', d:'Trigger und Schritte anlegen, Verzweigungen ergänzen, Fehler im Protokoll erklären.', q:'„Warum sind gestern 12 Durchläufe fehlgeschlagen?"' },
+  { k:'Im Kalender', t:'Termine ohne Ping-Pong', d:'Buchungsstrecken einrichten, Puffer setzen, Erinnerungen und Nachfass-Mails anhängen.', q:'„Leg eine Strecke für Erstgespräche an, 30 Minuten, Di und Do."' },
+  { k:'Im Mitgliederbereich', t:'Kurse, die laufen', d:'Module anlegen, Lektionen beschreiben, Zugänge nach Kauf freischalten.', q:'„Erstell die Modulübersicht aus meinem Kursplan im Anhang."' },
+];
+const Places = () => (
+  <section className="aa-sec aa-sec--alt">
+    <div className="aa-in">
+      <div className="aa-head">
+        <div className="aa-eyebrow">Überall im Tool</div>
+        <h2>Kein zweites Fenster. Sie ist <em>schon da</em>, wo du arbeitest.</h2>
+        <p>Ask AI kennt den Bereich, in dem du gerade bist, und den Kontakt oder Funnel, den du offen hast. Deshalb reicht ein halber Satz.</p>
+      </div>
+      <div className="aa-places">
+        {PLACES.map(p => (
+          <article key={p.k} className="aa-place">
+            <div className="aa-place__k">{p.k}</div>
+            <b>{p.t}</b>
+            <p>{p.d}</p>
+            <div className="aa-place__q">{p.q}</div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+/* ── Kontrolle ───────────────────────────────────── */
+const CTRL = [
+  { i:<IShield/>, t:'Freigabe vor Wirkung', d:'Alles, was nach außen geht — Versand, Veröffentlichung, Zahlung — wartet auf deinen Klick. Du legst je Bereich fest, was ohne Rückfrage laufen darf.' },
+  { i:<IList/>, t:'Vollständiges Protokoll', d:'Jede Aktion mit Zeitstempel, Auslöser und Ergebnis. Einzelne Schritte lassen sich zurücknehmen.' },
+  { i:<IStop/>, t:'Jederzeit stoppen', d:'Laufende Aufgaben und Browser-Sessions kannst du anhalten und selbst übernehmen — mitten im Schritt.' },
+  { i:<IShield/>, t:'DSGVO und Hosting in DE', d:'Verarbeitung in europäischen Rechenzentren, AV-Vertrag inklusive. Deine Daten trainieren keine fremden Modelle.' },
+];
+const Control = () => (
+  <section className="aa-sec">
+    <div className="aa-in">
+      <div className="aa-head aa-head--c">
+        <div className="aa-eyebrow">Kontrolle</div>
+        <h2>Handeln lassen heißt nicht <em>aus der Hand geben</em>.</h2>
+      </div>
+      <div className="aa-ctrl">
+        {CTRL.map(c => (
+          <div key={c.t} className="aa-ctrl__i">
+            <div className="aa-ctrl__ico">{c.i}</div>
+            <b>{c.t}</b>
+            <p>{c.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+/* ── FAQ ─────────────────────────────────────────── */
+const FAQS = [
+  { q:'Was unterscheidet Ask AI von einem KI-Chat, den ich nebenher offen habe?', a:'Schreibrechte und Kontext. Ask AI sieht deine Kontakte, Funnels, Kampagnen und Zahlen — und kann darin Dinge anlegen und ändern. Ein externer Chat kann dir nur Text geben, den du selbst übertragen musst.' },
+  { q:'Kostet Ask AI extra?', a:'Ask AI ist in allen Plänen enthalten. Umfangreiche Aufgaben mit Browser Control werden über ein monatliches Kontingent an Aktionen abgerechnet, das im Plan angegeben ist — Fragen und Textarbeit sind nicht begrenzt.' },
+  { q:'Wie lege ich einen Skill an — brauche ich dafür Prompt-Wissen?', a:'Nein. Du schreibst in normalen Sätzen auf, wie etwas bei dir läuft, hängst Beispiele oder Dateien an und speicherst. Ask AI zieht sich den passenden Skill danach selbst, wenn die Aufgabe dazu passt.' },
+  { q:'Kann sie etwas veröffentlichen oder verschicken, ohne dass ich es merke?', a:'Nur wenn du es erlaubst. Standardmäßig endet jede Aufgabe im Entwurf und wartet auf deine Freigabe. Für wiederkehrende Abläufe kannst du einzelne Aktionen dauerhaft freigeben.' },
+  { q:'Was passiert bei Browser Control mit Logins?', a:'Zugangsdaten liegen verschlüsselt im Tresor deines Workspace und werden nicht an das Modell übergeben. Bei Zwei-Faktor-Abfragen hält die Sitzung an und du bekommst eine Benachrichtigung.' },
+  { q:'Kann mein Team Ask AI mitbenutzen?', a:'Ja. Skills und Konnektoren gelten für den ganzen Workspace, Rechte steuerst du pro Rolle. Wer nur schreiben darf, kann keine Automationen aktivieren.' },
+];
+const Faq = () => {
+  const [open, setOpen] = useState(0);
+  return (
+    <section className="aa-sec aa-sec--alt">
+      <div className="aa-in">
+        <div className="aa-head aa-head--c">
+          <div className="aa-eyebrow">Häufige Fragen</div>
+          <h2>Bevor du sie loslässt.</h2>
+        </div>
+        <div className="aa-faq">
+          {FAQS.map((f,i) => (
+            <div key={i} className={`aa-faq__i${open===i?' open':''}`}>
+              <button className="aa-faq__b" onClick={() => setOpen(open===i?-1:i)}>{f.q}<span className="aa-faq__x">+</span></button>
+              <div className="aa-faq__a"><p>{f.a}</p></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const End = () => (
+  <section className="aa-end">
+    <div className="aa-in">
+      <h2>Beschreib das Ergebnis. <em>Den Rest baut sie.</em></h2>
+      <p>14 Tage kostenlos, keine Kreditkarte. Ask AI ist ab der ersten Minute in deinem Workspace.</p>
+      <div className="aa-end__btns">
+        <a href="#signup" className="btn btn--primary btn-lg">Jetzt kostenlos starten</a>
+        <a href="#demo" className="btn btn--ghost btn-lg" style={{borderColor:'rgba(255,255,255,0.25)',color:'rgba(255,255,255,0.85)'}}>Live-Demo buchen</a>
+      </div>
+    </div>
+  </section>
+);
+
+const App = () => (
+  <>
+    <Nav />
+    <main>
+      <Hero />
+      <Skills />
+      <Connectors />
+      <BrowserSec />
+      <Places />
+      <Control />
+      <Faq />
+    </main>
+    <End />
+    <Footer />
+  </>
+);
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

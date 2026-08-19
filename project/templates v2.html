@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vorlagen — Funnelspace</title>
+<meta name="description" content="Design-Kollektionen, Vorlagen pro Kollektion und komplette Setups mit Automationen — vom CRM-Setup bis zum Evergreen-Funnel. Ein Klick, und alles steht in deinem Account." />
+<link rel="stylesheet" href="colors_and_type.css" />
+<link rel="stylesheet" href="site.css" />
+<link rel="stylesheet" href="templates-v2.css" />
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="Nav.jsx"></script>
+<script type="text/babel" src="Footer.jsx"></script>
+<script type="text/babel">
+const { useState } = React;
+
+/* ── Ebene 1: Design-Kollektionen ─────────────────────────── */
+const COLLECTIONS = [
+  { name: 'Studio Mono', desc: 'Reduziert, viel Weißraum, harte Kanten. Für Berater und B2B-Angebote.', sw: ['var(--fs-ink)', 'var(--fs-gray-600)', 'var(--fs-gray-200)', 'var(--fs-paper)'], type: 'Outfit / Lato', radius: '4 px', tone: 'Sachlich', count: 14 },
+  { name: 'Coach Warm', desc: 'Warme Neutraltöne, weiche Ecken, viel Persönlichkeit. Für 1:1-Coaching.', sw: ['var(--fs-gray-700)', 'var(--fs-gray-300)', 'var(--fs-paper)', 'var(--fs-lime-soft)'], type: 'Outfit / Lato', radius: '22 px', tone: 'Nah', count: 14 },
+  { name: 'Bold Launch', desc: 'Große Typo, harter Kontrast, ein Lime-Moment pro Seite. Für Launches.', sw: ['var(--fs-ink)', 'var(--fs-lime)', 'var(--fs-white)', 'var(--fs-gray-300)'], type: 'Outfit / Lato', radius: '14 px', tone: 'Direkt', count: 14 },
+  { name: 'Editorial', desc: 'Ruhiges Raster, Serif-Headlines, Textfläche vor Bild. Für Autoren.', sw: ['var(--fs-ink)', 'var(--fs-paper)', 'var(--fs-gray-400)', 'var(--fs-lime-deep)'], type: 'Bitter / Lato', radius: '8 px', tone: 'Ruhig', count: 14 },
+  { name: 'Dark Focus', desc: 'Dunkle Flächen, ein Akzent, null Ablenkung. Für Webinare und Kurse.', sw: ['#1C1F24', 'var(--fs-ink)', 'var(--fs-gray-500)', 'var(--fs-lime)'], type: 'Outfit / Lato', radius: '14 px', tone: 'Fokussiert', count: 14 },
+  { name: 'Klar Weiß', desc: 'Weiße Flächen, Hairlines, Tabellen und Preise im Zentrum. Für SaaS.', sw: ['var(--fs-white)', 'var(--fs-gray-100)', 'var(--fs-gray-300)', 'var(--fs-ink)'], type: 'Outfit / Lato', radius: '8 px', tone: 'Klar', count: 14 },
+];
+
+/* ── Ebene 2: Vorlagen — in jeder Kollektion enthalten ────── */
+const TEMPLATES = [
+  { n: 'Landingpage', k: 'Einstieg', wf: 'hero' },
+  { n: 'Sales Page', k: 'Verkauf', wf: 'long' },
+  { n: 'Opt-In / Squeeze', k: 'Leads', wf: 'optin' },
+  { n: 'Danke-Seite', k: 'Leads', wf: 'thanks' },
+  { n: 'Webinar-Anmeldung', k: 'Webinar', wf: 'optin' },
+  { n: 'Watch Room', k: 'Webinar', wf: 'video' },
+  { n: 'Checkout', k: 'Verkauf', wf: 'checkout' },
+  { n: 'Upsell (OTO)', k: 'Verkauf', wf: 'thanks' },
+  { n: 'Terminbuchung', k: 'Kalender', wf: 'booking' },
+  { n: 'Über mich', k: 'Website', wf: 'hero' },
+  { n: 'Preise', k: 'Website', wf: 'cols' },
+  { n: 'Blog-Übersicht', k: 'Content', wf: 'list' },
+  { n: 'Blog-Artikel', k: 'Content', wf: 'article' },
+  { n: 'Kontakt', k: 'Website', wf: 'checkout' },
+];
+
+const WIREFRAMES = {
+  hero: [['bar', 8, '40%'], ['bar', 16, '80%'], ['bar', 6, '60%'], ['acc', 10, '30%'], ['cols', 22, 3]],
+  long: [['bar', 14, '90%'], ['bar', 6, '70%'], ['bar', 6, '80%'], ['acc', 10, '40%'], ['bar', 6, '75%'], ['bar', 6, '55%']],
+  optin: [['bar', 16, '70%'], ['bar', 6, '50%'], ['box', 12, '60%'], ['acc', 12, '60%']],
+  thanks: [['bar', 12, '55%'], ['box', 26, '100%'], ['acc', 10, '35%']],
+  video: [['box', 42, '100%'], ['bar', 6, '45%'], ['acc', 9, '32%']],
+  checkout: [['bar', 10, '45%'], ['box', 9, '100%'], ['box', 9, '100%'], ['box', 9, '100%'], ['acc', 11, '100%']],
+  booking: [['bar', 10, '50%'], ['cols', 14, 7], ['cols', 14, 7], ['acc', 10, '45%']],
+  cols: [['bar', 10, '48%'], ['cols', 40, 3], ['acc', 9, '30%']],
+  list: [['bar', 10, '42%'], ['cols', 20, 2], ['cols', 20, 2]],
+  article: [['bar', 14, '85%'], ['bar', 5, '95%'], ['bar', 5, '88%'], ['bar', 5, '92%'], ['bar', 5, '60%'], ['acc', 8, '28%']],
+};
+
+const Wireframe = ({ kind }) => (
+  <div className="tv-tpl__wf">
+    {(WIREFRAMES[kind] || WIREFRAMES.hero).map((row, i) => {
+      const [type, h, val] = row;
+      if (type === 'cols') return <div className="row" key={i} style={{ height: h }}>{Array.from({ length: val }).map((_, j) => <i key={j} className="d" style={{ height: h, opacity: 0.5 }} />)}</div>;
+      if (type === 'box') return <i key={i} className="d" style={{ height: h, width: val, opacity: 0.35 }} />;
+      return <i key={i} className={type === 'acc' ? 'a' : ''} style={{ height: h, width: val }} />;
+    })}
+  </div>
+);
+
+/* ── Ebene 3: Setups ──────────────────────────────────────── */
+const SETUPS = [
+  {
+    name: 'Evergreen-Funnel',
+    meta: 'Webinar läuft dauerhaft',
+    illo: 'webinare.png',
+    lead: 'Dein Webinar läuft jeden Tag neu — mit Deadline pro Kontakt, Erinnerungen, Verkaufsphase und Downsell. Einmal installiert, danach passiert alles ohne dich.',
+    stats: [['6', 'Seiten'], ['13', 'E-Mails'], ['5', 'Automationen'], ['9', 'Tags']],
+    chips: ['Funnel', 'E-Mail', 'Kalender', 'CRM', 'Zahlungen'],
+    flow: [
+      { k: 'Trigger', t: 'Kontakt meldet sich zum Webinar an', d: 'Tag „evergreen-anmeldung", Termin frei wählbar in den nächsten 48 Stunden.', type: 'trigger' },
+      { k: 'Aktion', t: 'Bestätigung + Kalendereintrag', d: 'E-Mail mit Watch-Room-Link und ICS-Datei geht sofort raus.' },
+      { k: 'Wartezeit', t: 'Erinnerung 24 Stunden und 15 Minuten vorher', d: 'Zwei E-Mails, optional SMS. Wer schon geklickt hat, bekommt die zweite nicht.' },
+      { k: 'Bedingung', t: 'Webinar gesehen?', d: 'Ja → Verkaufsphase startet. Nein → Replay-Sequenz über 2 Tage.' },
+      { k: 'Aktion', t: 'Angebot mit 72-Stunden-Deadline', d: '4 Verkaufsmails, Countdown auf der Sales Page, Deadline pro Kontakt.' },
+      { k: 'Abschluss', t: 'Kauf → Zugang, kein Kauf → Downsell', d: 'Käufer landen im Mitgliederbereich-Onboarding, alle anderen im Newsletter mit kleinem Angebot.', type: 'kauf' },
+    ],
+  },
+  {
+    name: 'CRM-Setup',
+    meta: 'Pipeline, Tags, Aufgaben',
+    illo: 'crm.png',
+    lead: 'Eine saubere Struktur für deine Kontakte: Pipelines mit Phasen, Tags nach Quelle, automatische Aufgaben und Nachfassen, wenn nichts passiert.',
+    stats: [['3', 'Pipelines'], ['14', 'Phasen'], ['6', 'Automationen'], ['22', 'Tags']],
+    chips: ['CRM', 'Kalender', 'E-Mail', 'Aufgaben'],
+    flow: [
+      { k: 'Trigger', t: 'Neuer Kontakt entsteht', d: 'Über Formular, Import, Kalenderbuchung oder Kauf.', type: 'trigger' },
+      { k: 'Aktion', t: 'Quelle taggen und Pipeline zuweisen', d: 'Leads gehen in „Erstgespräch", Käufer in „Kunden", Kalt-Kontakte in „Nurture".' },
+      { k: 'Aktion', t: 'Aufgabe für dich anlegen', d: 'Mit Fälligkeit, Notizfeld und Kontext aus dem Formular.' },
+      { k: 'Bedingung', t: 'Termin gebucht innerhalb von 7 Tagen?', d: 'Ja → Phase „Termin steht". Nein → Reaktivierung mit 3 E-Mails.' },
+      { k: 'Aktion', t: 'Nach dem Gespräch: Phase wechselt automatisch', d: 'Angebot raus, Nachfassen nach 3 und 7 Tagen, dann Abschluss oder Absage-Grund.' },
+      { k: 'Abschluss', t: 'Kunde → Onboarding, Absage → Grund im Kontakt', d: 'Du siehst pro Monat, woran Abschlüsse scheitern — ohne eine Tabelle zu pflegen.', type: 'kauf' },
+    ],
+  },
+  {
+    name: 'Lead-Magnet-Funnel',
+    meta: 'Liste aufbauen + Tripwire',
+    illo: 'automation.png',
+    lead: 'Freebie eintragen, ausliefern, aufwärmen — und direkt ein kleines Angebot hinterher. Der schnellste Weg zu den ersten Kontakten in deinem Account.',
+    stats: [['4', 'Seiten'], ['7', 'E-Mails'], ['3', 'Automationen'], ['5', 'Tags']],
+    chips: ['Funnel', 'E-Mail', 'Zahlungen'],
+    flow: [
+      { k: 'Trigger', t: 'Eintragung auf der Opt-In-Seite', d: 'Double-Opt-In inklusive, DSGVO-konform protokolliert.', type: 'trigger' },
+      { k: 'Aktion', t: 'Freebie ausliefern', d: 'Download-Link per E-Mail plus direkt auf der Danke-Seite.' },
+      { k: 'Aktion', t: 'Tripwire auf der Danke-Seite', d: 'Kleines Angebot, Checkout in einem Schritt, Upsell danach.' },
+      { k: 'Wartezeit', t: '5-teilige Nurture-Sequenz', d: 'Ein Thema pro Mail, jede endet mit einem konkreten nächsten Schritt.' },
+      { k: 'Bedingung', t: 'Freebie geöffnet?', d: 'Nein → Erinnerung nach 2 Tagen mit anderem Betreff.' },
+      { k: 'Abschluss', t: 'Kauf → Kunden-Pipeline, kein Kauf → Newsletter', d: 'Alle Kontakte bleiben getaggt, damit du später gezielt einladen kannst.', type: 'kauf' },
+    ],
+  },
+  {
+    name: 'Sales-Call-Setup',
+    meta: 'Termine ohne No-Shows',
+    illo: 'calendar.png',
+    lead: 'Buchungsseite, Qualifizierung, Erinnerungen und Nachfassen. Für alle, die per Gespräch verkaufen und weniger leere Slots wollen.',
+    stats: [['3', 'Seiten'], ['9', 'E-Mails'], ['4', 'Automationen'], ['1', 'Pipeline']],
+    chips: ['Kalender', 'CRM', 'E-Mail', 'Formulare'],
+    flow: [
+      { k: 'Trigger', t: 'Termin wird gebucht', d: 'Mit Qualifizierungsfragen direkt im Buchungsformular.', type: 'trigger' },
+      { k: 'Aktion', t: 'Bestätigung, Kalendereintrag, Vorbereitung', d: 'Kurzes Video oder PDF vorab, damit das Gespräch nicht bei Null startet.' },
+      { k: 'Wartezeit', t: 'Erinnerung 24 h und 1 h vorher', d: 'Mit Ein-Klick-Verschieben statt Absage.' },
+      { k: 'Bedingung', t: 'Erschienen?', d: 'Nein → No-Show-Sequenz mit neuem Buchungslink. Ja → Angebotsphase.' },
+      { k: 'Aktion', t: 'Angebot und Nachfassen', d: 'Angebots-E-Mail, dann Nachfassen nach 2, 5 und 9 Tagen.' },
+      { k: 'Abschluss', t: 'Abschluss oder Wiedervorlage in 90 Tagen', d: 'Kein „vielleicht später" geht mehr verloren.', type: 'kauf' },
+    ],
+  },
+  {
+    name: 'Kurs-Onboarding',
+    meta: 'Mitgliederbereich',
+    illo: 'mitgliederbereich.png',
+    lead: 'Vom Kauf zum ersten Erfolgserlebnis: Zugang, Willkommensserie, Fortschritts-Trigger und Reaktivierung, wenn jemand stehen bleibt.',
+    stats: [['5', 'Seiten'], ['11', 'E-Mails'], ['4', 'Automationen'], ['1', 'Kursstruktur']],
+    chips: ['Mitgliederbereich', 'E-Mail', 'CRM', 'Bewertungen'],
+    flow: [
+      { k: 'Trigger', t: 'Zahlung ist eingegangen', d: 'Zugang wird angelegt, Passwort-Mail geht raus.', type: 'trigger' },
+      { k: 'Aktion', t: 'Willkommensserie über 5 Tage', d: 'Jede Mail führt zu genau einer Lektion.' },
+      { k: 'Bedingung', t: 'Erste Lektion abgeschlossen?', d: 'Nein → Anstoß nach 3 Tagen. Ja → Glückwunsch-Mail und nächstes Modul.' },
+      { k: 'Wartezeit', t: 'Inaktiv seit 14 Tagen', d: 'Reaktivierung mit dem konkreten Punkt, an dem der Kurs stehen geblieben ist.' },
+      { k: 'Aktion', t: 'Kurs abgeschlossen', d: 'Zertifikat, Bewertungsanfrage, Angebot für das nächste Programm.' },
+      { k: 'Abschluss', t: 'Kündigung erkannt → Rückgewinnung', d: 'Ein Grund-Formular und ein Angebot, bevor der Zugang endet.', type: 'kauf' },
+    ],
+  },
+  {
+    name: 'Onlineshop-Setup',
+    meta: 'Produkte, Kasse, Nachkauf',
+    illo: 'onlineshop.png',
+    lead: 'Produktseiten, Checkout und alles, was nach dem Kauf passieren sollte — inklusive abgebrochener Warenkörbe und Bewertungsanfrage.',
+    stats: [['6', 'Seiten'], ['8', 'E-Mails'], ['4', 'Automationen'], ['7', 'Tags']],
+    chips: ['Onlineshop', 'Zahlungen', 'E-Mail', 'Bewertungen'],
+    flow: [
+      { k: 'Trigger', t: 'Checkout gestartet', d: 'Kontakt wird angelegt, sobald die E-Mail-Adresse steht.', type: 'trigger' },
+      { k: 'Bedingung', t: 'Kauf abgeschlossen?', d: 'Nein → Warenkorb-Erinnerung nach 1 h, 24 h und 3 Tagen.' },
+      { k: 'Aktion', t: 'Bestellbestätigung und Auslieferung', d: 'Rechnung, Zugang oder Versandinfo — je nach Produkttyp.' },
+      { k: 'Aktion', t: 'Cross-Sell nach 7 Tagen', d: 'Passendes Zweitprodukt auf Basis des gekauften Tags.' },
+      { k: 'Wartezeit', t: 'Bewertungsanfrage nach 14 Tagen', d: 'Positive Bewertungen landen automatisch auf der Produktseite.' },
+      { k: 'Abschluss', t: 'Stammkunden-Tag ab dem zweiten Kauf', d: 'Eigene Segmente für Angebote, die nur Bestandskunden sehen.', type: 'kauf' },
+    ],
+  },
+];
+
+const IMPORT_STEPS = [
+  { n: '01', t: 'Kollektion wählen', d: 'Der Look legt Farben, Schriften, Buttons und Sektionen für alles Weitere fest. Später umstellen ändert alle Vorlagen mit.' },
+  { n: '02', t: 'Vorlagen oder Setup importieren', d: 'Einzelne Seite für einen schnellen Test — oder ein komplettes Setup, das Seiten, E-Mails, Tags und Automationen zusammen anlegt.' },
+  { n: '03', t: 'Texte tauschen, live gehen', d: 'Alle Platzhalter sind markiert. Automationen sind vorverdrahtet und starten erst, wenn du sie aktivierst.' },
+];
+
+const FAQS = [
+  { q: 'Was ist der Unterschied zwischen Kollektion, Vorlage und Setup?', a: 'Eine Kollektion ist der Look — Farben, Schriften, Sektionen. Eine Vorlage ist eine einzelne Seite in diesem Look, zum Beispiel eine Sales Page. Ein Setup ist ein komplettes System: mehrere Seiten plus E-Mails, Tags, Pipelines und Automationen, die zusammen installiert werden.' },
+  { q: 'Kann ich die Kollektion später wechseln?', a: 'Ja. Der Look liegt auf Kollektionsebene — wenn du wechselst, übernehmen alle importierten Vorlagen die neuen Farben, Schriften und Abstände. Eigene Anpassungen bleiben erhalten.' },
+  { q: 'Werden die Automationen sofort aktiv?', a: 'Nein. Jedes Setup wird deaktiviert importiert. Du siehst jede Automation, jede E-Mail und jede Wartezeit im Editor und schaltest sie erst frei, wenn deine Texte stehen.' },
+  { q: 'Kann ich Teile eines Setups weglassen?', a: 'Ja. Vor dem Import wählst du aus, was übernommen wird — nur die Seiten, nur die E-Mail-Sequenz oder nur die CRM-Struktur. Alles bleibt danach frei editierbar.' },
+  { q: 'Überschreibt ein Import meine bestehenden Daten?', a: 'Nie. Setups legen neue Pipelines, Tags und Seiten an. Bestehende Kontakte, Automationen und Seiten bleiben unangetastet.' },
+  { q: 'Sind alle Vorlagen mobil optimiert?', a: 'Ja, jede Vorlage kommt mit geprüfter Desktop-, Tablet- und Mobilansicht. Du kannst jede Ansicht im Editor einzeln nachjustieren.' },
+];
+
+/* ── Sections ─────────────────────────────────────────────── */
+const Hero = () => (
+  <section className="tv-hero">
+    <div className="tv-hero__inner">
+      <div>
+        <p className="tv-eyebrow">Vorlagen</p>
+        <h1>Look wählen, Seiten übernehmen, <mark>Setup starten.</mark></h1>
+        <p className="tv-hero__lead">Funnelspace-Vorlagen sind in drei Ebenen aufgebaut: eine Design-Kollektion gibt den Look, die Vorlagen füllen ihn mit Seiten, und ein Setup bringt Seiten, E-Mails und Automationen in einem Import zusammen.</p>
+        <div className="tv-hero__cta">
+          <a href="#kollektionen" className="btn btn--primary btn-lg">Kollektionen ansehen</a>
+          <a href="#setups" className="btn btn--ghost btn-lg">Setups durchgehen</a>
+        </div>
+        <p className="tv-hero__note">6 Kollektionen · 14 Vorlagen pro Kollektion · 6 komplette Setups</p>
+      </div>
+      <div className="tv-stack">
+        <div className="tv-stack__item"><div className="tv-stack__n">1</div><div><div className="tv-stack__t">Design-Kollektion</div><div className="tv-stack__d">Farben, Schriften, Buttons, Sektionen. Ein Look für alles, was danach kommt.</div></div></div>
+        <div className="tv-stack__item"><div className="tv-stack__n">2</div><div><div className="tv-stack__t">Vorlagen pro Kollektion</div><div className="tv-stack__d">Einzelne Seiten im gewählten Look — Landingpage, Sales Page, Checkout, Blog.</div></div></div>
+        <div className="tv-stack__item tv-stack__item--accent"><div className="tv-stack__n">3</div><div><div className="tv-stack__t">Setups mit Automationen</div><div className="tv-stack__d">Seiten, E-Mails, Tags, Pipelines und Abläufe zusammen — CRM-Setup oder kompletter Evergreen-Funnel.</div></div></div>
+      </div>
+    </div>
+  </section>
+);
+
+const Collections = () => {
+  const [active, setActive] = useState(2);
+  const c = COLLECTIONS[active];
+  return (
+    <section className="tv-sec tv-sec--alt" id="kollektionen">
+      <div className="tv-in">
+        <div className="tv-head">
+          <p className="tv-eyebrow">Ebene 1 · Design-Kollektionen</p>
+          <h2>Erst der Look. Dann muss nichts mehr abgestimmt werden.</h2>
+          <p>Jede Kollektion ist ein fertiges Gestaltungssystem. Wählst du sie aus, erben alle 14 Vorlagen dieselben Farben, Schriften und Abstände — auch die, die du erst nächsten Monat brauchst.</p>
+        </div>
+        <div className="tv-colls">
+          {COLLECTIONS.map((col, i) => (
+            <button key={col.name} className="tv-coll" aria-pressed={i === active} onClick={() => setActive(i)}>
+              <div className="tv-coll__sw">{col.sw.map((s, j) => <span key={j} style={{ background: s }} />)}</div>
+              <div className="tv-coll__n">{col.name}</div>
+              <div className="tv-coll__m">{col.tone} · {col.count} Vorlagen</div>
+            </button>
+          ))}
+        </div>
+        <div className="tv-detail">
+          <div className="tv-detail__bar">
+            <div>
+              <h3>{c.name}</h3>
+              <p>{c.desc}</p>
+            </div>
+            <div className="tv-specs">
+              <div><div className="tv-spec__k">Schriften</div><div className="tv-spec__v">{c.type}</div></div>
+              <div><div className="tv-spec__k">Ecken</div><div className="tv-spec__v">{c.radius}</div></div>
+              <div><div className="tv-spec__k">Vorlagen</div><div className="tv-spec__v">{c.count}</div></div>
+            </div>
+            <a href="#setups" className="btn btn--ink">Kollektion übernehmen</a>
+          </div>
+          <div className="tv-tpls">
+            {TEMPLATES.map(t => (
+              <div key={t.n} className="tv-tpl">
+                <Wireframe kind={t.wf} />
+                <div>
+                  <div className="tv-tpl__n">{t.n}</div>
+                  <div className="tv-tpl__k">{t.k}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="tv-detail__foot">
+            <span>Alle Vorlagen gibt es in jeder Kollektion — du wechselst den Look, nicht die Struktur.</span>
+            <a href="#setups" className="btn btn--ghost btn-sm">Weiter zu den Setups</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Setups = () => {
+  const [active, setActive] = useState(0);
+  const s = SETUPS[active];
+  return (
+    <section className="tv-sec tv-sec--ink" id="setups">
+      <div className="tv-in">
+        <div className="tv-head">
+          <p className="tv-eyebrow">Ebene 3 · Setups</p>
+          <h2>Ein Setup ist mehr als Seiten. Es ist der ganze Ablauf.</h2>
+          <p>Setups bringen Seiten, E-Mail-Sequenzen, Tags, Pipelines und Automationen in einem Import mit. Du siehst vorher genau, was angelegt wird — und schaltest jede Automation selbst frei.</p>
+        </div>
+        <div className="tv-setups">
+          <div className="tv-slist">
+            {SETUPS.map((st, i) => (
+              <button key={st.name} className="tv-sitem" aria-pressed={i === active} onClick={() => setActive(i)}>
+                <div className="tv-sitem__ic"><img src={`assets/illustrations/${st.illo}`} alt="" /></div>
+                <div>
+                  <div className="tv-sitem__n">{st.name}</div>
+                  <div className="tv-sitem__m">{st.meta}</div>
+                </div>
+              </button>
+            ))}
+          </div>
+          <div className="tv-panel">
+            <div className="tv-panel__top">
+              <div>
+                <h3>{s.name}</h3>
+                <p>{s.lead}</p>
+              </div>
+              <div className="tv-stats">
+                {s.stats.map(([v, k]) => <div className="tv-stat" key={k}><div className="tv-stat__v">{v}</div><div className="tv-stat__k">{k}</div></div>)}
+              </div>
+            </div>
+            <div className="tv-flowwrap">
+              <div className="tv-flowlabel">Ablauf, der mitkommt</div>
+              <div className="tv-flow">
+                {s.flow.map((f, i) => (
+                  <div key={i} className={`tv-node${f.type === 'trigger' ? ' tv-node--trigger' : ''}${f.type === 'kauf' ? ' tv-node--kauf' : ''}`}>
+                    <div className="tv-node__k">{f.k}</div>
+                    <div className="tv-node__t">{f.t}</div>
+                    <div className="tv-node__d">{f.d}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="tv-panel__foot">
+              <div className="tv-chips">{s.chips.map(ch => <span className="tv-chip" key={ch}>{ch}</span>)}</div>
+              <a href="#signup" className="btn btn--primary">Setup importieren</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const ImportFlow = () => (
+  <section className="tv-sec">
+    <div className="tv-in">
+      <div className="tv-head tv-head--c">
+        <p className="tv-eyebrow">So läuft der Import</p>
+        <h2>Drei Entscheidungen, dann steht es in deinem Account.</h2>
+      </div>
+      <div className="tv-import">
+        {IMPORT_STEPS.map(st => (
+          <div className="tv-imp" key={st.n}>
+            <div className="tv-imp__n">{st.n}</div>
+            <h3>{st.t}</h3>
+            <p>{st.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+const FAQ = () => {
+  const [open, setOpen] = useState(0);
+  return (
+    <section className="tv-sec tv-sec--alt">
+      <div className="tv-in">
+        <div className="tv-head tv-head--c">
+          <p className="tv-eyebrow">Fragen</p>
+          <h2>Häufig gefragt</h2>
+        </div>
+        <div className="tv-faq">
+          {FAQS.map((f, i) => (
+            <div key={i} className={`tv-q${open === i ? ' open' : ''}`}>
+              <button className="tv-q__btn" onClick={() => setOpen(open === i ? null : i)}>{f.q}<span className="tv-q__ic">+</span></button>
+              <div className="tv-q__a">{f.a}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const App = () => (
+  <>
+    <Nav />
+    <main>
+      <Hero />
+      <Collections />
+      <Setups />
+      <ImportFlow />
+      <FAQ />
+    </main>
+    <CtaBand />
+    <Footer />
+  </>
+);
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

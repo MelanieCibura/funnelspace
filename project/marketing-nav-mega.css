@@ -1,0 +1,133 @@
+/* marketing-nav-mega.css — Megamenü-Navigation im Funnelspace-Stil.
+   Ergänzt marketing-app.css (wird zusätzlich geladen). */
+
+/* --- Top-Level-Trigger --- */
+.fs-nav__links { display: flex; gap: 2px; margin-left: 12px; }
+.fs-nav__item { position: static; }
+
+.fs-nav__link {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 8px 14px; border-radius: 10px;
+  font-family: var(--font-body, inherit);
+  font-size: 14px; font-weight: 500; line-height: 1;
+  color: var(--fs-ink-soft); text-decoration: none;
+  background: none; border: 0; cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.fs-nav__link:hover { background: var(--fs-gray-100); color: var(--fs-ink); }
+.fs-nav__trigger.is-open { background: var(--fs-gray-100); color: var(--fs-ink); }
+.fs-nav__chev { display: inline-flex; transition: transform var(--dur-med) var(--ease-out); color: var(--fs-gray-500); }
+.fs-nav__trigger.is-open .fs-nav__chev { transform: rotate(180deg); }
+
+.fs-nav__auth { display: flex; align-items: center; gap: 6px; }
+.fs-nav__ghost {
+  font-size: 14px; font-weight: 500; color: var(--fs-ink);
+  text-decoration: none; padding: 8px 12px; border-radius: 10px;
+  white-space: nowrap; transition: background var(--dur-fast) var(--ease-out);
+}
+.fs-nav__ghost:hover { background: var(--fs-gray-100); }
+
+/* --- Megapanel --- */
+.fs-mega {
+  position: absolute; left: 50%; top: calc(100% - 4px);
+  transform: translateX(-50%);
+  width: min(var(--mega-w, 640px), calc(100vw - 32px));
+  padding-top: 12px;
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out);
+}
+.fs-mega.is-open {
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+.fs-mega:not(.is-open) { transform: translateX(-50%) translateY(-6px); }
+
+.fs-mega__panel {
+  background: var(--fs-white, #fff);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 22px;
+  overflow: hidden;
+}
+
+.fs-mega__grid { display: flex; gap: 10px; }
+.fs-mega__col { flex: 1 1 0; min-width: 0; }
+.fs-mega__list { display: flex; flex-direction: column; gap: 2px; }
+
+.fs-mega__head { color: var(--fs-gray-500); margin: 0 0 8px 12px; }
+
+/* --- Menüeintrag --- */
+.fs-mega__item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 10px 12px; border-radius: var(--radius-md);
+  text-decoration: none; color: var(--fs-ink);
+  transition: background var(--dur-fast) var(--ease-out);
+}
+.fs-mega__item:hover { background: var(--fs-gray-100); }
+.fs-mega__ic {
+  flex: none; display: grid; place-items: center;
+  width: 38px; height: 38px; border-radius: var(--radius-sm);
+  background: var(--fs-gray-100); color: var(--fs-ink);
+  border: 1px solid var(--border-1);
+}
+.fs-mega__item:hover .fs-mega__ic { background: var(--fs-white, #fff); }
+.fs-mega__ic.is-accent { background: var(--fs-lime); color: var(--fs-lime-ink); border-color: transparent; }
+.fs-mega__item:hover .fs-mega__ic.is-accent { background: var(--fs-lime); }
+
+.fs-mega__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.fs-mega__title {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 14px; font-weight: 600; letter-spacing: -0.01em; color: var(--fs-ink);
+}
+.fs-mega__desc { font-size: 12.5px; line-height: 1.35; color: var(--fs-gray-500); }
+.fs-mega__arr { display: inline-flex; color: var(--fs-gray-500); transition: transform var(--dur-fast) var(--ease-out); }
+.fs-mega__item:hover .fs-mega__arr { transform: translateX(2px); }
+.fs-mega__item.is-muted .fs-mega__ic { background: transparent; }
+
+/* --- Promo-Karte --- */
+.fs-mega__promo {
+  flex: none; width: 210px; align-self: stretch;
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 18px; border-radius: var(--radius-md);
+  background: var(--fs-ink); color: var(--fs-white, #fff);
+  text-decoration: none;
+  transition: transform var(--dur-med) var(--ease-out);
+}
+.fs-mega__promo:hover { transform: translateY(-2px); }
+.fs-mega__promo-eyebrow { color: var(--fs-lime); }
+.fs-mega__promo-title { font-family: var(--font-display, inherit); font-size: 19px; font-weight: 700; letter-spacing: -0.02em; margin-top: 2px; }
+.fs-mega__promo-desc { font-size: 13px; line-height: 1.45; color: rgba(255,255,255,0.72); flex: 1; }
+.fs-mega__promo-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 600; color: var(--fs-lime);
+}
+.fs-mega__promo:hover .fs-mega__promo-cta svg { transform: translateX(3px); transition: transform var(--dur-fast) var(--ease-out); }
+
+/* --- Burger / Mobile --- */
+.fs-nav__burger { display: none; flex-direction: column; gap: 5px; background: none; border: 0; padding: 8px; cursor: pointer; }
+.fs-nav__burger span { display: block; width: 22px; height: 2px; background: var(--fs-ink); border-radius: 2px; }
+
+.fs-mnav {
+  display: none; position: absolute; left: 0; right: 0; top: 100%;
+  background: var(--fs-paper); border-bottom: 1px solid var(--border-1);
+  padding: 16px 24px 24px; max-height: calc(100vh - 72px); overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+}
+.fs-mnav.is-open { display: block; }
+.fs-mnav__group { padding: 10px 0; border-bottom: 1px solid var(--border-1); }
+.fs-mnav__top { font-family: var(--font-display, inherit); font-size: 15px; font-weight: 700; color: var(--fs-ink); margin: 0 0 8px; text-decoration: none; display: block; }
+.fs-mnav__sub { display: flex; flex-direction: column; gap: 2px; }
+.fs-mnav__sub a { font-size: 14px; color: var(--fs-ink-soft); text-decoration: none; padding: 6px 0; }
+.fs-mnav__cta { display: flex; gap: 10px; padding-top: 18px; }
+.fs-mnav__cta .btn { flex: 1; justify-content: center; }
+
+@media (max-width: 940px) {
+  .fs-nav__links, .fs-nav__spacer, .fs-nav__auth { display: none; }
+  .fs-nav__burger { display: flex; }
+  .fs-nav__inner { justify-content: space-between; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fs-mega, .fs-mega__promo, .fs-nav__chev, .fs-mega__arr { transition: opacity var(--dur-fast) linear; }
+}

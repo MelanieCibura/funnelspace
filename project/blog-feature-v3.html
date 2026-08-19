@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Blog — Funnelspace</title>
+<meta name="description" content="Keyword, Brand Voice, Content AI, Ask AI: Der Funnelspace-Blog schreibt in deiner Stimme, rankt bei Google und macht Leser zu Kontakten — automatisiert, in einem Tool." />
+<link rel="stylesheet" href="colors_and_type.css" />
+<link rel="stylesheet" href="site.css" />
+<style>
+.b2{background:var(--fs-paper)}
+a{color:var(--fs-ink)}
+a:hover{color:var(--fs-lime-deep)}
+.b2-wrap{max-width:1280px;margin:0 auto;padding:0 40px}
+
+/* ── Hero ─────────────────────────────────────────────── */
+.b2-hero{background:var(--fs-ink);color:#fff;position:relative;overflow:hidden;padding:76px 40px 190px}
+.b2-hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(215,240,120,.07) 1px,transparent 1.2px);background-size:8px 8px;pointer-events:none}
+.b2-hero__inner{position:relative;max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:end}
+.b2-kicker{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fs-lime);border:1px solid rgba(215,240,120,.3);background:rgba(215,240,120,.08);padding:6px 12px;border-radius:var(--radius-pill)}
+.b2-hero h1{margin-top:26px;font-family:var(--font-display);font-size:clamp(42px,4.8vw,66px);font-weight:800;line-height:1.03;letter-spacing:-.035em;color:#fff;text-wrap:balance}
+.b2-hero h1 em{font-style:normal;color:var(--fs-lime)}
+.b2-lead{margin-top:22px;font-size:19px;line-height:1.55;color:rgba(255,255,255,.68);max-width:520px}
+.b2-hero__cta{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.b2-hero__cta .btn--ghost{color:#fff;border-color:rgba(255,255,255,.28)}
+.b2-hero__cta .btn--ghost:hover{border-color:#fff}
+.b2-hero__note{margin-top:18px;font-family:var(--font-mono);font-size:11.5px;letter-spacing:.04em;color:rgba(255,255,255,.42)}
+.b2-chain{display:grid;gap:10px}
+.b2-chain__t{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:6px}
+.b2-chain__row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;border-top:1px solid rgba(255,255,255,.12);padding:12px 0}
+.b2-chain__row:last-child{border-bottom:1px solid rgba(255,255,255,.12)}
+.b2-chain__n{font-family:var(--font-mono);font-size:11px;color:rgba(255,255,255,.35)}
+.b2-chain__l{font-size:14.5px;color:rgba(255,255,255,.85)}
+.b2-chain__v{font-family:var(--font-display);font-weight:700;font-size:15px;color:var(--fs-lime);letter-spacing:-.01em}
+
+/* ── Workbench ────────────────────────────────────────── */
+.b2-bench{max-width:1180px;margin:-140px auto 0;position:relative;z-index:2;background:var(--fs-white);border-radius:var(--radius-xl);box-shadow:0 44px 90px -30px rgba(0,0,0,.42);overflow:hidden;display:grid;grid-template-columns:274px 1fr}
+.b2-rail{background:var(--fs-paper);border-right:1px solid var(--border-1);padding:22px 0}
+.b2-rail__t{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3);padding:0 22px 14px}
+.b2-step{width:100%;display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:start;text-align:left;background:none;border:none;padding:13px 22px;cursor:pointer;position:relative;transition:background var(--dur-fast) var(--ease-in-out)}
+.b2-step:hover{background:rgba(0,0,0,.03)}
+.b2-step.on{background:var(--fs-white)}
+.b2-step.on::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--fs-lime-deep)}
+.b2-step__n{font-family:var(--font-mono);font-size:11px;color:var(--fg-3);padding-top:3px}
+.b2-step.on .b2-step__n{color:var(--fs-lime-deep)}
+.b2-step__l{font-family:var(--font-display);font-weight:700;font-size:14.5px;letter-spacing:-.01em;color:var(--fs-ink)}
+.b2-step__d{font-size:12px;line-height:1.4;color:var(--fg-3);margin-top:3px;display:none}
+.b2-step.on .b2-step__d{display:block}
+.b2-step__bar{grid-column:2;height:2px;background:var(--fs-gray-200);border-radius:2px;margin-top:9px;overflow:hidden;display:none}
+.b2-step.on .b2-step__bar{display:block}
+.b2-step__bar i{display:block;height:100%;background:var(--fs-lime-deep);transition:width .2s linear}
+.b2-rail__foot{padding:16px 22px 2px;border-top:1px solid var(--border-1);margin-top:14px;display:flex;align-items:center;gap:10px}
+.b2-rail__foot button{border:1px solid var(--border-1);background:var(--fs-white);border-radius:var(--radius-pill);font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:7px 12px;cursor:pointer;color:var(--fs-ink);transition:background var(--dur-fast)}
+.b2-rail__foot button:hover{background:var(--fs-paper)}
+
+.b2-panel{padding:26px 30px 30px;min-height:452px;display:flex;flex-direction:column;background-image:radial-gradient(var(--fs-gray-200) 1px,transparent 1.2px);background-size:14px 14px}
+.b2-panel__head{display:flex;align-items:center;gap:10px;padding-bottom:16px;border-bottom:1px solid var(--border-1);margin-bottom:20px}
+.b2-panel__head svg{width:17px;height:17px;color:var(--fs-ink)}
+.b2-panel__head b{font-family:var(--font-display);font-size:15px;letter-spacing:-.01em}
+.b2-panel__head span{margin-left:auto;font-family:var(--font-mono);font-size:10.5px;color:var(--fg-3);letter-spacing:.06em}
+.b2-fade{animation:b2in .38s var(--ease-out) both}
+@keyframes b2in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* panel internals */
+.b2-kw{display:grid;gap:8px}
+.b2-kw__r{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:14px;background:var(--fs-white);border:1px solid var(--border-1);border-radius:var(--radius-sm);padding:12px 14px}
+.b2-kw__r.hot{border:2px solid var(--fs-ink)}
+.b2-kw__q{font-size:14px}
+.b2-kw__v{font-family:var(--font-mono);font-size:11.5px;color:var(--fg-3)}
+.b2-chip{font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:var(--radius-pill);background:var(--fs-gray-100);color:var(--fs-ink-soft)}
+.b2-chip--lime{background:var(--fs-lime);color:var(--fs-lime-ink)}
+
+.b2-outline{display:grid;gap:9px}
+.b2-outline__i{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline;background:var(--fs-white);border:1px solid var(--border-1);border-radius:var(--radius-sm);padding:11px 14px}
+.b2-outline__i b{font-family:var(--font-mono);font-size:10.5px;color:var(--fs-lime-deep)}
+.b2-outline__i span{font-size:14px}
+.b2-typing-cursor{display:inline-block;width:7px;height:15px;background:var(--fs-ink);vertical-align:-2px;margin-left:2px;animation:b2blink 1s steps(2) infinite}
+@keyframes b2blink{50%{opacity:0}}
+
+.b2-blocks{display:grid;gap:8px}
+.b2-block{background:var(--fs-white);border:1px solid var(--border-1);border-radius:var(--radius-sm);padding:12px 14px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}
+.b2-block svg{width:15px;height:15px;color:var(--fg-3)}
+.b2-block__t{font-size:13.5px}
+.b2-block__t i{display:block;font-style:normal;font-size:11.5px;color:var(--fg-3);margin-top:2px}
+.b2-block--accent{border:2px solid var(--fs-ink)}
+.b2-block--accent svg{color:var(--fs-lime-deep)}
+.b2-block__tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-3)}
+
+.b2-serp{background:var(--fs-white);border:1px solid var(--border-1);border-radius:var(--radius-sm);padding:16px}
+.b2-serp__u{font-family:var(--font-mono);font-size:11.5px;color:var(--fg-3)}
+.b2-serp__t{font-family:var(--font-display);font-size:18px;font-weight:700;color:#1a3fa0;margin-top:5px;letter-spacing:-.01em}
+.b2-serp__d{font-size:13px;line-height:1.5;color:var(--fg-2);margin-top:6px}
+.b2-seo{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;margin-top:16px}
+.b2-ring{width:76px;height:76px;border-radius:50%;background:var(--fs-lime);color:var(--fs-lime-ink);display:grid;place-items:center;font-family:var(--font-display);font-weight:800;font-size:24px}
+.b2-rules{display:grid;gap:7px}
+.b2-rule{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--fs-ink)}
+.b2-rule svg{width:15px;height:15px;color:var(--fs-lime-deep);flex-shrink:0}
+
+.b2-pub{display:grid;gap:10px}
+.b2-pub__r{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;background:var(--fs-white);border:1px solid var(--border-1);border-radius:var(--radius-sm);padding:13px 14px;font-size:13.5px}
+.b2-pub__r svg{width:16px;height:16px;color:var(--fs-lime-deep)}
+.b2-pub__r span{font-family:var(--font-mono);font-size:10.5px;color:var(--fg-3);letter-spacing:.05em}
+
+.b2-contact{background:var(--fs-white);border:2px solid var(--fs-ink);border-radius:var(--radius-md);padding:18px}
+.b2-contact__h{display:flex;align-items:center;gap:12px}
+.b2-avatar{width:42px;height:42px;border-radius:50%;background:var(--fs-lime);color:var(--fs-lime-ink);display:grid;place-items:center;font-family:var(--font-display);font-weight:800;font-size:14px}
+.b2-contact__n{font-family:var(--font-display);font-weight:700;font-size:15px;letter-spacing:-.01em}
+.b2-contact__m{font-family:var(--font-mono);font-size:11.5px;color:var(--fg-3);margin-top:2px}
+.b2-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.b2-tl{margin-top:16px;border-top:1px solid var(--border-1);padding-top:14px;display:grid;gap:11px}
+.b2-tl__i{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;font-size:13px}
+.b2-tl__d{width:8px;height:8px;border-radius:50%;background:var(--fs-gray-300)}
+.b2-tl__i.key .b2-tl__d{background:var(--fs-lime-deep)}
+.b2-tl__t{font-family:var(--font-mono);font-size:10.5px;color:var(--fg-3)}
+
+/* ── Sektionen ────────────────────────────────────────── */
+.b2-sec{padding:104px 0}
+.b2-sec--white{background:var(--fs-white)}
+.b2-eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fs-ink-soft)}
+.b2-h2{font-family:var(--font-display);font-size:clamp(30px,3.3vw,44px);font-weight:800;letter-spacing:-.03em;line-height:1.08;margin-top:14px;max-width:760px;text-wrap:balance}
+.b2-sub{font-size:18px;line-height:1.55;color:var(--fg-2);max-width:620px;margin-top:18px}
+
+.b2-vs{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:52px}
+.b2-card{border-radius:var(--radius-lg);padding:30px}
+.b2-card--old{background:var(--fs-paper);border:1px solid var(--border-1)}
+.b2-card--new{background:var(--fs-white);border:2px solid var(--fs-ink)}
+.b2-card h3{font-family:var(--font-display);font-size:20px;font-weight:700;letter-spacing:-.02em}
+.b2-card ul{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:12px}
+.b2-card li{display:grid;grid-template-columns:auto 1fr;gap:11px;font-size:14.5px;line-height:1.5;color:var(--fg-2)}
+.b2-card li svg{width:16px;height:16px;margin-top:3px;flex-shrink:0}
+.b2-card--old li svg{color:var(--fs-gray-400)}
+.b2-card--new li{color:var(--fs-ink)}
+.b2-card--new li svg{color:var(--fs-lime-deep)}
+.b2-card__cost{margin-top:24px;padding-top:18px;border-top:1px solid var(--border-1);font-family:var(--font-mono);font-size:11.5px;letter-spacing:.05em;color:var(--fg-3)}
+.b2-card--new .b2-card__cost{color:var(--fs-ink)}
+
+.b2-row{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;padding:64px 0;border-top:1px solid var(--border-1)}
+.b2-row:first-of-type{border-top:none}
+.b2-row--flip .b2-row__txt{order:2}
+.b2-row h3{font-family:var(--font-display);font-size:28px;font-weight:700;letter-spacing:-.025em;line-height:1.14;margin-top:12px}
+.b2-row p{font-size:16.5px;line-height:1.6;color:var(--fg-2);margin-top:14px}
+.b2-row ul{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:10px}
+.b2-row li{display:grid;grid-template-columns:auto 1fr;gap:10px;font-size:14.5px;line-height:1.5}
+.b2-row li svg{width:16px;height:16px;color:var(--fs-lime-deep);margin-top:3px}
+.b2-illu{background:var(--fs-paper);border:1px solid var(--border-1);border-radius:var(--radius-lg);padding:26px;display:grid;place-items:center}
+.b2-illu img{max-width:100%;height:auto;display:block}
+
+.b2-stats{background:var(--fs-ink);color:#fff;padding:76px 40px;position:relative;overflow:hidden}
+.b2-stats::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(215,240,120,.07) 1px,transparent 1.2px);background-size:8px 8px}
+.b2-stats__inner{position:relative;max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:36px}
+.b2-stat b{display:block;font-family:var(--font-display);font-size:40px;font-weight:800;letter-spacing:-.03em;color:var(--fs-lime)}
+.b2-stat span{display:block;font-size:14px;line-height:1.5;color:rgba(255,255,255,.6);margin-top:8px;max-width:220px}
+
+.b2-faq{display:grid;gap:0;margin-top:44px;max-width:860px;border-top:1px solid var(--border-1)}
+.b2-faq details{border-bottom:1px solid var(--border-1)}
+.b2-faq summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 0;font-family:var(--font-display);font-size:17px;font-weight:700;letter-spacing:-.01em}
+.b2-faq summary::-webkit-details-marker{display:none}
+.b2-faq summary svg{width:18px;height:18px;flex-shrink:0;color:var(--fs-ink-soft);transition:transform var(--dur-med) var(--ease-in-out)}
+.b2-faq details[open] summary svg{transform:rotate(45deg)}
+.b2-faq p{font-size:15px;line-height:1.6;color:var(--fg-2);margin:0 0 22px;max-width:680px}
+
+/* ── Brand Voice Panel ────────────────────────────────── */
+.b2-voice{display:grid;gap:14px}
+.b2-voice__card{background:var(--fs-white);border:1px solid var(--border-1);border-radius:var(--radius-sm);padding:14px 16px}
+.b2-voice__t{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-3);margin-bottom:11px}
+.b2-dial{display:grid;grid-template-columns:96px 1fr 96px;align-items:center;gap:12px;margin-bottom:11px}
+.b2-dial:last-child{margin-bottom:0}
+.b2-dial span{font-size:12px;color:var(--fg-3)}
+.b2-dial span:last-child{text-align:right}
+.b2-dial__track{height:4px;background:var(--fs-gray-200);border-radius:4px;position:relative}
+.b2-dial__track i{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;background:var(--fs-lime);border:2px solid var(--fs-ink);transform:translate(-50%,-50%);transition:left .5s var(--ease-out)}
+.b2-words{display:flex;flex-wrap:wrap;gap:6px}
+.b2-word{font-family:var(--font-mono);font-size:10.5px;padding:4px 9px;border-radius:var(--radius-pill);background:var(--fs-gray-100);color:var(--fs-ink-soft)}
+.b2-word--no{text-decoration:line-through;opacity:.55}
+.b2-ba{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:2px}
+.b2-ba__c{border:1px solid var(--border-1);border-radius:var(--radius-sm);padding:12px 14px;background:var(--fs-white)}
+.b2-ba__c.on{border:2px solid var(--fs-ink)}
+.b2-ba__l{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-3);margin-bottom:7px}
+.b2-ba__c.on .b2-ba__l{color:var(--fs-lime-deep)}
+.b2-ba__c p{font-size:13.5px;line-height:1.5;color:var(--fg-2);margin:0}
+.b2-ba__c.on p{color:var(--fs-ink)}
+
+/* ── Ask AI Panel ─────────────────────────────────────── */
+.b2-ask{display:grid;gap:10px}
+.b2-ask__bar{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;background:var(--fs-white);border:2px solid var(--fs-ink);border-radius:var(--radius-md);padding:13px 15px}
+.b2-ask__bar svg{width:16px;height:16px;color:var(--fs-lime-deep)}
+.b2-ask__q{font-size:14px;color:var(--fs-ink)}
+.b2-ask__do{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;background:var(--fs-white);border:1px solid var(--border-1);border-radius:var(--radius-sm);padding:12px 14px;font-size:13.5px}
+.b2-ask__do svg{width:15px;height:15px;color:var(--fs-lime-deep)}
+.b2-ask__do span{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.05em;color:var(--fg-3)}
+.b2-ask__do.wait{opacity:.45}
+.b2-ask__do.wait svg{color:var(--fg-3)}
+
+@media(max-width:1080px){
+.b2-hero__inner{grid-template-columns:1fr;gap:40px}
+.b2-bench{grid-template-columns:1fr;margin:-120px 24px 0}
+.b2-rail{border-right:none;border-bottom:1px solid var(--border-1)}
+.b2-stats__inner{grid-template-columns:1fr 1fr;gap:28px}
+.b2-vs,.b2-row{grid-template-columns:1fr;gap:28px}
+.b2-row--flip .b2-row__txt{order:0}
+.b2-wrap{padding:0 24px}
+.nav__links{display:none}
+}
+</style>
+</head>
+<body class="b2">
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="Nav.jsx"></script>
+<script type="text/babel" src="Footer.jsx"></script>
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+const BP = {
+  search:"M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z|m21 21-4.3-4.3",
+  sparkles:"m12 3 1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9Z|M18 15l.9 2.1L21 18l-2.1.9L18 21l-.9-2.1L15 18l2.1-.9Z",
+  layout:"M3 4h18v16H3z|M3 10h18|M9 20V10",
+  globe:"M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z|M3 12h18|M12 3a14 14 0 0 1 0 18|M12 3a14 14 0 0 0 0 18",
+  user:"M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z|M4 21a8 8 0 0 1 16 0",
+  check:"M20 6 9 17l-5-5",
+  circleCheck:"M22 11.1V12a10 10 0 1 1-5.9-9.1|m9 11 3 3L22 4",
+  plus:"M12 5v14|M5 12h14",
+  minus:"M5 12h14",
+  type:"M4 7V4h16v3|M9 20h6|M12 4v16",
+  image:"M3 5h18v14H3z|m3 16 5-5 4 4 3-3 6 6|M8.5 9.5h.01",
+  mail:"M3 6h18v12H3z|m3 7 9 6 9-6",
+  quote:"M7 7H4v6h6V7c0 4-1 6-3 7|M20 7h-3v6h6V7c0 4-1 6-3 7",
+  send:"m22 2-7 20-4-9-9-4Z",
+  clock:"M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z|M12 7v5l3 2",
+  x:"M18 6 6 18|m6 6 12 12",
+  euro:"M18 7a6 6 0 1 0 0 10|M4 10h9|M4 14h9",
+  zap:"M13 2 4 14h7l-1 8 9-12h-7Z",
+  rss:"M4 11a9 9 0 0 1 9 9|M4 4a16 16 0 0 1 16 16|M5 19h.01",
+};
+const I = ({n, ...r}) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" {...r}>
+    {BP[n].split("|").map((d,i)=><path key={i} d={d} />)}
+  </svg>
+);
+
+/* ── Panels ───────────────────────────────────────────── */
+const PanelIdee = () => (
+  <div className="b2-fade">
+    <div className="b2-kw">
+      {[["landingpage erstellen","2.400/Mon.","Platz 14",false],["e mail funnel aufbauen","880/Mon.","Lücke",true],["crm für coaches","590/Mon.","Platz 8",false],["newsletter tool dsgvo","1.100/Mon.","schwer",false]].map(([q,v,d,hot])=>(
+        <div key={q} className={"b2-kw__r" + (hot?" hot":"")}>
+          <div className="b2-kw__q">{q}</div>
+          <div className="b2-kw__v">{v}</div>
+          <div className={"b2-chip" + (hot?" b2-chip--lime":"")}>{hot?"Thema wählen":d}</div>
+        </div>
+      ))}
+    </div>
+    <p style={{fontSize:"13px",color:"var(--fg-3)",marginTop:"18px",lineHeight:1.5}}>Der Themen-Radar verbindet Suchvolumen mit deinen echten Daten: wofür du schon rankst, wonach Besucher auf deiner Seite suchen und welche Fragen im Posteingang landen.</p>
+  </div>
+);
+
+const PanelEntwurf = () => {
+  const items = [["H1","E-Mail-Funnel aufbauen: die 5 Mails, die verkaufen"],["H2","Warum Einzel-Newsletter nichts bringen"],["H2","Mail 1–5: Aufbau, Timing, Betreffzeilen"],["H2","Automatisch statt manuell versenden"],["H2","Vorlage: Funnel in 15 Minuten kopieren"]];
+  const [n, setN] = useState(0);
+  useEffect(() => { setN(0); const t = setInterval(() => setN(v => v < items.length ? v+1 : v), 420); return () => clearInterval(t); }, []);
+  return (
+    <div className="b2-fade">
+      <div className="b2-outline">
+        {items.slice(0,n).map(([lvl,t])=>(
+          <div key={t} className="b2-outline__i b2-fade"><b>{lvl}</b><span>{t}</span></div>
+        ))}
+      </div>
+      {n < items.length && <div style={{marginTop:"12px",fontFamily:"var(--font-mono)",fontSize:"11.5px",color:"var(--fg-3)"}}>Content AI schreibt Gliederung<span className="b2-typing-cursor" /></div>}
+      {n >= items.length && <p style={{fontSize:"13px",color:"var(--fg-3)",marginTop:"18px",lineHeight:1.5}}>Gliederung steht. Aus jedem Punkt macht Content AI auf Wunsch einen fertigen Absatz — in deiner hinterlegten Brand Voice, nicht im KI-Standardton.</p>}
+    </div>
+  );
+};
+
+const PanelSchreiben = () => (
+  <div className="b2-fade">
+    <div className="b2-blocks">
+      {[["type","Textblock","Einleitung · 84 Wörter","Standard",false],["image","Bild","funnel-schema.png · Alt-Text gesetzt","Standard",false],["quote","Zitat","‚Drei Mails, 4.200 € Umsatz.‘","Standard",false],["mail","E-Mail-Opt-in","Liste ‚Blog-Leser‘ · Tag ‚funnel‘","Nur bei uns",true],["layout","Funnel-CTA","Verlinkt Funnel ‚Starter-Bundle‘","Nur bei uns",true]].map(([ic,t,d,tag,acc])=>(
+        <div key={t} className={"b2-block" + (acc?" b2-block--accent":"")}>
+          <I n={ic} />
+          <div className="b2-block__t">{t}<i>{d}</i></div>
+          <div className="b2-block__tag">{tag}</div>
+        </div>
+      ))}
+    </div>
+    <p style={{fontSize:"13px",color:"var(--fg-3)",marginTop:"18px",lineHeight:1.5}}>Die letzten beiden Blöcke gibt es in keinem CMS: Sie kennen deine Listen und deine Funnels, weil sie im selben System liegen.</p>
+  </div>
+);
+
+const PanelSeo = () => (
+  <div className="b2-fade">
+    <div className="b2-serp">
+      <div className="b2-serp__u">funnelspace.de › blog › e-mail-funnel-aufbauen</div>
+      <div className="b2-serp__t">E-Mail-Funnel aufbauen: die 5 Mails, die verkaufen</div>
+      <div className="b2-serp__d">Schritt für Schritt zum automatisierten E-Mail-Funnel — inklusive Betreffzeilen, Timing und einer Vorlage, die du in 15 Minuten kopierst.</div>
+    </div>
+    <div className="b2-seo">
+      <div className="b2-ring">92</div>
+      <div className="b2-rules">
+        {["Titel 52 Zeichen · Keyword vorn","Meta-Beschreibung 148 Zeichen","Überschriften-Hierarchie sauber","Alt-Texte vollständig","Sitemap und Open Graph automatisch"].map(t=>(
+          <div key={t} className="b2-rule"><I n="circleCheck" />{t}</div>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
+const PanelLive = () => (
+  <div className="b2-fade">
+    <div className="b2-pub">
+      {[["globe","Live unter deiner Domain","funnelspace.de/blog"],["zap","Statisch ausgeliefert","0,4 s Ladezeit"],["mail","Newsletter an Segment ‚Marketing‘","3.812 Empfänger"],["send","Beitrag für LinkedIn und Instagram","geplant für Di, 9:00"],["rss","Sitemap, RSS und Ping an Google","erledigt"]].map(([ic,t,v])=>(
+        <div key={t} className="b2-pub__r"><I n={ic} />{t}<span>{v}</span></div>
+      ))}
+    </div>
+    <p style={{fontSize:"13px",color:"var(--fg-3)",marginTop:"18px",lineHeight:1.5}}>Ein Klick auf „Veröffentlichen“ löst die ganze Kette aus. Was raus soll, entscheidest du vorher per Häkchen.</p>
+  </div>
+);
+
+const PanelLead = () => (
+  <div className="b2-fade">
+    <div className="b2-contact">
+      <div className="b2-contact__h">
+        <div className="b2-avatar">JM</div>
+        <div>
+          <div className="b2-contact__n">Jana Mertens</div>
+          <div className="b2-contact__m">jana@coaching-mertens.de · Quelle: Blog</div>
+        </div>
+      </div>
+      <div className="b2-tags">
+        <span className="b2-chip">artikel: e-mail-funnel</span>
+        <span className="b2-chip">interesse: automation</span>
+        <span className="b2-chip b2-chip--lime">Lead-Score 78</span>
+      </div>
+      <div className="b2-tl">
+        {[["Artikel gelesen (6:12 Min.)","Di 09:41",false],["Opt-in ‚Content-Plan‘ ausgefüllt","Di 09:47",false],["Sequenz ‚Funnel-Basics‘ gestartet","Di 09:47",false],["Funnel ‚Starter-Bundle‘ gekauft · 297 €","Fr 14:02",true]].map(([t,time,key])=>(
+          <div key={t} className={"b2-tl__i" + (key?" key":"")}><span className="b2-tl__d" />{t}<span className="b2-tl__t">{time}</span></div>
+        ))}
+      </div>
+    </div>
+    <p style={{fontSize:"13px",color:"var(--fg-3)",marginTop:"18px",lineHeight:1.5}}>Am Ende steht kein Seitenaufruf in einer Statistik, sondern ein Kontakt mit Kaufhistorie — und du weißt, welcher Artikel ihn gebracht hat.</p>
+  </div>
+);
+
+const PanelVoice = () => {
+  const [on, setOn] = useState(false);
+  useEffect(() => { const t = setTimeout(()=>setOn(true), 500); return ()=>clearTimeout(t); }, []);
+  return (
+    <div className="b2-fade">
+      <div className="b2-voice">
+        <div className="b2-voice__card">
+          <div className="b2-voice__t">Tonalität · gelernt aus 24 deiner Artikel</div>
+          {[["sachlich","persönlich",78],["knapp","ausführlich",38],["neutral","meinungsstark",66]].map(([a,b,v])=>(
+            <div key={a} className="b2-dial"><span>{a}</span><div className="b2-dial__track"><i style={{left:(on?v:50)+"%"}} /></div><span>{b}</span></div>
+          ))}
+        </div>
+        <div className="b2-voice__card">
+          <div className="b2-voice__t">Regeln deiner Marke</div>
+          <div className="b2-words">
+            {["immer „du“","kurze Sätze","Beispiel vor Theorie","Zahlen statt Adjektive"].map(w=><span key={w} className="b2-word">{w}</span>)}
+            {["revolutionär","Game-Changer","Sie/Ihnen"].map(w=><span key={w} className="b2-word b2-word--no">{w}</span>)}
+          </div>
+        </div>
+        <div className="b2-ba">
+          <div className="b2-ba__c"><div className="b2-ba__l">Generische KI</div><p>Nutzen Sie unsere revolutionäre Lösung, um Ihr Potenzial voll auszuschöpfen.</p></div>
+          <div className={"b2-ba__c" + (on?" on":"")}><div className="b2-ba__l">Mit deiner Brand Voice</div><p>Fünf Mails, ein Verkauf. So baust du deinen Funnel — in 15 Minuten, mit Vorlage.</p></div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const PanelAsk = () => {
+  const steps = [["search","Thema gegen deine Keyword-Lücken geprüft","0,8 s"],["sparkles","Entwurf in deiner Brand Voice geschrieben","12 s"],["check","SEO-Titel, Meta und interne Links gesetzt","3 s"],["mail","Opt-in-Block mit Liste ‚Blog-Leser‘ eingefügt","1 s"],["send","Newsletter und Social-Posts terminiert","2 s"],["user","Zur Freigabe an dich gelegt","wartet"]];
+  const [n, setN] = useState(0);
+  useEffect(() => { setN(0); const t = setInterval(()=>setN(v=>v<steps.length?v+1:v), 620); return ()=>clearInterval(t); }, []);
+  return (
+    <div className="b2-fade">
+      <div className="b2-ask">
+        <div className="b2-ask__bar"><I n="zap" /><div className="b2-ask__q">„Schreib mir einen Artikel zu ‚E-Mail-Funnel aufbauen‘, verlinke das Starter-Bundle und plan den Newsletter für Dienstag.“</div></div>
+        {steps.map(([ic,t,v],k)=>(
+          <div key={t} className={"b2-ask__do" + (k<n?"":" wait")}><I n={k<n?"circleCheck":ic} />{t}<span>{k<n?v:"…"}</span></div>
+        ))}
+      </div>
+      <p style={{fontSize:"13px",color:"var(--fg-3)",marginTop:"18px",lineHeight:1.5}}>Ask AI kennt deine Keywords, deine Brand Voice, deine Listen und deine Funnels. Du sagst, was passieren soll — freigeben tust immer noch du.</p>
+    </div>
+  );
+};
+
+const STAGES = [
+  {id:"idee", n:"01", l:"Thema finden", d:"SEO-Lücken aus deinen eigenen Daten.", icon:"search", meta:"Themen-Radar", C:PanelIdee},
+  {id:"voice", n:"02", l:"Brand Voice laden", d:"Deine Stimme als Profil hinterlegt.", icon:"user", meta:"Brand Voice", C:PanelVoice},
+  {id:"entwurf", n:"03", l:"Content AI schreibt", d:"Gliederung und erster Text in deinem Ton.", icon:"sparkles", meta:"Content AI", C:PanelEntwurf},
+  {id:"blocks", n:"04", l:"Artikel bauen", d:"Blöcke, die deine Funnels kennen.", icon:"layout", meta:"Block-Editor", C:PanelSchreiben},
+  {id:"seo", n:"05", l:"SEO prüfen", d:"Live-Vorschau statt Plugin-Zoo.", icon:"check", meta:"SEO-Check", C:PanelSeo},
+  {id:"ask", n:"06", l:"Ask AI übernimmt", d:"Ein Satz, und die Kette läuft allein.", icon:"zap", meta:"Ask AI", C:PanelAsk},
+  {id:"lead", n:"07", l:"Leser wird Kunde", d:"Kontakt, Tag, Sequenz, Verkauf.", icon:"user", meta:"CRM-Kontakt", C:PanelLead},
+];
+const DUR = 6200;
+
+const Bench = () => {
+  const [i, setI] = useState(0);
+  const [p, setP] = useState(0);
+  const [play, setPlay] = useState(true);
+  useEffect(() => {
+    if (!play) return;
+    setP(0);
+    const t0 = Date.now();
+    const t = setInterval(() => {
+      const v = (Date.now() - t0) / DUR;
+      if (v >= 1) { setI(x => (x + 1) % STAGES.length); setP(0); }
+      else setP(v * 100);
+    }, 80);
+    return () => clearInterval(t);
+  }, [i, play]);
+  const S = STAGES[i];
+  return (
+    <div className="b2-bench">
+      <div className="b2-rail">
+        <div className="b2-rail__t">Ein Artikel, sieben Schritte</div>
+        {STAGES.map((s, k) => (
+          <button key={s.id} className={"b2-step" + (k===i?" on":"")} onClick={()=>{setI(k);setP(0);}}>
+            <span className="b2-step__n">{s.n}</span>
+            <span>
+              <span className="b2-step__l">{s.l}</span>
+              <span className="b2-step__d">{s.d}</span>
+            </span>
+            <span className="b2-step__bar"><i style={{width: (play?p:0) + "%"}} /></span>
+          </button>
+        ))}
+        <div className="b2-rail__foot">
+          <button onClick={()=>setPlay(v=>!v)}>{play ? "Pause" : "Abspielen"}</button>
+          <span style={{fontFamily:"var(--font-mono)",fontSize:"10.5px",color:"var(--fg-3)"}}>oder Schritt anklicken</span>
+        </div>
+      </div>
+      <div className="b2-panel">
+        <div className="b2-panel__head"><I n={S.icon} /><b>{S.meta}</b><span>Schritt {S.n} / 07</span></div>
+        <S.C key={S.id} />
+      </div>
+    </div>
+  );
+};
+
+const App = () => (
+  <>
+    <Nav />
+    <header className="b2-hero">
+      <div className="b2-hero__inner">
+        <div>
+          <span className="b2-kicker">Feature · Blog</span>
+          <h1>Ein Blog, der bei Google rankt — und <em>in deiner Stimme</em> schreibt.</h1>
+          <p className="b2-lead">SEO, Content AI und deine hinterlegte Brand Voice arbeiten im selben Tool. Über Ask AI läuft die ganze Kette automatisch: vom Keyword über den Entwurf bis zum Kontakt im CRM. Du gibst frei, mehr nicht.</p>
+          <div className="b2-hero__cta">
+            <a href="#signup" className="btn btn--primary btn-lg">14 Tage kostenlos testen</a>
+            <a href="funktionen.html" className="btn btn--ghost btn-lg">Alle Funktionen</a>
+          </div>
+          <p className="b2-hero__note">Inklusive in jedem Tarif · Import aus WordPress in 10 Minuten</p>
+        </div>
+        <div className="b2-chain">
+          <div className="b2-chain__t">Was Ask AI für dich übernimmt</div>
+          {[["01","Keyword-Lücke finden","SEO"],["02","Entwurf in deinem Ton","Content AI"],["03","Optimieren und einbetten","Blöcke"],["04","Verteilen und terminieren","Kanäle"],["05","Leser wird Kontakt","CRM"]].map(([n,l,v])=>(
+            <div key={n} className="b2-chain__row"><span className="b2-chain__n">{n}</span><span className="b2-chain__l">{l}</span><span className="b2-chain__v">{v}</span></div>
+          ))}
+        </div>
+      </div>
+    </header>
+
+    <Bench />
+
+    <section className="b2-sec">
+      <div className="b2-wrap">
+        <span className="b2-eyebrow">Der Unterschied</span>
+        <h2 className="b2-h2">Ein Blog neben deinem Business — oder einer, der mitdenkt.</h2>
+        <div className="b2-vs">
+          <div className="b2-card b2-card--old">
+            <h3>WordPress + Plugin-Stack</h3>
+            <ul>
+              {["Eigenes Login für CMS, SEO-Tool und KI-Schreibhilfe","Die KI kennt deine Marke nicht — jeder Text klingt nach Baukasten","SEO-Plugin, Cache-Plugin, Formular-Plugin — jedes mit eigener Rechnung","Leads landen in einem Formular-Tool und müssen exportiert werden","Niemand weiß, welcher Artikel den Verkauf gebracht hat"].map(t=>(
+                <li key={t}><I n="x" />{t}</li>
+              ))}
+            </ul>
+            <div className="b2-card__cost">ca. 40–120 € / Monat · 4 Logins · KI ohne deine Stimme</div>
+          </div>
+          <div className="b2-card b2-card--new">
+            <h3>Blog in Funnelspace</h3>
+            <ul>
+              {["Ein Login für Artikel, SEO, KI, Kontakte und Funnels","Content AI schreibt in deiner hinterlegten Brand Voice","Keyword-Radar und SEO-Check direkt im Editor","Opt-in schreibt direkt ins CRM — mit Artikel-Tag","Ask AI automatisiert die ganze Kette auf Zuruf"].map(t=>(
+                <li key={t}><I n="check" />{t}</li>
+              ))}
+            </ul>
+            <div className="b2-card__cost">0 € extra · 1 Login · KI, die klingt wie du</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section className="b2-sec b2-sec--white">
+      <div className="b2-wrap">
+        <div className="b2-row">
+          <div className="b2-row__txt">
+            <span className="b2-eyebrow">Schreiben</span>
+            <h3>Blöcke, die mehr können als Text</h3>
+            <p>Text, Bild, Zitat, Video, Code — und dazu Opt-in- und Funnel-Blöcke, die es nur gibt, weil dein Blog im selben System wohnt wie deine Kontakte.</p>
+            <ul>
+              {["Versionen und Entwürfe, jederzeit zurückholbar","Terminiert veröffentlichen","Mehrere Autoren mit Rollen und Freigaben","Alles responsiv im Design deiner Marke"].map(t=><li key={t}><I n="circleCheck" />{t}</li>)}
+            </ul>
+          </div>
+          <div className="b2-illu"><img src="assets/illustrations/blog.png" alt="Isometrische Illustration: Blog-Editor" /></div>
+        </div>
+        <div className="b2-row">
+          <div className="b2-row__txt">
+            <span className="b2-eyebrow">Gefunden werden</span>
+            <h3>SEO ist eingebaut, nicht zugekauft</h3>
+            <p>Der Themen-Radar zeigt dir, wonach deine Zielgruppe wirklich sucht — aus Suchvolumen, deinen bestehenden Rankings und den Fragen, die in deinem Posteingang landen. Beim Schreiben prüft der SEO-Check live mit, und die Google-Vorschau aktualisiert sich, während du tippst.</p>
+            <ul>
+              {["Keyword-Recherche und Lückenanalyse im Editor","Titel, Slug, Meta, Open Graph und Sitemap automatisch","Strukturierte Daten für Artikel und FAQ","Automatische interne Verlinkung zu passenden Artikeln","301-Redirects beim Umzug alter URLs"].map(t=><li key={t}><I n="circleCheck" />{t}</li>)}
+            </ul>
+          </div>
+          <div className="b2-illu"><img src="assets/illustrations/seo.png" alt="Isometrische Illustration: SEO" /></div>
+        </div>
+        <div className="b2-row b2-row--flip">
+          <div className="b2-row__txt">
+            <span className="b2-eyebrow">Brand Voice</span>
+            <h3>Hinterlege deine Stimme einmal — die KI hält sich daran</h3>
+            <p>Lade ein paar Texte hoch oder lass Funnelspace deine bestehenden Artikel lesen. Daraus entsteht ein Stimmprofil: Tonalität, Satzlänge, Lieblingswörter und die Begriffe, die bei dir nie vorkommen. Jeder KI-Text folgt diesem Profil — auch Newsletter und Social-Posts.</p>
+            <ul>
+              {["Stimmprofil aus deinen eigenen Texten gelernt","Verbotene Wörter und Pflichtbegriffe definieren","Mehrere Profile für Marken, Reihen oder Autoren","Gilt für Blog, E-Mail und Funnel-Texte gleichermaßen"].map(t=><li key={t}><I n="circleCheck" />{t}</li>)}
+            </ul>
+          </div>
+          <div className="b2-illu"><img src="assets/illustrations/blog.png" alt="Isometrische Illustration: Blog-Editor" /></div>
+        </div>
+        <div className="b2-row">
+          <div className="b2-row__txt">
+            <span className="b2-eyebrow">Content AI</span>
+            <h3>Vom Stichpunkt zum fertigen Artikel</h3>
+            <p>Content AI baut aus dem gewählten Keyword eine Gliederung, schreibt Absatz für Absatz und schlägt Betreffzeilen, Meta-Beschreibung und Social-Text gleich mit vor. Du bleibst im Editor: umschreiben, kürzen, zuspitzen — markieren genügt.</p>
+            <ul>
+              {["Gliederung, Entwurf und Zusammenfassung auf Knopfdruck","Umschreiben, kürzen oder Beispiel ergänzen für jede Markierung","Bildvorschläge samt Alt-Text","Aus einem Artikel Newsletter und Posts ableiten"].map(t=><li key={t}><I n="circleCheck" />{t}</li>)}
+            </ul>
+          </div>
+          <div className="b2-illu"><img src="assets/illustrations/voice-ai.png" alt="Isometrische Illustration: KI" /></div>
+        </div>
+        <div className="b2-row b2-row--flip">
+          <div className="b2-row__txt">
+            <span className="b2-eyebrow">Ask AI</span>
+            <h3>Sag, was passieren soll. Den Rest macht das System.</h3>
+            <p>Ask AI ist die Ebene darüber: Sie kennt deine Keywords, dein Stimmprofil, deine Listen und deine Funnels — und kann sie verbinden. Ein Satz genügt, und aus Recherche, Entwurf, SEO, Opt-in-Block und Verteilung wird ein Ablauf, der ohne dich läuft. Freigeben tust du.</p>
+            <ul>
+              {["Ein Prompt statt sechs Werkzeuge","Wiederkehrende Aufträge planen: „jeden Montag ein Artikel“","Alles landet als Entwurf — Freigabe bleibt bei dir","Jeder Schritt nachvollziehbar protokolliert"].map(t=><li key={t}><I n="circleCheck" />{t}</li>)}
+            </ul>
+          </div>
+          <div className="b2-illu"><img src="assets/illustrations/automation.png" alt="Isometrische Illustration: Automation" /></div>
+        </div>
+        <div className="b2-row">
+          <div className="b2-row__txt">
+            <span className="b2-eyebrow">Verkaufen</span>
+            <h3>Jeder Artikel weiß, was er wert war</h3>
+            <p>Weil Artikel, Kontakt, E-Mail und Funnel im selben Datensatz hängen, siehst du nicht nur Aufrufe, sondern Kontakte und Umsatz pro Artikel — und weißt, welches Thema du als Nächstes schreiben solltest.</p>
+            <ul>
+              {["Umsatz-Attribution pro Artikel","Automationen starten beim Opt-in","Segmente nach gelesenen Themen","Vorlagen für wiederkehrende Formate"].map(t=><li key={t}><I n="circleCheck" />{t}</li>)}
+            </ul>
+          </div>
+          <div className="b2-illu"><img src="assets/illustrations/crm.png" alt="Isometrische Illustration: CRM" /></div>
+        </div>
+      </div>
+    </section>
+
+    <section className="b2-stats">
+      <div className="b2-stats__inner">
+        {[["0 €","Extra-Kosten für Hosting, SEO-Plugins und KI-Abos"],["1 Stimme","Ein Brand-Voice-Profil für Blog, E-Mail und Funnel-Texte"],["1 Satz","reicht Ask AI, um Recherche, Entwurf und Verteilung anzustoßen"],["10 Min.","für den Import deines bestehenden Blogs aus WordPress"]].map(([b,s])=>(
+          <div key={b} className="b2-stat"><b>{b}</b><span>{s}</span></div>
+        ))}
+      </div>
+    </section>
+
+    <section className="b2-sec">
+      <div className="b2-wrap">
+        <span className="b2-eyebrow">Häufige Fragen</span>
+        <h2 className="b2-h2">Was Coaches uns zu SEO und KI fragen</h2>
+        <div className="b2-faq">
+          {[
+            ["Woher kennt die KI meine Brand Voice?","Du legst ein Stimmprofil an: entweder aus deinen bestehenden Artikeln, die Funnelspace analysiert, oder aus ein paar Beispieltexten, die du hochlädst. Dazu kommen Regeln wie ‚immer du‘ oder verbotene Wörter. Jeder KI-Text hält sich daran — im Blog wie in E-Mails."],
+            ["Merkt man den Artikeln an, dass sie von einer KI stammen?","Nicht, wenn du sie wie einen Entwurf behandelst. Content AI liefert Struktur und ersten Text in deinem Ton; deine Beispiele, Zahlen und Meinungen machen daraus den Artikel. Veröffentlicht wird nichts ohne deine Freigabe."],
+            ["Was genau kann Ask AI automatisieren?","Recherche, Entwurf, SEO-Felder, interne Links, Opt-in- und Funnel-Blöcke, Newsletter-Versand und Social-Posts — einzeln oder als wiederkehrender Auftrag, etwa „jeden Montag ein Artikel zum Thema Funnel“. Ergebnisse landen als Entwurf zur Freigabe."],
+            ["Brauche ich trotzdem ein SEO-Tool?","Für den Alltag nicht. Keyword-Vorschläge, SEO-Check, Meta-Daten, Sitemap und strukturierte Daten sind eingebaut. Für tiefe Wettbewerbsanalysen kannst du dein bestehendes Tool weiter nutzen."],
+            ["Kann ich meinen bestehenden Blog umziehen?","Ja. Import aus WordPress oder per RSS — inklusive Bilder, Kategorien und Weiterleitungen der alten URLs, damit dein Ranking bleibt. Auf Wunsch übernimmt das unser Umzugsservice."],
+            ["Läuft der Blog auf meiner eigenen Domain?","Der Blog liegt unter deiner Domain, wahlweise als /blog oder als Subdomain. SSL richten wir automatisch ein."],
+            ["Verliere ich Rankings beim Wechsel?","Nein, wenn die URL-Struktur erhalten bleibt. Wir legen beim Import 301-Weiterleitungen an und übernehmen Meta-Daten und strukturierte Daten eins zu eins."],
+            ["Ist der Blog DSGVO-konform?","Gehostet in Deutschland, Opt-ins mit Double-Opt-in und dokumentierter Einwilligung, keine externen Tracker per Default. Deine Texte werden nicht zum Training fremder Modelle verwendet."],
+          ].map(([q,a])=>(
+            <details key={q}>
+              <summary>{q}<I n="plus" /></summary>
+              <p>{a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <CtaBand />
+    <Footer />
+  </>
+);
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

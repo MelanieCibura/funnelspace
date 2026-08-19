@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Conversation AI — Funnelspace</title>
+<meta name="description" content="Conversation AI beantwortet Nachrichten aus WhatsApp, Instagram, Website-Chat und SMS in Sekunden — qualifiziert, bucht Termine und gibt ab, wenn ein Mensch ran muss." />
+<link rel="stylesheet" href="colors_and_type.css" />
+<link rel="stylesheet" href="site.css" />
+<link rel="stylesheet" href="conversation-ai.css" />
+</head>
+<body class="ca">
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="Nav.jsx"></script>
+<script type="text/babel" src="Footer.jsx"></script>
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+const Ic = ({ d, size = 20 }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">{d}</svg>
+);
+const IChat = p => <Ic {...p} d={<path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.5 9.5 0 0 1-2.9-.4L3 21l1.6-4.4A8.2 8.2 0 0 1 3 11.5 8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5z" />} />;
+const IWa = p => <Ic {...p} d={<><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.5 9.5 0 0 1-2.9-.4L3 21l1.6-4.4A8.2 8.2 0 0 1 3 11.5 8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5z" /><path d="M8.6 9.4c0 3 2.4 5.4 5.4 5.4l.9-1.4-1.8-.8-.9.9a4 4 0 0 1-1.8-1.8l.9-.9-.8-1.8z" /></>} />;
+const IIg = p => <Ic {...p} d={<><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="3.6" /><circle cx="17" cy="7" r=".6" fill="currentColor" /></>} />;
+const IWeb = p => <Ic {...p} d={<><rect x="2" y="3" width="20" height="15" rx="2" /><line x1="2" y1="8" x2="22" y2="8" /><rect x="13.5" y="11" width="6.5" height="5" rx="1.5" /></>} />;
+const ISms = p => <Ic {...p} d={<><rect x="6" y="2" width="12" height="20" rx="3" /><line x1="10.5" y1="18.5" x2="13.5" y2="18.5" /></>} />;
+const IFb = p => <Ic {...p} d={<><path d="M20 12a8 8 0 1 0-9.25 7.9v-5.6H8.7V12h2.05v-1.6c0-2 1.2-3.1 3-3.1.87 0 1.78.15 1.78.15v1.96h-1c-.98 0-1.29.61-1.29 1.24V12h2.2l-.35 2.3h-1.85v5.6A8 8 0 0 0 20 12z" /></>} />;
+const ITt = p => <Ic {...p} d={<><path d="M14 3.2v10.9a3.6 3.6 0 1 1-3-3.55" /><path d="M14 3.2a5 5 0 0 0 5 4.6" /></>} />;
+const IMail = p => <Ic {...p} d={<><rect x="2" y="4" width="20" height="16" rx="2" /><path d="M22 7l-10 7L2 7" /></>} />;
+const ICal = p => <Ic {...p} d={<><rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></>} />;
+const IUser = p => <Ic {...p} d={<><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></>} />;
+const ITag = p => <Ic {...p} d={<><path d="M20.6 13.4 12 22l-9-9V3h10l7.6 7.6a2 2 0 0 1 0 2.8z" /><circle cx="7.5" cy="7.5" r="1.2" /></>} />;
+const ICheck = p => <Ic {...p} d={<polyline points="20 6 9 17 4 12" />} />;
+const IHand = p => <Ic {...p} d={<><path d="M18 11V6a2 2 0 0 0-4 0" /><path d="M14 10V4a2 2 0 0 0-4 0v6" /><path d="M10 10.5V6a2 2 0 0 0-4 0v9a6 6 0 0 0 12 0v-2a2 2 0 0 0-4 0" /></>} />;
+const IDoc = p => <Ic {...p} d={<><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /></>} />;
+const IGlobe = p => <Ic {...p} d={<><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z" /></>} />;
+const IBook = p => <Ic {...p} d={<><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" /></>} />;
+const ICart = p => <Ic {...p} d={<><circle cx="9" cy="20" r="1.4" /><circle cx="18" cy="20" r="1.4" /><path d="M2 3h2.5l2.2 11h11.6l2.2-8H6" /></>} />;
+const IHistory = p => <Ic {...p} d={<><path d="M3 12a9 9 0 1 0 3-6.7" /><polyline points="3 4 3 9 8 9" /><path d="M12 8v4.5l3.5 2" /></>} />;
+const IArrow = () => <Ic size={15} d={<><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></>} />;
+const IAlert = p => <Ic {...p} d={<><circle cx="12" cy="12" r="9" /><line x1="12" y1="8" x2="12" y2="13" /><line x1="12" y1="16.5" x2="12" y2="16.6" /></>} />;
+const IEye = p => <Ic {...p} d={<><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" /><circle cx="12" cy="12" r="2.8" /></>} />;
+
+/* ══ 1. Der Posteingang ══ */
+const THREADS = [
+  {
+    id: 'wa', ch: 'WhatsApp', icon: IWa, who: 'Sandra Metz', sub: '+49 151 2244 8890 · WhatsApp Business', t: '18:42', ini: 'SM',
+    prev: 'Hey! Gibt es das Programm auch in Raten?',
+    msgs: [
+      { s: 'them', x: 'Hey! Gibt es das Programm auch in Raten?' },
+      { s: 'ai', x: 'Hi Sandra, ja — 3 oder 6 Raten sind möglich, ohne Zuschlag. Der Gesamtpreis bleibt bei 2.400 €.' },
+      { s: 'them', x: 'Und wann startet die nächste Gruppe?' },
+      { s: 'ai', x: 'Am 6. Oktober, Einstieg geht bis zum 29. September. Soll ich dir 20 Minuten mit Nadine blocken, damit du vorher alles klären kannst?' },
+      { s: 'them', x: 'Ja gern, am Nachmittag' },
+      { s: 'ai', x: 'Donnerstag 15:30 ist frei — ich habe dir den Termin reserviert und die Bestätigung geschickt. Bis Donnerstag!' },
+    ],
+    outs: [{ i: <ICal />, x: 'Termin gebucht · Do, 15:30', key: true }, { i: <ITag />, x: 'Tag „Ratenzahlung“' }, { i: <IUser />, x: 'Deal in Pipeline „Coaching“' }],
+  },
+  {
+    id: 'ig', ch: 'Instagram', icon: IIg, who: '@jules.moves', sub: 'Instagram DM · Antwort auf Story', t: '18:39', ini: 'JM',
+    prev: 'Kann ich das machen, wenn ich Vollzeit arbeite?',
+    msgs: [
+      { s: 'them', x: 'Kann ich das machen, wenn ich Vollzeit arbeite? Hab abends nur so 1–2 Stunden' },
+      { s: 'ai', x: 'Das reicht. Die Lektionen sind in 20-Minuten-Blöcke geschnitten, die Live-Calls sind immer 19 Uhr und werden aufgezeichnet.' },
+      { s: 'them', x: 'Ok, schick mir mal Infos' },
+      { s: 'ai', x: 'Mach ich — an welche Mailadresse? Dann geht der Überblick plus Beispiel-Lektion direkt raus.' },
+      { s: 'them', x: 'jules@…' },
+      { s: 'ai', x: 'Ist unterwegs. Ich melde mich in zwei Wochen nochmal, falls du bis dahin nichts entschieden hast.' },
+    ],
+    outs: [{ i: <IMail />, x: 'Info-Sequenz gestartet', key: true }, { i: <IUser />, x: 'Kontakt angelegt · Quelle Instagram' }, { i: <IHistory />, x: 'Wiedervorlage in 14 Tagen' }],
+  },
+  {
+    id: 'web', ch: 'Website-Chat', icon: IWeb, who: 'Besucherin (anonym)', sub: 'Website-Chat · /preise · 3. Besuch', t: '18:31', ini: '?',
+    prev: 'Wie unterscheidet sich das von einem Online-Kurs?',
+    msgs: [
+      { s: 'them', x: 'Wie unterscheidet sich das von einem normalen Online-Kurs?' },
+      { s: 'ai', x: 'Kurz: Es gibt wöchentliche Live-Calls, Feedback auf deine Umsetzung und eine feste Gruppe. Der Kurs ist nur der Materialteil davon.' },
+      { s: 'them', x: 'Und wenn es mir nicht passt?' },
+      { s: 'ai', x: '14 Tage Rückgaberecht, ohne Begründung. Danach läuft die Teilnahme bis zum Gruppenende.' },
+      { s: 'them', x: 'Danke, das hilft' },
+      { s: 'ai', x: 'Gern. Wenn du reinschauen willst: es gibt eine kostenlose Beispiel-Lektion — soll ich dir den Link hier reinlegen?' },
+    ],
+    outs: [{ i: <ITag />, x: 'Interesse „Gruppenprogramm“' }, { i: <IDoc />, x: 'Verlauf am Kontakt gespeichert' }],
+  },
+  {
+    id: 'sms', ch: 'SMS', icon: ISms, who: '+49 176 88 40 219', sub: 'SMS · Antwort auf Terminerinnerung', t: '18:12', ini: '#',
+    prev: 'Ich muss den Termin morgen leider verschieben.',
+    msgs: [
+      { s: 'them', x: 'Ich muss den Termin morgen leider verschieben.' },
+      { s: 'ai', x: 'Kein Problem. Freitag 11:00 oder Montag 09:30 wären frei — was passt?' },
+      { s: 'them', x: 'Montag' },
+      { s: 'ai', x: 'Verschoben auf Montag, 09:30. Alter Termin ist raus, neue Bestätigung kommt per Mail.' },
+    ],
+    outs: [{ i: <ICal />, x: 'Termin verschoben · Mo, 09:30', key: true }, { i: <IMail />, x: 'Bestätigung versendet' }],
+  },
+  {
+    id: 'tt', ch: 'TikTok', icon: ITt, who: '@lenatrainiert', sub: 'TikTok DM · Antwort auf Video „3 Fehler“', t: '18:24', ini: 'LT',
+    prev: 'Wo kann ich das buchen? Link geht bei mir nicht',
+    msgs: [
+      { s: 'them', x: 'Wo kann ich das buchen? Der Link in deinem Profil geht bei mir nicht' },
+      { s: 'ai', x: 'Danke für den Hinweis — ich schick dir den Link direkt hier: nadine-kolb.de/start' },
+      { s: 'them', x: 'Und das ist das aus dem Video mit den 3 Fehlern?' },
+      { s: 'ai', x: 'Genau das. Startpreis 2.400 €, Ratenzahlung möglich, nächste Gruppe am 6. Oktober.' },
+      { s: 'them', x: 'Nice, schau ich mir an' },
+      { s: 'ai', x: 'Mach das. Wenn Fragen aufkommen, schreib einfach hier weiter — ich bin da.' },
+    ],
+    outs: [{ i: <IUser />, x: 'Kontakt angelegt · Quelle TikTok', key: true }, { i: <ITag />, x: 'Video „3 Fehler“ zugeordnet' }, { i: <IDoc />, x: 'Link-Klick am Kontakt getrackt' }],
+  },
+  {
+    id: 'fb', ch: 'Facebook', icon: IFb, who: 'Tom Reuter', sub: 'Facebook Messenger · Bestandskunde', t: '17:58', ini: 'TR',
+    prev: 'Ich habe zweimal bezahlt und keinen Zugang.',
+    msgs: [
+      { s: 'them', x: 'Ich habe jetzt zweimal bezahlt und komme trotzdem nicht in den Mitgliederbereich. Das ist echt ärgerlich.' },
+      { s: 'ai', x: 'Das tut mir leid, Tom — da schaue ich nicht selbst rein, sondern hole Nadine dazu. Sie hat die Zahlungen im Blick und meldet sich heute noch bei dir.' },
+      { s: 'them', x: 'Ok, danke.' },
+    ],
+    outs: [{ i: <IHand />, x: 'An Nadine übergeben · Grund: Zahlung', hand: true }, { i: <IAlert />, x: 'Aufgabe „heute klären“' }],
+  },
+];
+
+const Inbox = () => {
+  const [active, setActive] = useState('wa');
+  const [n, setN] = useState(1);
+  const [done, setDone] = useState([]);
+  const [autoplay, setAutoplay] = useState(true);
+  const timers = useRef([]);
+  const th = THREADS.find(t => t.id === active);
+
+  const clearAll = () => { timers.current.forEach(clearTimeout); timers.current = []; };
+  useEffect(() => () => clearAll(), []);
+
+  useEffect(() => {
+    const el = document.getElementById('ca-inbox');
+    if (!el) return;
+    const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) setAutoplay(false); }), { threshold: 0 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    clearAll();
+    if (n >= th.msgs.length) {
+      setDone(d => d.includes(th.id) ? d : [...d, th.id]);
+      if (autoplay) {
+        const i = THREADS.findIndex(t => t.id === th.id);
+        const next = THREADS[(i + 1) % THREADS.length];
+        timers.current.push(setTimeout(() => { setActive(next.id); setN(1); }, 3400));
+      }
+      return;
+    }
+    const nx = th.msgs[n];
+    const wait = nx.s === 'ai' ? 1400 + Math.min(nx.x.length * 16, 2600) : 1100 + Math.min(nx.x.length * 10, 1400);
+    timers.current.push(setTimeout(() => setN(v => v + 1), wait));
+  }, [active, n, autoplay]);
+
+  const pick = id => { setAutoplay(false); setActive(id); setN(1); };
+  const shown = th.msgs.slice(0, n);
+  const pending = th.msgs[n];
+  const finished = n >= th.msgs.length;
+
+  return (
+    <div className="ca-inbox" id="ca-inbox">
+      <div className="ca-inbox__bar">
+        <IChat size={17} />
+        <div className="ca-inbox__t">Posteingang · alle Kanäle</div>
+        <div className="ca-inbox__st">
+          <span>Unbeantwortet <b>0</b></span>
+          <span>Ø Antwortzeit <b>4 s</b></span>
+          <span>Heute beantwortet <b>{124 + done.length}</b></span>
+        </div>
+      </div>
+      <div className="ca-inbox__body">
+        <div className="ca-list">
+          <div className="ca-list__h">Eingang · Mi, 18:42</div>
+          {THREADS.map(t => {
+            const I = t.icon;
+            const isDone = done.includes(t.id);
+            return (
+              <button key={t.id} className={`ca-th${t.id === active ? ' on' : ''}`} onClick={() => pick(t.id)}>
+                <div className="ca-th__ch"><I size={14} /></div>
+                <div>
+                  <div className="ca-th__top"><span className="ca-th__n">{t.who}</span><span className="ca-th__t">{t.t}</span></div>
+                  <div className="ca-th__p">{t.prev}</div>
+                  <div className="ca-th__f">
+                    {isDone ? <><span className="ca-th__ok"><ICheck size={11} /></span>von KI beantwortet</> : <><span className="ca-th__dot" />{t.id === active ? 'läuft' : 'wartet'}</>}
+                    <span style={{ marginLeft: 'auto' }}>{t.ch}</span>
+                  </div>
+                </div>
+              </button>
+            );
+          })}
+          <div className="ca-list__foot">Ein Posteingang für WhatsApp, Instagram, TikTok, Messenger, SMS, Website-Chat und E-Mail. Du liest mit, die KI antwortet.</div>
+        </div>
+        <div className="ca-conv">
+          <div className="ca-conv__h">
+            <div className="ca-conv__av">{th.ini}</div>
+            <div>
+              <div className="ca-conv__n">{th.who}</div>
+              <div className="ca-conv__m">{th.sub}</div>
+            </div>
+            <span className="ca-pill ca-pill--ai">Conversation AI aktiv</span>
+          </div>
+          <div className="ca-stream">
+            {shown.map((m, i) => (
+              <div key={th.id + i} className={`ca-msg ca-msg--${m.s}`}>
+                <span className="ca-msg__w">{m.s === 'ai' ? 'Conversation AI' : th.who}</span>
+                <div className="ca-msg__b">{m.x}</div>
+              </div>
+            ))}
+            {pending && (
+              <div className={`ca-msg ca-msg--${pending.s}`}>
+                <span className="ca-msg__w">{pending.s === 'ai' ? 'Conversation AI · schreibt' : `${th.who} · tippt`}</span>
+                <div className="ca-msg__b"><span className="ca-typing"><i /><i /><i /></span></div>
+              </div>
+            )}
+          </div>
+          <div className="ca-conv__foot">
+            {finished ? th.outs.map((o, i) => (
+              <span key={i} className={`ca-out${o.key ? ' ca-out--key' : ''}${o.hand ? ' ca-out--hand' : ''}`}>{o.i}{o.x}</span>
+            )) : <span className="ca-out__idle">Was aus dem Gespräch entsteht, erscheint hier ↓</span>}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Hero = () => (
+  <section className="ca-hero">
+    <div className="ca-hero__inner">
+      <div>
+        <span className="ca-kicker"><i />Conversation AI · in jedem Funnelspace-Tarif</span>
+        <h1>Deine Nachrichten beantworten sich <em>selbst</em>.</h1>
+        <p className="ca-hero__lead">WhatsApp, Instagram, TikTok, Messenger, SMS, Website-Chat: eine KI liest, antwortet in Sekunden, qualifiziert, bucht Termine — und gibt ab, sobald ein Mensch ran muss.</p>
+        <div className="ca-hero__cta">
+          <a href="#signup" className="btn btn--primary btn-lg">14 Tage kostenlos testen</a>
+          <a href="#demo" className="btn btn--ghost btn-lg">Selbst schreiben</a>
+        </div>
+        <div className="ca-hero__meta">
+          <div className="ca-mrow"><b>4 s</b><span>bis zur ersten Antwort — auch um 23:40 Uhr</span></div>
+          <div className="ca-mrow"><b>7</b><span>Kanäle in einem Posteingang, ein Gesprächsverlauf pro Kontakt</span></div>
+          <div className="ca-mrow"><b>EU</b><span>Verarbeitung, AV-Vertrag im Account, Verläufe löschbar</span></div>
+        </div>
+      </div>
+      <Inbox />
+    </div>
+  </section>
+);
+
+/* ══ 2. Kanal-Übersetzer ══ */
+const CHANNELS = [
+  { k: 'wa', n: 'WhatsApp', icon: IWa, txt: 'Ja, Raten gehen — 3 oder 6, ohne Zuschlag 🙂\nNächster Start: 6. Oktober.\nSoll ich dir 20 Min. mit Nadine blocken?', specs: [['Länge', '3 Zeilen'], ['Anrede', 'du, ohne Grußformel'], ['Emoji', 'eins, maximal'], ['Antwortzeit', '< 5 Sekunden'], ['Sprache', 'Sprache des Kontakts'], ['Signatur', 'keine']] },
+  { k: 'ig', n: 'Instagram DM', icon: IIg, txt: 'Klar, geht in Raten (3 oder 6).\nNächste Gruppe startet am 6.10.\nWillst du kurz mit Nadine sprechen?', specs: [['Länge', '2–3 Zeilen'], ['Anrede', 'direkt, ohne Name'], ['Emoji', 'nein'], ['Antwortzeit', '< 5 Sekunden'], ['Links', 'erst auf Nachfrage'], ['Signatur', 'keine']] },
+  { k: 'tt', n: 'TikTok DM', icon: ITt, txt: 'Ja — 3 oder 6 Raten, ohne Aufschlag.\nNächste Gruppe: 6.10.\nLink schick ich dir hier rein, wenn du willst.', specs: [['Länge', '2–3 Zeilen'], ['Anrede', 'direkt, sehr locker'], ['Emoji', 'nein'], ['Antwortzeit', '< 5 Sekunden'], ['Links', 'nur im Chat'], ['Signatur', 'keine']] },
+  { k: 'fb', n: 'Messenger', icon: IFb, txt: 'Ja, in 3 oder 6 Raten — ohne Aufschlag.\nDie nächste Gruppe startet am 6. Oktober, Einstieg bis 29.9.\nSoll ich dir einen Termin mit Nadine reservieren?', specs: [['Länge', '3 Zeilen'], ['Anrede', 'du, mit Namen'], ['Emoji', 'nein'], ['Antwortzeit', '< 5 Sekunden'], ['Links', 'Terminlink erlaubt'], ['Signatur', 'keine']] },
+  { k: 'web', n: 'Website-Chat', icon: IWeb, txt: 'Ja, du kannst in 3 oder 6 Raten zahlen — ohne Aufschlag. Die nächste Gruppe startet am 6. Oktober, Einstieg bis 29. September.\n\nWenn du magst, reserviere ich dir direkt einen Termin mit Nadine.', specs: [['Länge', '2 Absätze'], ['Anrede', 'du, sachlich'], ['Emoji', 'nein'], ['Antwortzeit', 'sofort'], ['Links', 'Preise, Termin'], ['Signatur', 'keine']] },
+  { k: 'sms', n: 'SMS', icon: ISms, txt: 'Ratenzahlung: ja, 3 oder 6 Raten. Start 6.10. Termin mit Nadine? Antworte mit JA.', specs: [['Länge', '1 Segment (160)'], ['Anrede', 'keine'], ['Emoji', 'nein'], ['Antwortzeit', '< 10 Sekunden'], ['Links', 'nur gekürzt'], ['Signatur', 'keine']] },
+  { k: 'mail', n: 'E-Mail', icon: IMail, txt: 'Hallo Sandra,\n\nja — das Programm lässt sich in 3 oder 6 Raten zahlen, ohne Zuschlag. Die nächste Gruppe startet am 6. Oktober, der Einstieg ist bis zum 29. September möglich.\n\nWenn du vorab sprechen willst: hier sind Nadines freie Zeiten.\n\nViele Grüße\nTeam Nadine Kolb', specs: [['Länge', '4 Absätze'], ['Anrede', 'mit Namen'], ['Emoji', 'nein'], ['Antwortzeit', '< 2 Minuten'], ['Links', 'Terminlink'], ['Signatur', 'Team-Signatur']] },
+];
+
+const Translator = () => {
+  const [k, setK] = useState('wa');
+  const c = CHANNELS.find(x => x.k === k);
+  const I = c.icon;
+  return (
+    <section className="ca-sec ca-sec--white">
+      <div className="ca-wrap">
+        <div className="ca-head">
+          <div>
+            <span className="ca-tag">Ein Gehirn, sieben Tonlagen</span>
+            <h2>Dieselbe Antwort. <em>Anders</em> geschrieben.</h2>
+          </div>
+          <p>Eine WhatsApp-Nachricht ist keine E-Mail. Die KI kennt den Unterschied: Länge, Anrede, Emoji, Links — pro Kanal, ohne dass du sechs Vorlagen pflegst.</p>
+        </div>
+        <div className="ca-tr">
+          <div>
+            <div className="ca-tr__ask">
+              <div className="ca-tr__l">Anfrage · gleicher Wortlaut</div>
+              <p className="ca-tr__q">„Gibt es das Programm auch in Raten? Und wann startet die nächste Gruppe?“</p>
+            </div>
+            <div className="ca-chs">
+              {CHANNELS.map(x => { const X = x.icon; return (
+                <button key={x.k} className={`ca-ch${x.k === k ? ' on' : ''}`} onClick={() => setK(x.k)}><X size={15} />{x.n}</button>
+              ); })}
+            </div>
+            <p className="ca-tr__note">Der Inhalt kommt aus derselben Wissensquelle. Nur die Form richtet sich nach dem Kanal — und nach den Regeln, die du einmal festlegst.</p>
+          </div>
+          <div className="ca-tr__out">
+            <div className="ca-tr__hd"><I size={15} />Antwort auf {c.n}</div>
+            <div className="ca-tr__bub">{c.txt}</div>
+            <div className="ca-tr__specs">
+              {c.specs.map(([a, b]) => (
+                <div key={a} className="ca-spec"><div className="ca-spec__k">{a}</div><div className="ca-spec__v">{b}</div></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/* ══ 3. Autonomie ══ */
+const LEVELS = [
+  { n: 'Stufe 1', t: 'Mitlesen', d: 'KI schweigt, sortiert nur', fill: 25,
+    ai: ['Fasst jeden neuen Verlauf in drei Sätzen zusammen', 'Erkennt Absicht: Frage, Termin, Reklamation, Spam', 'Setzt Tags und priorisiert den Posteingang'],
+    you: ['Schreibst jede Antwort selbst', 'Siehst auf einen Blick, was dringend ist', 'Gute erste Woche, um die KI zu beobachten'] },
+  { n: 'Stufe 2', t: 'Vorschlagen', d: 'KI schreibt, du gibst frei', fill: 50,
+    ai: ['Formuliert die Antwort fertig im Kanal-Ton', 'Zeigt die Quelle, aus der sie die Info hat', 'Lernt aus deinen Korrekturen'],
+    you: ['Ein Klick: senden, ändern oder verwerfen', 'Antwortzeit sinkt, Kontrolle bleibt bei dir', 'Empfohlen für Preis- und Vertragsthemen'] },
+  { n: 'Stufe 3', t: 'Antworten', d: 'KI antwortet, Termine mit Freigabe', fill: 75,
+    ai: ['Beantwortet Fragen aus der Wissensdatenbank selbst', 'Qualifiziert mit deinen drei Fragen', 'Schlägt Termine vor und hält Slots kurz frei'],
+    you: ['Bestätigst Termine und Angebote', 'Wirst nur bei neuen Themen gefragt', 'Der Alltagsmodus der meisten Accounts'] },
+  { n: 'Stufe 4', t: 'Abschließen', d: 'KI führt das Gespräch zu Ende', fill: 100,
+    ai: ['Bucht Termine direkt im Kalender', 'Verschiebt, storniert, hakt nach dem No-Show nach', 'Startet Sequenzen und legt Deals an'],
+    you: ['Liest mit, greifst jederzeit ein', 'Definierst harte Grenzen (Preis, Rabatt, Recht)', 'Für Terminierung und Support-Standardfälle'] },
+];
+
+const Autonomy = () => {
+  const [i, setI] = useState(2);
+  const l = LEVELS[i];
+  return (
+    <section className="ca-sec">
+      <div className="ca-wrap">
+        <div className="ca-head">
+          <div>
+            <span className="ca-tag">Du bestimmst, wie weit sie geht</span>
+            <h2>Von mitlesen bis <em>abschließen</em> — in vier Stufen.</h2>
+          </div>
+          <p>Die meisten starten auf Stufe 2 und schalten nach zwei Wochen hoch. Umschalten geht jederzeit, pro Kanal und pro Thema — nicht als Alles-oder-nichts.</p>
+        </div>
+        <div className="ca-auto">
+          <div className="ca-track">
+            {LEVELS.map((x, k) => (
+              <button key={x.n} className={`ca-lvl${k === i ? ' on' : ''}`} onClick={() => setI(k)}>
+                <div className="ca-lvl__n">{x.n}</div>
+                <div className="ca-lvl__t">{x.t}</div>
+                <div className="ca-lvl__d">{x.d}</div>
+                <div className="ca-lvl__bar"><i style={{ width: `${x.fill}%` }} /></div>
+              </button>
+            ))}
+          </div>
+          <div className="ca-panes">
+            <div className="ca-pane ca-pane--ink">
+              <div className="ca-pane__l">Das macht die KI</div>
+              <h3>{l.t}</h3>
+              <ul>{l.ai.map(x => <li key={x}><ICheck size={16} />{x}</li>)}</ul>
+            </div>
+            <div className="ca-pane">
+              <div className="ca-pane__l">Das bleibt bei dir</div>
+              <h3>Deine Rolle auf {l.n}</h3>
+              <ul>{l.you.map(x => <li key={x}><IEye size={16} />{x}</li>)}</ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/* ══ 4. Wissen ══ */
+const KNOW = [
+  { i: <IGlobe />, h: 'Deine Website', p: 'Domain eintragen, die KI liest Seiten, Preise und FAQ ein und aktualisiert sich bei Änderungen.', c: 'nadine-kolb.de · 41 Seiten' },
+  { i: <IBook />, h: 'Dokumente & FAQ', p: 'PDFs, Onboarding-Notizen, Einwand-Antworten. Text reinkopieren reicht, kein Format-Zwang.', c: '12 Dokumente · 3.480 Absätze' },
+  { i: <ICart />, h: 'Produkte & Termine', p: 'Preise, Kontingente, Kalenderverfügbarkeit kommen live aus Funnelspace — nie aus einer alten Kopie.', c: 'Sync: laufend' },
+  { i: <IHistory />, h: 'Frühere Gespräche', p: 'Sie kennt den Verlauf des Kontakts: Kauf, letzter Termin, offene Frage von vorletzter Woche.', c: 'CRM-Verlauf · pro Kontakt' },
+];
+
+const Knowledge = () => (
+  <section className="ca-sec ca-sec--white">
+    <div className="ca-wrap">
+      <div className="ca-head">
+        <div>
+          <span className="ca-tag">Woher die Antworten kommen</span>
+          <h2>Sie weiß, was <em>bei dir</em> gilt.</h2>
+        </div>
+        <p>Kein allgemeines Weltwissen im Kundengespräch. Die KI antwortet ausschließlich aus deinen Quellen — und sagt es, wenn eine Antwort dort nicht steht.</p>
+      </div>
+      <div className="ca-know">
+        {KNOW.map(k => (
+          <article key={k.h} className="ca-know__c">
+            <div className="ca-know__i">{k.i}</div>
+            <h3>{k.h}</h3>
+            <p>{k.p}</p>
+            <code>{k.c}</code>
+          </article>
+        ))}
+      </div>
+      <div className="ca-nokn">
+        <div>
+          <h4>Und wenn sie es nicht weiß?</h4>
+          <p>Dann erfindet sie nichts. Sie sagt es, hält das Gespräch am Laufen und legt die Lücke bei dir als Aufgabe an.</p>
+        </div>
+        <div>
+          <div className="ca-tr__l">Standardsatz bei fehlender Info</div>
+          <q>Das steht bei mir nicht sauber drin — ich will dir nichts Falsches sagen. Nadine antwortet dir heute noch, oder wir klären es direkt in 20 Minuten am Telefon.</q>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+/* ══ 5. Danach: CRM ══ */
+const ROWS = [
+  ['Kontakt', <>Sandra Metz · <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12.5 }}>+49 151 2244 8890</span></>],
+  ['Quelle', 'WhatsApp · Conversation AI · Kampagne „Story Okt“'],
+  ['Tags', <div className="ca-tags"><span className="ca-tagx ca-tagx--lime">Warm</span><span className="ca-tagx">Ratenzahlung</span><span className="ca-tagx">Gruppe Okt</span></div>],
+  ['Deal', 'Coaching-Programm · 2.400 € · Stufe „Termin vereinbart“'],
+  ['Termin', 'Do, 15:30 · 20 Min. Erstgespräch (aus Kalender gebucht)'],
+  ['Nächster Schritt', 'Erinnerung Mi 18:00 · Nachfass bei No-Show'],
+  ['Verlauf', '6 Nachrichten · Zusammenfassung in 3 Sätzen · Volltext'],
+];
+
+const After = () => (
+  <section className="ca-sec">
+    <div className="ca-wrap">
+      <div className="ca-head">
+        <div>
+          <span className="ca-tag">Nach dem Gespräch</span>
+          <h2>Das Gespräch endet. Der <em>Datensatz</em> steht.</h2>
+        </div>
+        <p>Conversation AI sitzt auf derselben Datenbank wie CRM, Kalender und E-Mail. Nichts muss übertragen werden — der Kontakt ist nach dem letzten „Danke“ fertig gepflegt.</p>
+      </div>
+      <div className="ca-after">
+        <div className="ca-card">
+          <div className="ca-card__h">
+            <div className="ca-conv__av">SM</div>
+            <div>
+              <div className="ca-card__n">Sandra Metz</div>
+              <div className="ca-card__s">Kontakt angelegt Mi 18:43 · von Conversation AI</div>
+            </div>
+          </div>
+          <div className="ca-rows">
+            {ROWS.map(([k, v]) => (
+              <div key={k} className="ca-row"><div className="ca-row__k">{k}</div><div className="ca-row__v">{v}</div></div>
+            ))}
+          </div>
+        </div>
+        <div>
+          <p style={{ fontSize: 17, lineHeight: 1.6, color: 'var(--fg-2)' }}>Was in anderen Setups drei Tools und zwei Copy-Paste-Schritte braucht, passiert hier als Nebenwirkung des Gesprächs:</p>
+          <div className="ca-links">
+            <a className="ca-link" href="crm.html"><IUser size={18} /><b>CRM</b><span>Kontakt, Tags, Pipeline <IArrow /></span></a>
+            <a className="ca-link" href="funktionen.html"><ICal size={18} /><b>Kalender</b><span>echte freie Slots <IArrow /></span></a>
+            <a className="ca-link" href="email-marketing.html"><IMail size={18} /><b>E-Mail</b><span>Bestätigung, Erinnerung, Nachfass <IArrow /></span></a>
+            <a className="ca-link" href="voice-ai.html"><IChat size={18} /><b>Voice AI</b><span>wenn lieber telefoniert wird <IArrow /></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+/* ══ 6. Setup ══ */
+const STEPS = [
+  { n: 'Schritt 01', h: 'Kanäle verbinden', p: 'WhatsApp Business, Instagram, TikTok, Facebook-Seite, SMS-Nummer, Website-Chat — jeweils einmal verknüpfen. Der Website-Chat ist ein Snippet.', t: '≈ 15 Minuten' },
+  { n: 'Schritt 02', h: 'Wissen und Ton hinterlegen', p: 'Domain einlesen lassen, drei Qualifizierungsfragen festlegen, Tonalität wählen. Im Klartext, kein Entscheidungsbaum.', t: '≈ 30 Minuten' },
+  { n: 'Schritt 03', h: 'Auf Stufe 2 starten', p: 'Zwei Wochen Vorschläge freigeben, Korrekturen fließen zurück. Danach hochschalten — pro Kanal, wenn du willst.', t: '≈ 5 Minuten täglich' },
+];
+
+const Setup = () => (
+  <section className="ca-sec ca-sec--white" id="setup">
+    <div className="ca-wrap">
+      <div className="ca-head">
+        <div>
+          <span className="ca-tag">Einrichtung</span>
+          <h2>Heute verbinden, morgen <em>antwortet sie</em>.</h2>
+        </div>
+        <p>Keine Entwickler:in, kein Chatbot-Baum, keine Zapier-Kette. Du beschreibst dein Geschäft, die KI führt das Gespräch.</p>
+      </div>
+      <div className="ca-setup">
+        <div className="ca-steps">
+          {STEPS.map(s => (
+            <div key={s.n} className="ca-step">
+              <div className="ca-step__n">{s.n}</div>
+              <h3>{s.h}</h3>
+              <p>{s.p}</p>
+              <span className="ca-step__t">{s.t}</span>
+            </div>
+          ))}
+        </div>
+        <div className="ca-art"><img src="assets/email.png" alt="Isometrische Illustration: Nachrichten und Automation in Funnelspace" /></div>
+      </div>
+    </div>
+  </section>
+);
+
+/* ══ 7. FAQ ══ */
+const FAQS = [
+  { q: 'Merken Kontakte, dass sie mit einer KI schreiben?', a: 'Die Antworten klingen wie geschrieben, nicht wie ein Bot-Menü — und trotzdem steht der Hinweis standardmäßig in der ersten Antwort eines neuen Verlaufs. Den Satz formulierst du selbst; heimlich weglassen lässt er sich nicht.' },
+  { q: 'Was passiert bei einer Beschwerde oder einem heiklen Thema?', a: 'Sie übergibt. Reklamation, Kündigung, Zahlungsprobleme, starke Emotion oder ein „Ich will mit einem Menschen sprechen“ lösen sofort die Übergabe aus: der Verlauf landet mit Zusammenfassung bei dir, mit Frist. Welche Themen dazugehören, legst du fest.' },
+  { q: 'Brauche ich ein WhatsApp-Business-Konto?', a: 'Für WhatsApp ja — die Verknüpfung läuft über einen Business-Account. Instagram, TikTok und Facebook brauchen das verbundene Business-Profil, SMS eine Nummer aus Funnelspace, der Website-Chat nur ein Snippet. [Platzhalter — Verfügbarkeit je Kanal vor Veröffentlichung bestätigen]' },
+  { q: 'Antwortet sie auch auf Englisch?', a: 'Sie antwortet in der Sprache des Kontakts. Standard ist Deutsch mit „du“; welche Sprachen erlaubt sind, stellst du pro Kanal ein.' },
+  { q: 'Wie wird Conversation AI abgerechnet?', a: '[Platzhalter — bitte bestätigen] Nachrichtenkontingent im Tarif enthalten, darüber hinaus nutzungsbasiert. WhatsApp-Gebühren des Anbieters kommen separat dazu. Konditionen vor Veröffentlichung prüfen.' },
+  { q: 'Was ist mit DSGVO und Gesprächsverläufen?', a: 'Verarbeitung in der EU, AV-Vertrag im Account. Verläufe hängen am Kontakt und lassen sich einzeln oder nach Frist löschen. Welche Felder die KI sehen darf, entscheidest du.' },
+];
+
+const FAQ = () => {
+  const [open, setOpen] = useState(0);
+  return (
+    <section className="ca-sec">
+      <div className="ca-wrap">
+        <div className="ca-head ca-head--center">
+          <span className="ca-tag">FAQ</span>
+          <h2>Die Fragen vor der ersten Antwort.</h2>
+        </div>
+        <div className="ca-faq">
+          {FAQS.map((f, i) => (
+            <div key={i} className={`ca-faq__i${open === i ? ' open' : ''}`}>
+              <button className="ca-faq__b" onClick={() => setOpen(open === i ? -1 : i)}>{f.q}<span className="ca-faq__ic">+</span></button>
+              <div className="ca-faq__a">{f.a}</div>
+            </div>
+          ))}
+        </div>
+        <p className="ca-note">Hinweis: Kontingente, Kanal-Verfügbarkeit und Preise sind Platzhalter und vor Veröffentlichung zu bestätigen.</p>
+      </div>
+    </section>
+  );
+};
+
+/* ══ 8. Final: selbst schreiben ══ */
+const REPLIES = [
+  { q: 'Was kostet das Programm?', a: '2.400 € — zahlbar in 3 oder 6 Raten, ohne Zuschlag. Soll ich dir die Aufteilung schicken?' },
+  { q: 'Habt ihr heute noch einen Termin frei?', a: 'Heute 17:15 ist frei, sonst morgen 11:00. Ich reserviere dir 17:15 für 15 Minuten — passt das?' },
+  { q: 'Ich will kündigen.', a: 'Das nehme ich nicht selbst in die Hand. Ich gebe es sofort an Nadine weiter — sie meldet sich heute noch bei dir.' },
+  { q: 'Schreibe ich mit einem Menschen?', a: 'Nein, ich bin der digitale Assistent von Nadine. Wenn du sie direkt sprechen willst, hole ich sie dazu.' },
+];
+const FALLBACK = 'Das steht bei mir nicht sauber drin — ich will dir nichts Falsches sagen. Ich gebe die Frage an Nadine weiter und melde mich mit einer klaren Antwort. Wenn es schneller gehen soll: 20 Minuten am Telefon?';
+
+const Final = () => {
+  const [msgs, setMsgs] = useState([{ s: 'ai', x: 'Hi! Ich bin der digitale Assistent von Nadine. Frag mich was zum Coaching-Programm.' }]);
+  const [typing, setTyping] = useState(false);
+  const [used, setUsed] = useState([]);
+  const [val, setVal] = useState('');
+  const timers = useRef([]);
+  useEffect(() => () => timers.current.forEach(clearTimeout), []);
+
+  const send = (q, a) => {
+    setMsgs(m => [...m.slice(-5), { s: 'you', x: q }]);
+    setTyping(true);
+    timers.current.push(setTimeout(() => { setTyping(false); setMsgs(m => [...m, { s: 'ai', x: a }]); }, 1300));
+  };
+  const submit = e => {
+    e.preventDefault();
+    const q = val.trim();
+    if (!q) return;
+    setVal('');
+    const hit = REPLIES.find(r => r.q.toLowerCase() === q.toLowerCase());
+    send(q, hit ? hit.a : FALLBACK);
+  };
+
+  return (
+    <section className="ca-sec ca-sec--ink" id="demo">
+      <div className="ca-final">
+        <div>
+          <h2>Schreib ihr <em>jetzt</em>.</h2>
+          <p>Frage wählen oder selbst tippen — die Demo ist auf ein fiktives Coaching-Business eingerichtet und reagiert genau so, wie sie es in deinem Posteingang täte.</p>
+          <div className="ca-final__btns">
+            <a href="#signup" className="btn btn--primary btn-lg">14 Tage kostenlos starten</a>
+            <a href="#setup" className="btn btn--ghost btn-lg" style={{ borderColor: 'rgba(255,255,255,0.25)', color: 'rgba(255,255,255,0.85)' }}>Einrichtung ansehen</a>
+          </div>
+        </div>
+        <div className="ca-demo">
+          <div className="ca-demo__h"><i />Live-Demo · Website-Chat</div>
+          <div className="ca-demo__stream">
+            {msgs.map((m, i) => (
+              <div key={i} className={`ca-dm ca-dm--${m.s}`}>
+                <span className="ca-dm__w">{m.s === 'ai' ? 'Conversation AI' : 'Du'}</span>{m.x}
+              </div>
+            ))}
+            {typing && <div className="ca-dm ca-dm--ai"><span className="ca-dm__w">Conversation AI · schreibt</span><span className="ca-typing"><i /><i /><i /></span></div>}
+          </div>
+          <div className="ca-asks">
+            {REPLIES.map(r => (
+              <button key={r.q} className="ca-ask" disabled={typing} onClick={() => { setUsed(u => u.includes(r.q) ? u : [...u, r.q]); send(r.q, r.a); }}>
+                {used.includes(r.q) ? '↺ ' : ''}{r.q}
+              </button>
+            ))}
+          </div>
+          <form className="ca-form" onSubmit={submit}>
+            <input value={val} onChange={e => setVal(e.target.value)} placeholder="Eigene Nachricht schreiben …" aria-label="Nachricht" />
+            <button type="submit">Senden</button>
+          </form>
+          <p className="ca-demo__note">Demo mit hinterlegtem Leitfaden · freie Eingaben zeigen den Standardsatz bei fehlender Info</p>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const App = () => (
+  <>
+    <Nav />
+    <main>
+      <Hero />
+      <Translator />
+      <Autonomy />
+      <Knowledge />
+      <After />
+      <Setup />
+      <FAQ />
+    </main>
+    <Final />
+    <Footer />
+  </>
+);
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

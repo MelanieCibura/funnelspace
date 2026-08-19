@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>KI-Tools — Funnelspace</title>
+<meta name="description" content="Neun KI-Assistenten, die in Funnelspace schon eingebaut sind: Seiten bauen, Texte schreiben, E-Mails, Voice AI, SEO, Quiz-Auswertung und Automationen. Ein Login, ein Datenraum, EU-Server." />
+<link rel="stylesheet" href="colors_and_type.css" />
+<link rel="stylesheet" href="site.css" />
+<style>
+/* ── Hero ─────────────────────────────── */
+.kt-hero{padding:80px 40px 72px;position:relative;overflow:hidden}
+.kt-hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--fs-gray-300) 1px,transparent 1.2px);background-size:11px 11px;opacity:.55;pointer-events:none}
+.kt-hero__inner{max-width:1280px;margin:0 auto;position:relative;display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:center}
+.kt-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fs-ink);background:var(--fs-lime);padding:6px 12px;border-radius:var(--radius-pill);margin-bottom:22px}
+.kt-hero h1{font-family:var(--font-display);font-size:clamp(42px,5vw,70px);font-weight:700;line-height:1.04;letter-spacing:-.03em;text-wrap:balance}
+.kt-hero h1 em{font-style:normal;background:var(--fs-lime);color:var(--fs-lime-ink);padding:0 6px;border-radius:6px}
+.kt-hero__lead{margin-top:22px;font-size:19px;line-height:1.55;color:var(--fg-2);max-width:520px}
+.kt-hero__cta{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+.kt-hero__proof{margin-top:24px;display:flex;gap:20px;flex-wrap:wrap;font-size:13px;color:var(--fg-3)}
+.kt-hero__proof span{display:flex;align-items:center;gap:6px}
+.kt-hero__proof span::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--fs-lime);flex-shrink:0}
+/* Hero visual: KI-Panel */
+.kt-panel{background:#fff;border:1px solid var(--border-1);border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);overflow:hidden}
+.kt-panel__bar{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border-1);background:var(--fs-gray-100)}
+.kt-panel__mark{width:22px;height:22px;border-radius:7px;background:var(--fs-lime);display:grid;place-items:center;color:var(--fs-lime-ink)}
+.kt-panel__mark svg{width:12px;height:12px}
+.kt-panel__title{font-family:var(--font-display);font-size:13px;font-weight:700;letter-spacing:-.01em}
+.kt-panel__kbd{margin-left:auto;font-family:var(--font-mono);font-size:10px;background:#fff;border:1px solid var(--border-1);padding:2px 6px;border-radius:4px;color:var(--fg-3)}
+.kt-panel__q{padding:16px;border-bottom:1px solid var(--border-1);font-family:var(--font-mono);font-size:12.5px;line-height:1.5;color:var(--fs-ink)}
+.kt-cursor{display:inline-block;width:7px;height:14px;background:var(--fs-ink);vertical-align:-2px;margin-left:2px;animation:kt-blink 1s steps(2) infinite}
+@keyframes kt-blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+.kt-panel__label{font-size:9px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--fg-3);padding:12px 16px 6px}
+.kt-panel__list{display:flex;flex-direction:column}
+.kt-row{display:grid;grid-template-columns:30px 1fr auto;gap:12px;align-items:center;padding:11px 16px;border-top:1px solid var(--border-1)}
+.kt-row--on{background:var(--fs-lime-soft)}
+.kt-row__dot{width:30px;height:30px;border-radius:9px;background:var(--fs-gray-100);display:grid;place-items:center;color:var(--fs-ink)}
+.kt-row--on .kt-row__dot{background:var(--fs-lime);color:var(--fs-lime-ink)}
+.kt-row__dot svg{width:15px;height:15px}
+.kt-row__name{font-size:12.5px;font-weight:700;line-height:1.2}
+.kt-row__meta{font-size:10.5px;color:var(--fg-3);margin-top:2px;line-height:1.3}
+.kt-row__time{font-family:var(--font-mono);font-size:10.5px;font-weight:600;color:var(--fs-ink-soft);white-space:nowrap}
+.kt-panel__foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-top:1px solid var(--border-1);background:var(--fs-paper)}
+.kt-panel__foot-txt{font-size:11px;color:var(--fg-3)}
+.kt-panel__foot-btn{background:var(--fs-ink);color:#fff;border-radius:8px;padding:7px 12px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:6px}
+/* ── Stat strip ───────────────────────── */
+.kt-strip{border-top:1px solid var(--border-1);border-bottom:1px solid var(--border-1);background:var(--fs-white)}
+.kt-strip__inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.kt-stat{padding:30px 40px}
+.kt-stat+.kt-stat{border-left:1px solid var(--border-1)}
+.kt-stat__num{font-family:var(--font-display);font-size:34px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.kt-stat__lbl{margin-top:8px;font-size:13px;color:var(--fg-2);line-height:1.4}
+/* ── Sections ─────────────────────────── */
+.kt-sec{padding:100px 40px}
+.kt-sec--alt{background:var(--fs-white)}
+.kt-sec__inner{max-width:1280px;margin:0 auto}
+.kt-sec__head{max-width:740px;margin:0 auto 56px;text-align:center}
+.kt-sec__eyebrow{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-3);margin-bottom:14px}
+.kt-sec__head h2{font-family:var(--font-display);font-size:clamp(32px,3.5vw,50px);font-weight:700;letter-spacing:-.03em;line-height:1.08;text-wrap:balance}
+.kt-sec__head h2 em{font-style:normal;background:var(--fs-lime);color:var(--fs-lime-ink);padding:0 8px;border-radius:6px}
+.kt-sec__head p{margin-top:16px;font-size:18px;color:var(--fg-2);line-height:1.55}
+/* ── Tool groups ──────────────────────── */
+.kt-group+.kt-group{margin-top:64px;padding-top:56px;border-top:1px solid var(--border-1)}
+.kt-group__head{display:flex;align-items:baseline;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+.kt-group__n{font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--fs-ink);background:var(--fs-lime);padding:3px 8px;border-radius:4px}
+.kt-group__title{font-family:var(--font-display);font-size:26px;font-weight:700;letter-spacing:-.02em}
+.kt-group__sub{font-size:15px;color:var(--fg-3);line-height:1.4}
+.kt-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.kt-card{background:#fff;border:1px solid var(--border-1);border-radius:var(--radius-lg);padding:22px;display:flex;flex-direction:column;gap:12px;text-decoration:none;color:inherit;transition:transform var(--dur-med) var(--ease-out),box-shadow var(--dur-med) var(--ease-out)}
+.kt-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.kt-card__art{width:100%;aspect-ratio:16/10;background:var(--fs-paper);background-image:radial-gradient(var(--fs-gray-300) 1px,transparent 1.2px);background-size:9px 9px;border-radius:var(--radius-md);display:grid;place-items:center;overflow:hidden;border:1px solid var(--border-1)}
+.kt-card__art img{max-height:120px;max-width:72%}
+.kt-card__top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.kt-card h3{font-family:var(--font-display);font-size:20px;font-weight:700;letter-spacing:-.02em}
+.kt-tag{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:var(--radius-pill);background:var(--fs-gray-100);color:var(--fs-ink-soft)}
+.kt-tag--live{background:var(--fs-lime);color:var(--fs-lime-ink)}
+.kt-card p{font-size:14px;color:var(--fg-2);line-height:1.55}
+.kt-card__list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:7px}
+.kt-card__list li{display:flex;gap:9px;align-items:flex-start;font-size:13px;color:var(--fg-2);line-height:1.45}
+.kt-card__list li svg{width:15px;height:15px;flex-shrink:0;margin-top:2px;color:var(--fs-lime-deep)}
+.kt-card__link{margin-top:auto;padding-top:14px;border-top:1px solid var(--border-1);display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--fs-ink)}
+.kt-card__link svg{width:15px;height:15px;transition:transform var(--dur-fast) var(--ease-out)}
+.kt-card:hover .kt-card__link svg{transform:translateX(3px)}
+/* ── Flow example ─────────────────────── */
+.kt-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(255,255,255,.14);border-radius:var(--radius-lg);overflow:hidden}
+.kt-flow__step{background:var(--fs-ink);padding:26px 22px;display:flex;flex-direction:column;gap:10px}
+.kt-flow__n{width:26px;height:26px;border-radius:50%;background:var(--fs-lime);color:var(--fs-lime-ink);display:grid;place-items:center;font-size:12px;font-weight:800}
+.kt-flow__tool{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--fs-lime)}
+.kt-flow__t{font-family:var(--font-display);font-size:17px;font-weight:700;letter-spacing:-.01em;color:#fff;line-height:1.2}
+.kt-flow__d{font-size:13px;color:rgba(255,255,255,.6);line-height:1.5}
+.kt-flow__note{margin-top:28px;text-align:center;font-size:14px;color:rgba(255,255,255,.55)}
+.kt-flow__note b{color:#fff}
+/* ── Plans table ──────────────────────── */
+.kt-plans{border:1px solid var(--border-1);border-radius:var(--radius-lg);overflow:hidden;background:#fff}
+.kt-plans__row{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr}
+.kt-plans__row+.kt-plans__row{border-top:1px solid var(--border-1)}
+.kt-plans__row--head{background:var(--fs-paper)}
+.kt-plans__cell{padding:16px 20px;font-size:14px;color:var(--fg-2);line-height:1.45}
+.kt-plans__cell+.kt-plans__cell{border-left:1px solid var(--border-1)}
+.kt-plans__row--head .kt-plans__cell{font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--fs-ink)}
+.kt-plans__cell--k{font-weight:600;color:var(--fs-ink)}
+.kt-plans__cell--hi{background:var(--fs-lime-soft);color:var(--fs-ink);font-weight:600}
+/* ── Trust cards ──────────────────────── */
+.kt-trust{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.kt-trust__card{background:#fff;border:2px solid var(--border-strong);border-radius:var(--radius-lg);padding:28px 24px;display:flex;flex-direction:column;gap:12px}
+.kt-trust__icon{width:40px;height:40px;border-radius:var(--radius-sm);background:var(--fs-ink);color:var(--fs-lime);display:grid;place-items:center}
+.kt-trust__icon svg{width:20px;height:20px}
+.kt-trust__card h4{font-family:var(--font-display);font-size:19px;font-weight:700;letter-spacing:-.01em}
+.kt-trust__card p{font-size:14px;color:var(--fg-2);line-height:1.55}
+/* ── FAQ ──────────────────────────────── */
+.kt-faq{max-width:820px;margin:0 auto}
+.kt-faq__item{border-bottom:1px solid var(--border-1)}
+.kt-faq__item:first-child{border-top:1px solid var(--border-1)}
+.kt-faq__btn{width:100%;background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:22px 0;gap:20px;text-align:left;font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--fs-ink);letter-spacing:-.01em}
+.kt-faq__icon{width:30px;height:30px;border-radius:50%;background:var(--fs-gray-100);flex-shrink:0;display:grid;place-items:center;font-size:18px;transition:background var(--dur-fast),transform var(--dur-med) var(--ease-out)}
+.kt-faq__item.open .kt-faq__icon{background:var(--fs-lime);transform:rotate(45deg)}
+.kt-faq__body{font-size:15px;color:var(--fg-2);line-height:1.65;overflow:hidden;max-height:0;transition:max-height var(--dur-slow) var(--ease-out),padding var(--dur-slow) var(--ease-out)}
+.kt-faq__item.open .kt-faq__body{max-height:460px;padding-bottom:22px}
+/* ── Final CTA ────────────────────────── */
+.kt-final{background:var(--fs-ink);padding:100px 40px;text-align:center;position:relative;overflow:hidden}
+.kt-final::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(215,240,120,.07) 1px,transparent 1.2px);background-size:8px 8px}
+.kt-final__inner{position:relative;max-width:740px;margin:0 auto}
+.kt-final h2{font-family:var(--font-display);font-size:clamp(34px,4vw,54px);font-weight:700;letter-spacing:-.03em;color:#fff;text-wrap:balance}
+.kt-final h2 em{font-style:normal;color:var(--fs-lime)}
+.kt-final p{margin:16px auto 0;font-size:18px;color:rgba(255,255,255,.6)}
+.kt-final__btns{display:flex;gap:12px;justify-content:center;margin-top:34px;flex-wrap:wrap}
+/* ── Responsive ───────────────────────── */
+@media(max-width:1024px){
+.kt-hero__inner{grid-template-columns:1fr;gap:48px}
+.kt-strip__inner{grid-template-columns:1fr 1fr}
+.kt-stat:nth-child(3){border-left:none}
+.kt-stat:nth-child(n+3){border-top:1px solid var(--border-1)}
+.kt-cards{grid-template-columns:1fr 1fr}
+.kt-flow{grid-template-columns:1fr 1fr}
+.kt-trust{grid-template-columns:1fr}
+.kt-plans__row{grid-template-columns:1.2fr 1fr 1fr 1fr}
+}
+@media(max-width:768px){
+.kt-hero{padding:56px 22px}
+.kt-sec{padding:68px 22px}
+.kt-stat{padding:24px 22px}
+.kt-strip__inner{grid-template-columns:1fr}
+.kt-stat+.kt-stat{border-left:none;border-top:1px solid var(--border-1)}
+.kt-cards{grid-template-columns:1fr}
+.kt-flow{grid-template-columns:1fr}
+.kt-plans__row{grid-template-columns:1fr}
+.kt-plans__cell+.kt-plans__cell{border-left:none;border-top:1px solid var(--border-1)}
+.kt-final{padding:68px 22px}
+.nav__links{display:none}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="Nav.jsx"></script>
+<script type="text/babel" src="Footer.jsx"></script>
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+const Icon = ({ d, size = 20 }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">{d}</svg>
+);
+const ISpark = ({size=20}) => <Icon size={size} d={<><path d="M12 3v4"/><path d="M12 17v4"/><path d="M3 12h4"/><path d="M17 12h4"/><path d="M5.6 5.6l2.8 2.8"/><path d="M15.6 15.6l2.8 2.8"/><path d="M5.6 18.4l2.8-2.8"/><path d="M15.6 8.4l2.8-2.8"/></>} />;
+const ICheck = ({size=15}) => <Icon size={size} d={<polyline points="20 6 9 17 4 12"/>} />;
+const IArrow = ({size=15}) => <Icon size={size} d={<><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></>} />;
+const IPage = ({size=15}) => <Icon size={size} d={<><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></>} />;
+const IMail = ({size=15}) => <Icon size={size} d={<><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></>} />;
+const IFlow = ({size=15}) => <Icon size={size} d={<><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></>} />;
+const IPhone = ({size=15}) => <Icon size={size} d={<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.8.6a2 2 0 0 1 1.7 2z"/>} />;
+const ILock = ({size=20}) => <Icon size={size} d={<><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></>} />;
+const IEye = ({size=20}) => <Icon size={size} d={<><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></>} />;
+const IServer = ({size=20}) => <Icon size={size} d={<><rect x="2" y="3" width="20" height="8" rx="2"/><rect x="2" y="13" width="20" height="8" rx="2"/><line x1="6" y1="7" x2="6.01" y2="7"/><line x1="6" y1="17" x2="6.01" y2="17"/></>} />;
+
+/* ── Content ───────────────────────────── */
+const PANEL_ROWS = [
+  { i: <IPage />, name: 'Landingpage „Freischwimmer-Webinar"', meta: 'KI Builder · 7 Sektionen, Marken-Kit angewandt', time: '48 Sek.', on: true },
+  { i: <IMail />, name: '4 Erinnerungsmails', meta: 'E-Mail-Copilot · Ton: warm, kein Dringlichkeits-Theater', time: '22 Sek.' },
+  { i: <IPhone />, name: 'Voice-Agent für No-Shows', meta: 'Voice AI · ruft 24 h nach Webinar-Ende zurück', time: '9 Sek.' },
+  { i: <IFlow />, name: 'Automation: Tag → Angebot → Kalender', meta: 'Automations-Assistent · 3 Aktionen, im CRM verknüpft', time: '14 Sek.' },
+];
+
+const STATS = [
+  { n: '9', l: 'KI-Assistenten — alle im gleichen Login, ohne Zusatz-Abo' },
+  { n: '0 €', l: 'Extrakosten für Modelle, Tokens oder API-Keys' },
+  { n: '~6 h', l: 'gespart pro Launch — Durchschnitt unserer Beta-Kund:innen' },
+  { n: 'EU', l: 'Inferenz &amp; Hosting, AV-Vertrag inklusive' },
+];
+
+const GROUPS = [
+  {
+    n: '01', title: 'Bauen & gestalten', sub: 'Von der Idee zur veröffentlichten Seite.',
+    tools: [
+      { name: 'KI Builder', tag: 'Live', tagLive: true, img: 'assets/illustrations/funnel.png',
+        p: 'Beschreibe die Seite, lade einen Screenshot hoch oder gib eine URL an — der Builder baut Landingpage, Funnel oder Website und verknüpft Formulare direkt mit dem CRM.',
+        li: ['Chat, Screenshot oder URL als Startpunkt', '1-Click CRM- und E-Mail-Anbindung', 'Marken-Kit statt Template-Look'],
+        href: 'ki-builder.html', cta: 'KI Builder ansehen' },
+      { name: 'AI Studio', tag: 'Beta', img: 'assets/illustrations/dashboard-funnelspace.png',
+        p: 'Vibe Coding für dein Business: ein Satz, und du bekommst ganze Funnels samt Sequenz und Automation. Jedes Element bleibt einzeln editierbar — mit Versionsverlauf.',
+        li: ['Prompt → kompletter Funnel-Aufbau', 'Inline-Inspector pro Element', 'Rollback auf jede Version'],
+        href: 'ai-studio.html', cta: 'AI Studio ansehen' },
+      { name: 'KI Texter', tag: 'Live', tagLive: true, img: 'assets/illustrations/blog.png',
+        p: 'Headlines, Bullet-Points, Blogartikel, Angebotsseiten. Der Texter lernt deine Tonalität aus bestehenden Texten und schlägt drei Varianten statt einer vor.',
+        li: ['Tonalität aus deinen eigenen Texten', 'Drei Varianten pro Anfrage', 'Claim-Check gegen Abmahn-Fallen'],
+        href: 'funktionen.html', cta: 'Zu den Funktionen' },
+    ],
+  },
+  {
+    n: '02', title: 'Verkaufen & betreuen', sub: 'Jeder Lead bekommt Antwort — auch nachts.',
+    tools: [
+      { name: 'E-Mail-Copilot', tag: 'Live', tagLive: true, img: 'assets/illustrations/email.png',
+        p: 'Sequenzen, Broadcasts, Betreffzeilen. Der Copilot schreibt auf Basis deiner Segmente und schlägt Versandzeitpunkte vor, die zu deiner Liste passen.',
+        li: ['Komplette Sequenzen aus einem Briefing', 'Betreffzeilen-Test mit Vorhersage', 'Segment-Kontext aus dem CRM'],
+        href: 'email-marketing.html', cta: 'E-Mail-Marketing ansehen' },
+      { name: 'Voice AI Agent', tag: 'Beta', img: 'assets/illustrations/voice-ai.png',
+        p: 'Ein Telefon-Agent, der Erstgespräche qualifiziert, Termine bucht und No-Shows nachfasst. Auf Deutsch, mit deinem Gesprächsleitfaden.',
+        li: ['Termine direkt in deinen Kalender', 'Transkript und Zusammenfassung im CRM', 'Übergabe an dich, wenn es ernst wird'],
+        href: 'funktionen.html', cta: 'Voice AI ansehen' },
+      { name: 'KI Chat-Assistent', tag: 'Live', tagLive: true, img: 'assets/illustrations/crm.png',
+        p: 'Beantwortet Fragen zu deinem Angebot auf jeder Seite — nur mit deinen Inhalten. Unbekanntes landet als Aufgabe bei dir, nicht als erfundene Antwort.',
+        li: ['Wissensbasis aus Seiten & Kursen', 'Keine Antwort ohne Quelle', 'Lead-Erfassung mitten im Chat'],
+        href: 'crm.html', cta: 'CRM ansehen' },
+    ],
+  },
+  {
+    n: '03', title: 'Wachsen & automatisieren', sub: 'Die Arbeit, die du sonst abends machst.',
+    tools: [
+      { name: 'SEO-Assistent', tag: 'Live', tagLive: true, img: 'assets/illustrations/seo.png',
+        p: 'Findet die Suchbegriffe deiner Zielgruppe, schreibt Meta-Titel und Beschreibungen und prüft jede Seite vor dem Veröffentlichen.',
+        li: ['Keyword-Vorschläge für deine Nische', 'Meta-Daten automatisch gepflegt', 'Check-Liste vor jedem Publish'],
+        href: 'funktionen.html', cta: 'Zu den Funktionen' },
+      { name: 'Quiz & Lead-Scoring', tag: 'Live', tagLive: true, img: 'assets/illustrations/quiz.png',
+        p: 'Aus einem Thema wird ein Quiz-Funnel mit Auswertung. Die KI bewertet Antworten, setzt Tags und sortiert heiße Leads nach oben.',
+        li: ['Quiz-Fragen und Ergebnistypen generiert', 'Automatisches Tagging pro Antwort', 'Score-Ranking in der Pipeline'],
+        href: 'funktionen.html', cta: 'Zu den Funktionen' },
+      { name: 'Automations-Assistent', tag: 'Live', tagLive: true, img: 'assets/illustrations/automation.png',
+        p: 'Sag, was passieren soll — der Assistent baut den Flow: Trigger, Bedingungen, Aktionen. Und schlägt vor, was dir in bestehenden Flows fehlt.',
+        li: ['Flow aus einem Satz gebaut', 'Lücken-Analyse bestehender Automationen', 'Test-Lauf vor Aktivierung'],
+        href: 'funktionen.html', cta: 'Zu den Funktionen' },
+    ],
+  },
+];
+
+const FLOW = [
+  { n: '1', tool: 'KI Builder', t: 'Seite steht', d: 'Webinar-Anmeldeseite inklusive Formular und Dankeseite — in unter einer Minute generiert.' },
+  { n: '2', tool: 'E-Mail-Copilot', t: 'Sequenz läuft', d: 'Vier Erinnerungsmails, geschrieben in deinem Ton, terminiert auf den Webinar-Tag.' },
+  { n: '3', tool: 'Quiz & Scoring', t: 'Leads sortiert', d: 'Ein Zwei-Fragen-Quiz nach der Anmeldung sortiert Kaufabsicht von Neugier.' },
+  { n: '4', tool: 'Voice AI', t: 'No-Shows zurück', d: 'Wer nicht dabei war, bekommt einen Rückruf mit Replay-Link und Terminangebot.' },
+  { n: '5', tool: 'Automationen', t: 'Abschluss folgt', d: 'Kauf → Kursfreischaltung, Welcome-Mail, Rechnung, Bewertungs-Anfrage nach 14 Tagen.' },
+];
+
+const PLANS = [
+  ['KI-Generierungen / Monat', '50', 'unbegrenzt', 'unbegrenzt'],
+  ['Builder, Texter, E-Mail-Copilot', 'inklusive', 'inklusive', 'inklusive'],
+  ['Voice AI Gesprächsminuten', '—', '300 / Monat', 'nach Bedarf'],
+  ['Eigenes Marken-Modell', '—', '—', 'inklusive'],
+  ['Team-Zugänge fürs Studio', '1', '5', 'unbegrenzt'],
+];
+
+const TRUST = [
+  { i: <IServer />, t: 'EU-Server, EU-Inferenz', d: 'Hosting in Deutschland, Modell-Anfragen in der EU. AV-Vertrag und Auftragsverarbeitungs-Übersicht liegen im Account bereit.' },
+  { i: <ILock />, t: 'Keine Trainingsdaten', d: 'Deine Prompts, Kundendaten und Kursinhalte werden nicht zum Training fremder Modelle verwendet. Kein Opt-out nötig — es passiert einfach nicht.' },
+  { i: <IEye />, t: 'Nichts geht ohne dich live', d: 'Jede KI-Ausgabe ist ein Entwurf. Du prüfst, änderst, veröffentlichst. Jeder Schritt ist versioniert und umkehrbar.' },
+];
+
+const FAQS = [
+  { q: 'Brauche ich einen eigenen OpenAI- oder Claude-Account?', a: 'Nein. Alle KI-Funktionen laufen über Funnelspace — keine API-Keys, keine zweite Rechnung, keine Token-Rechnerei. Wenn du willst, kannst du im Enterprise-Plan einen eigenen Modell-Zugang hinterlegen.' },
+  { q: 'Was zählt als „KI-Generierung"?', a: 'Ein Auftrag, egal wie groß das Ergebnis ist. Ein Prompt, der eine Landingpage plus vier E-Mails plus eine Automation erzeugt, ist eine Generierung. Kleine Tweaks an einzelnen Elementen zählen nicht mit.' },
+  { q: 'Klingt das nicht alles gleich — wie bei jedem anderen KI-Tool?', a: 'Der Unterschied ist Kontext: Die Assistenten kennen deine Marke, deine Produkte, deine Tags und deine bisherigen Texte. Deshalb kommt kein generischer Output zurück, sondern Entwürfe, die nach dir klingen. Du hinterlegst Tonalität, verbotene Formulierungen und Beispieltexte einmal.' },
+  { q: 'Kann ich einzelne KI-Funktionen für mein Team abschalten?', a: 'Ja. Pro Rolle lässt sich festlegen, wer generieren, wer nur bearbeiten und wer veröffentlichen darf. Voice AI und Chat-Assistent können separat deaktiviert werden.' },
+  { q: 'Was passiert mit bestehenden Seiten und Sequenzen?', a: 'Die bleiben, wie sie sind. Du kannst sie jederzeit in den KI-Modus holen — Inline-Edits, Textvarianten, SEO-Check — ohne das Original zu verlieren.' },
+];
+
+const HERO_PROMPT = 'Baue mir einen Webinar-Launch für mein Coaching „Freischwimmer" — Seite, Mails, Nachfass-Anrufe.';
+
+const Typing = () => {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    if (i >= HERO_PROMPT.length) return;
+    const t = setTimeout(() => setI(i + 1), i < 24 ? 52 : 26);
+    return () => clearTimeout(t);
+  }, [i]);
+  return (<>{HERO_PROMPT.slice(0, i)}<span className="kt-cursor"/></>);
+};
+
+/* ── Sections ──────────────────────────── */
+const Hero = () => (
+  <section className="kt-hero">
+    <div className="kt-hero__inner">
+      <div>
+        <span className="kt-eyebrow">KI in Funnelspace</span>
+        <h1>Neun KI-Assistenten. <em>Ein Login.</em> Keine Bastelei.</h1>
+        <p className="kt-hero__lead">
+          Seiten bauen, Texte schreiben, E-Mails planen, anrufen, auswerten, automatisieren —
+          die KI in Funnelspace kennt deine Marke, deine Kontakte und deine Produkte.
+          Kein Tool-Zoo, keine API-Keys, keine zweite Rechnung.
+        </p>
+        <div className="kt-hero__cta">
+          <a href="#signup" className="btn btn--primary btn-lg">14 Tage kostenlos testen</a>
+          <a href="#tools" className="btn btn--ghost btn-lg">Alle KI-Tools ansehen</a>
+        </div>
+        <div className="kt-hero__proof">
+          <span>50 Generierungen gratis</span>
+          <span>Keine Kreditkarte</span>
+          <span>Server in Deutschland</span>
+        </div>
+      </div>
+      <div className="kt-panel">
+        <div className="kt-panel__bar">
+          <span className="kt-panel__mark"><ISpark size={12}/></span>
+          <span className="kt-panel__title">KI-Assistenten</span>
+          <span className="kt-panel__kbd">⌘K</span>
+        </div>
+        <div className="kt-panel__q"><Typing /></div>
+        <div className="kt-panel__label">Vier Assistenten übernehmen</div>
+        <div className="kt-panel__list">
+          {PANEL_ROWS.map(r => (
+            <div key={r.name} className={`kt-row${r.on ? ' kt-row--on' : ''}`}>
+              <span className="kt-row__dot">{r.i}</span>
+              <div>
+                <div className="kt-row__name">{r.name}</div>
+                <div className="kt-row__meta">{r.meta}</div>
+              </div>
+              <span className="kt-row__time">{r.time}</span>
+            </div>
+          ))}
+        </div>
+        <div className="kt-panel__foot">
+          <span className="kt-panel__foot-txt">Alles bleibt Entwurf, bis du veröffentlichst.</span>
+          <span className="kt-panel__foot-btn">Entwürfe prüfen <IArrow size={12}/></span>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+const Strip = () => (
+  <div className="kt-strip">
+    <div className="kt-strip__inner">
+      {STATS.map(s => (
+        <div key={s.n} className="kt-stat">
+          <div className="kt-stat__num">{s.n}</div>
+          <div className="kt-stat__lbl" dangerouslySetInnerHTML={{__html: s.l}} />
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+const Tools = () => (
+  <section className="kt-sec" id="tools">
+    <div className="kt-sec__inner">
+      <div className="kt-sec__head">
+        <div className="kt-sec__eyebrow">Die Assistenten</div>
+        <h2>Kein KI-Feature ohne Job. <em>Neun</em> davon.</h2>
+        <p>Jeder Assistent löst eine Aufgabe, die dich sonst einen Abend kostet. Alle greifen auf denselben Datenraum zu — deine Marke, deine Kontakte, deine Produkte.</p>
+      </div>
+      {GROUPS.map(g => (
+        <div key={g.n} className="kt-group">
+          <div className="kt-group__head">
+            <span className="kt-group__n">{g.n}</span>
+            <span className="kt-group__title">{g.title}</span>
+            <span className="kt-group__sub">{g.sub}</span>
+          </div>
+          <div className="kt-cards">
+            {g.tools.map(t => (
+              <a key={t.name} href={t.href} className="kt-card">
+                <div className="kt-card__art"><img src={t.img} alt="" /></div>
+                <div className="kt-card__top">
+                  <h3>{t.name}</h3>
+                  <span className={`kt-tag${t.tagLive ? ' kt-tag--live' : ''}`}>{t.tag}</span>
+                </div>
+                <p>{t.p}</p>
+                <ul className="kt-card__list">
+                  {t.li.map(x => <li key={x}><ICheck />{x}</li>)}
+                </ul>
+                <span className="kt-card__link">{t.cta} <IArrow /></span>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+);
+
+const Together = () => (
+  <section className="kt-sec section--ink">
+    <div className="kt-sec__inner">
+      <div className="kt-sec__head">
+        <div className="kt-sec__eyebrow" style={{color:'rgba(255,255,255,0.45)'}}>Ein Launch, fünf Assistenten</div>
+        <h2 style={{color:'#fff'}}>Einzeln nützlich. Zusammen ein <em>Launch</em>.</h2>
+        <p style={{color:'rgba(255,255,255,0.65)'}}>Ein Webinar-Launch von Montag bis Sonntag — und was die KI dabei übernimmt, während du das Webinar hältst.</p>
+      </div>
+      <div className="kt-flow">
+        {FLOW.map(f => (
+          <div key={f.n} className="kt-flow__step">
+            <span className="kt-flow__n">{f.n}</span>
+            <span className="kt-flow__tool">{f.tool}</span>
+            <span className="kt-flow__t">{f.t}</span>
+            <span className="kt-flow__d">{f.d}</span>
+          </div>
+        ))}
+      </div>
+      <p className="kt-flow__note">Deine Aufgabe in dieser Kette: <b>prüfen und freigeben.</b></p>
+    </div>
+  </section>
+);
+
+const Plans = () => (
+  <section className="kt-sec kt-sec--alt">
+    <div className="kt-sec__inner">
+      <div className="kt-sec__head">
+        <div className="kt-sec__eyebrow">Was ist drin</div>
+        <h2>KI ist kein Add-on. Sie ist Teil deines Plans.</h2>
+        <p>Kein separates KI-Abo, keine Credit-Pakete zum Nachkaufen. Nur ein Fair-Use-Rahmen im Starter.</p>
+      </div>
+      <div className="kt-plans">
+        <div className="kt-plans__row kt-plans__row--head">
+          <div className="kt-plans__cell">KI-Leistung</div>
+          <div className="kt-plans__cell">Starter</div>
+          <div className="kt-plans__cell">Business</div>
+          <div className="kt-plans__cell">Enterprise</div>
+        </div>
+        {PLANS.map(r => (
+          <div key={r[0]} className="kt-plans__row">
+            <div className="kt-plans__cell kt-plans__cell--k">{r[0]}</div>
+            <div className="kt-plans__cell">{r[1]}</div>
+            <div className="kt-plans__cell kt-plans__cell--hi">{r[2]}</div>
+            <div className="kt-plans__cell">{r[3]}</div>
+          </div>
+        ))}
+      </div>
+      <div style={{marginTop:'28px',textAlign:'center'}}>
+        <a href="preise.html" className="btn btn--ink">Alle Preise ansehen <IArrow /></a>
+      </div>
+    </div>
+  </section>
+);
+
+const Trust = () => (
+  <section className="kt-sec">
+    <div className="kt-sec__inner">
+      <div className="kt-sec__head">
+        <div className="kt-sec__eyebrow">DSGVO & Kontrolle</div>
+        <h2>KI, die du deinen Kundendaten anvertrauen kannst.</h2>
+      </div>
+      <div className="kt-trust">
+        {TRUST.map(t => (
+          <div key={t.t} className="kt-trust__card">
+            <div className="kt-trust__icon">{t.i}</div>
+            <h4>{t.t}</h4>
+            <p>{t.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+const FAQ = () => {
+  const [open, setOpen] = useState(0);
+  return (
+    <section className="kt-sec kt-sec--alt">
+      <div className="kt-sec__inner">
+        <div className="kt-sec__head">
+          <div className="kt-sec__eyebrow">FAQ</div>
+          <h2>Häufige Fragen zu den KI-Tools.</h2>
+        </div>
+        <div className="kt-faq">
+          {FAQS.map((f, i) => (
+            <div key={i} className={`kt-faq__item${open === i ? ' open' : ''}`}>
+              <button className="kt-faq__btn" onClick={() => setOpen(open === i ? -1 : i)}>
+                {f.q}<span className="kt-faq__icon">+</span>
+              </button>
+              <div className="kt-faq__body">{f.a}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const FinalCTA = () => (
+  <section className="kt-final">
+    <div className="kt-final__inner">
+      <h2>Probier's mit deinem <em>nächsten Launch</em>.</h2>
+      <p>50 KI-Generierungen gratis, alle Assistenten freigeschaltet. Keine Kreditkarte, kein Einrichtungs-Marathon.</p>
+      <div className="kt-final__btns">
+        <a href="#signup" className="btn btn--primary btn-lg">14 Tage kostenlos testen</a>
+        <a href="ki-builder.html" className="btn btn--ghost btn-lg" style={{borderColor:'rgba(255,255,255,0.3)',color:'#fff'}}>KI Builder ansehen</a>
+      </div>
+    </div>
+  </section>
+);
+
+const KIToolsApp = () => (
+  <>
+    <Nav />
+    <main>
+      <Hero />
+      <Strip />
+      <Tools />
+      <Together />
+      <Plans />
+      <Trust />
+      <FAQ />
+      <FinalCTA />
+    </main>
+    <Footer />
+  </>
+);
+ReactDOM.createRoot(document.getElementById('root')).render(<KIToolsApp />);
+</script>
+</body>
+</html>

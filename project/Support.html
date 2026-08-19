@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Support — Funnelspace</title>
+<meta name="description" content="Wir sind da, wenn du uns brauchst: 24/7 Live-Chat, wöchentliche Zoom-Calls, Community, Knowledgebase, Academy und E-Mail-Support." />
+<link rel="stylesheet" href="colors_and_type.css" />
+<link rel="stylesheet" href="site.css" />
+<style>
+.sup-hero{padding:100px 40px 80px;background:var(--fs-ink);color:#fff;position:relative;overflow:hidden;text-align:center}
+.sup-hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(215,240,120,0.07) 1px,transparent 1.2px);background-size:8px 8px;pointer-events:none}
+.sup-hero__inner{max-width:820px;margin:0 auto;position:relative}
+.sup-hero__eyebrow{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--fs-lime);margin-bottom:20px}
+.sup-hero h1{font-family:var(--font-display);font-size:clamp(40px,5vw,68px);font-weight:700;line-height:1.05;letter-spacing:-0.03em;text-wrap:balance;color:#fff}
+.sup-hero h1 em{font-style:normal;color:var(--fs-lime)}
+.sup-hero__lead{margin:20px auto 0;font-size:18px;line-height:1.55;color:rgba(255,255,255,0.65);max-width:560px}
+.sup-hero__cta{display:flex;gap:12px;margin-top:36px;flex-wrap:wrap;justify-content:center}
+.sup-hero__proof{margin-top:24px;display:flex;gap:20px;flex-wrap:wrap;justify-content:center;font-size:13px;color:rgba(255,255,255,0.45)}
+.sup-hero__proof span{display:flex;align-items:center;gap:6px}
+.sup-hero__proof span::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--fs-lime);display:inline-block}
+.sup-section{padding:96px 40px}
+.sup-section--alt{background:var(--fs-white)}
+.sup-section__inner{max-width:1280px;margin:0 auto}
+.sup-section__head--center{text-align:center;max-width:680px;margin:0 auto 56px}
+.sup-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--fg-3);margin-bottom:14px}
+.sup-section__head--center h2{font-family:var(--font-display);font-size:clamp(32px,3.5vw,50px);font-weight:700;letter-spacing:-0.03em;text-wrap:balance}
+.sup-section__head--center p{margin-top:14px;font-size:18px;color:var(--fg-2);line-height:1.5}
+.chan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.chan{background:var(--fs-white);border:1px solid var(--border-1);border-radius:var(--radius-lg);padding:30px 28px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow-sm);transition:transform var(--dur-med) var(--ease-out),box-shadow var(--dur-med) var(--ease-out)}
+.chan:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.chan__top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.chan__icon{width:48px;height:48px;border-radius:var(--radius-md);background:var(--fs-gray-100);color:var(--fs-ink);display:grid;place-items:center;flex-shrink:0}
+.chan__icon svg{width:24px;height:24px}
+.chan--featured .chan__icon{background:var(--fs-lime)}
+.chan__chip{font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:4px 12px;border-radius:var(--radius-pill);background:var(--fs-gray-100);color:var(--fg-2);white-space:nowrap}
+.chan--featured .chan__chip{background:var(--fs-lime);color:var(--fs-lime-ink)}
+.chan h3{font-family:var(--font-display);font-size:21px;font-weight:700;letter-spacing:-0.01em}
+.chan__sub{font-size:13px;font-weight:700;color:var(--fg-3);margin-top:-8px}
+.chan p{font-size:14px;color:var(--fg-2);line-height:1.6;flex:1}
+.chan a.chan__link{font-size:14px;font-weight:700;color:var(--fs-ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.chan a.chan__link:hover{text-decoration:underline}
+.d4y{background:var(--fs-ink);border-radius:var(--radius-xl);padding:56px 56px;display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center;position:relative;overflow:hidden}
+.d4y::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(215,240,120,0.06) 1px,transparent 1.2px);background-size:8px 8px;pointer-events:none}
+.d4y__eyebrow{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--fs-lime);margin-bottom:14px;position:relative}
+.d4y h2{font-family:var(--font-display);font-size:clamp(28px,3vw,42px);font-weight:700;letter-spacing:-0.03em;color:#fff;text-wrap:balance;position:relative}
+.d4y p{margin-top:14px;font-size:16px;line-height:1.6;color:rgba(255,255,255,0.6);max-width:600px;position:relative}
+.d4y__cta{position:relative}
+.faq-list{max-width:800px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--border-1)}
+.faq-item:first-child{border-top:1px solid var(--border-1)}
+.faq-btn{width:100%;background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:22px 0;gap:20px;text-align:left;font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--fs-ink);letter-spacing:-0.01em}
+.faq-icon{width:28px;height:28px;border-radius:50%;background:var(--fs-gray-100);flex-shrink:0;display:grid;place-items:center;font-size:18px;color:var(--fs-ink);transition:background var(--dur-fast),transform var(--dur-med) var(--ease-out)}
+.faq-item.open .faq-icon{background:var(--fs-lime);transform:rotate(45deg)}
+.faq-body{font-size:15px;color:var(--fg-2);line-height:1.65;overflow:hidden;max-height:0;transition:max-height var(--dur-slow) var(--ease-out),padding var(--dur-slow) var(--ease-out)}
+.faq-item.open .faq-body{max-height:400px;padding-bottom:24px}
+.sup-final{background:var(--fs-ink);padding:96px 40px;text-align:center;position:relative;overflow:hidden}
+.sup-final::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(215,240,120,0.06) 1px,transparent 1.2px);background-size:8px 8px}
+.sup-final h2{font-family:var(--font-display);font-size:clamp(36px,4vw,58px);font-weight:700;letter-spacing:-0.04em;color:#fff;text-wrap:balance;max-width:800px;margin:0 auto;position:relative}
+.sup-final p{margin:14px auto 0;font-size:18px;color:rgba(255,255,255,0.55);position:relative}
+.sup-final__btns{display:flex;gap:14px;justify-content:center;margin-top:36px;flex-wrap:wrap;position:relative}
+a{color:var(--fs-ink)}a:hover{color:var(--fs-lime-deep)}
+@media (max-width:1024px){.chan-grid{grid-template-columns:1fr 1fr}.d4y{grid-template-columns:1fr;padding:40px 32px}}
+@media (max-width:768px){.sup-hero{padding:64px 24px 56px}.sup-section{padding:64px 24px}.chan-grid{grid-template-columns:1fr}.sup-final{padding:64px 24px}.nav__links{display:none}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="Nav.jsx"></script>
+<script type="text/babel">
+const I = {
+  chat: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>,
+  video: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"></path><rect x="2" y="6" width="14" height="12" rx="2"></rect></svg>,
+  users: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>,
+  book: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg>,
+  cap: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path><path d="M22 10v6"></path><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path></svg>,
+  mail: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>,
+};
+const CHANNELS = [
+  { icon: 'chat', chip: '24/7', title: '24/7 Live-Chat', sub: 'Rund um die Uhr Unterstützung', featured: true,
+    body: 'Unser Live-Chat steht dir 24/7 zur Verfügung. Egal, ob du mitten in der Nacht eine dringende Frage hast oder während deiner Arbeitszeit Unterstützung brauchst — der Chat ist jederzeit für dich da.',
+    link: { href: 'https://login.funnelspace.com', label: 'Chat im Dashboard öffnen →' } },
+  { icon: 'video', chip: 'Wöchentlich', title: 'Live-Zoom-Calls', sub: 'Persönlicher Support',
+    body: 'Im wöchentlichen Live-Zoom-Call stellst du deine Fragen direkt und bekommst praxisnahe Tipps zur optimalen Nutzung von Funnelspace. Lerne von Experten und finde gemeinsam mit anderen die besten Lösungen.',
+    link: { href: '#', label: 'Zum nächsten Call anmelden →' } },
+  { icon: 'users', chip: 'Community', title: 'Support-Community', sub: 'Gemeinsam wachsen',
+    body: 'Tausche dich mit anderen Nutzern aus, teile Erfahrungen und erhalte wertvolle Tipps. Hier findest du Inspiration, Hilfe und den direkten Kontakt zu Gleichgesinnten.',
+    link: { href: 'https://member.funnelspace.com/communities/groups/funnelspace/', label: 'Zur Community →' } },
+  { icon: 'book', chip: 'Selbsthilfe', title: 'Knowledgebase', sub: 'Antworten auf Knopfdruck',
+    body: 'Detaillierte Anleitungen, hilfreiche Artikel und praxisnahe Lösungen. Hier findest du Antworten auf häufige Fragen und arbeitest dich Schritt für Schritt in die Software ein.',
+    link: { href: 'https://help.funnelspace.com/', label: 'Helpcenter öffnen →' } },
+  { icon: 'cap', chip: 'Academy', title: 'Schulungsvideos', sub: 'Lerne in deinem Tempo',
+    body: 'In der Academy findest du umfangreiche Schulungsvideos, die dir Schritt für Schritt zeigen, wie du Funnelspace optimal nutzt — von der Einrichtung bis zu fortgeschrittenen Strategien.',
+    link: { href: '#', label: 'Zur Academy →' } },
+  { icon: 'mail', chip: 'E-Mail', title: 'E-Mail-Support', sub: 'Direkt in deinem Postfach',
+    body: 'Für komplexere Anliegen kannst du dich jederzeit per E-Mail an uns wenden. Wir sorgen dafür, dass du schnell und ausführlich die Unterstützung erhältst, die du brauchst.',
+    link: { href: 'mailto:support@funnelspace.com', label: 'support@funnelspace.com →' } },
+];
+const FAQS = [
+  { q: 'Was ist, wenn ich nicht weiterkomme oder Hilfe brauche?', a: 'Kein Problem! Funnelspace bietet umfangreichen Support via E-Mail und Chat. Zusätzlich stehen dir Tutorials, Anleitungen, unsere Community und wöchentliche Technik-Calls zur Verfügung — damit du jederzeit die Hilfe bekommst, die du brauchst.' },
+  { q: 'Ist der Support im Preis enthalten?', a: 'Ja. Live-Chat, Zoom-Calls, Community, Knowledgebase und Academy sind für alle Funnelspace-Nutzer ohne Zusatzkosten enthalten.' },
+  { q: 'Ist Funnelspace für Anfänger geeignet?', a: 'Ja, absolut! Funnelspace ist so konzipiert, dass auch Einsteiger schnell starten können. Mit intuitiven Tools, Vorlagen und umfassendem Support gelingt dir ein einfacher Einstieg.' },
+  { q: 'Wie schnell bekomme ich eine Antwort?', a: 'Im Live-Chat sofort — rund um die Uhr. E-Mail-Anfragen beantworten wir schnell und ausführlich, komplexere Anliegen klären wir gern im wöchentlichen Zoom-Call.' },
+  { q: 'Gibt es auch Support auf Deutsch?', a: 'Ja. Funnelspace ist eine deutsche Plattform — Support, Community, Calls und Academy sind auf Deutsch.' },
+];
+const Hero = () => (
+  <section className="sup-hero">
+    <div className="sup-hero__inner">
+      <div className="sup-hero__eyebrow">Support</div>
+      <h1>Wir sind da, <em>wenn du uns brauchst.</em></h1>
+      <p className="sup-hero__lead">Sechs Wege zur schnellen Hilfe — vom 24/7 Live-Chat bis zum persönlichen Zoom-Call. Du bleibst nie allein mit deiner Frage.</p>
+      <div className="sup-hero__cta">
+        <a href="#kanaele" className="btn btn--primary btn-lg">Support-Kanäle ansehen</a>
+        <a href="https://help.funnelspace.com/" className="btn btn--ghost btn-lg" style={{borderColor:'rgba(255,255,255,0.3)', color:'#fff'}}>Zum Helpcenter</a>
+      </div>
+      <div className="sup-hero__proof">
+        <span>24/7 erreichbar</span>
+        <span>Auf Deutsch</span>
+        <span>Ohne Zusatzkosten</span>
+      </div>
+    </div>
+  </section>
+);
+const Channels = () => (
+  <section className="sup-section" id="kanaele">
+    <div className="sup-section__inner">
+      <div className="sup-section__head--center">
+        <div className="sup-eyebrow">Deine Support-Kanäle</div>
+        <h2>Hilfe, wie sie zu dir passt.</h2>
+        <p>Sofort im Chat, persönlich im Call oder in deinem Tempo per Video — such dir den Weg aus, der für dich funktioniert.</p>
+      </div>
+      <div className="chan-grid">
+        {CHANNELS.map(c => (
+          <article key={c.title} className={`chan${c.featured ? ' chan--featured' : ''}`}>
+            <div className="chan__top">
+              <div className="chan__icon">{I[c.icon]}</div>
+              <span className="chan__chip">{c.chip}</span>
+            </div>
+            <h3>{c.title}</h3>
+            <div className="chan__sub">{c.sub}</div>
+            <p>{c.body}</p>
+            <a className="chan__link" href={c.link.href}>{c.link.label}</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+const Done4You = () => (
+  <section className="sup-section sup-section--alt">
+    <div className="sup-section__inner">
+      <div className="d4y">
+        <div>
+          <div className="d4y__eyebrow">Du brauchst individuelle Unterstützung?</div>
+          <h2>Done4You statt Do-it-yourself.</h2>
+          <p>Wir bauen dir komplett maßgeschneiderte Funnels, E-Mail-Automationen, CRM-Prozesse und mehr. Ein echter Done4You-Service mit Strategie, Struktur und System. Ob Leadgenerierung, Launch oder Mitgliederbereich — wir machen's für dich.</p>
+        </div>
+        <div className="d4y__cta">
+          <a href="services.html" className="btn btn--primary btn-lg">Zum Agentur-Service</a>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+const FAQ = () => {
+  const [open, setOpen] = React.useState(null);
+  return (
+    <section className="sup-section">
+      <div className="sup-section__inner">
+        <div className="sup-section__head--center">
+          <div className="sup-eyebrow">FAQ</div>
+          <h2>Häufige Fragen zum Support.</h2>
+        </div>
+        <div className="faq-list">
+          {FAQS.map((f, i) => (
+            <div key={i} className={`faq-item${open === i ? ' open' : ''}`}>
+              <button className="faq-btn" onClick={() => setOpen(open === i ? null : i)}>
+                {f.q}
+                <span className="faq-icon">+</span>
+              </button>
+              <div className="faq-body">{f.a}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+const FinalCTA = () => (
+  <section className="sup-final">
+    <h2>Teste Funnelspace — mit Support, der wirklich da ist.</h2>
+    <p>14 Tage kostenlos testen · Jederzeit kündbar</p>
+    <div className="sup-final__btns">
+      <a href="#" className="btn btn--primary btn-lg">Kostenlos testen</a>
+      <a href="index.html" className="btn btn--ghost btn-lg" style={{borderColor:'rgba(255,255,255,0.25)', color:'rgba(255,255,255,0.8)'}}>← Zur Startseite</a>
+    </div>
+  </section>
+);
+const SimpleFooter = () => (
+  <footer style={{textAlign:'center', padding:'24px 40px', borderTop:'1px solid var(--border-1)', fontSize:13, color:'var(--fg-3)', background:'var(--fs-paper)'}}>
+    <a href="index.html" style={{color:'var(--fs-ink)', textDecoration:'none', fontWeight:600}}>← Startseite</a>
+    <span style={{margin:'0 12px'}}>·</span>
+    <a href="services.html" style={{color:'var(--fg-2)', textDecoration:'none'}}>Services</a>
+    <span style={{margin:'0 12px'}}>·</span>
+    © 2026 Funnelspace GmbH
+  </footer>
+);
+const App = () => (
+  <>
+    <Nav />
+    <main>
+      <Hero />
+      <Channels />
+      <Done4You />
+      <FAQ />
+    </main>
+    <FinalCTA />
+    <SimpleFooter />
+  </>
+);
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

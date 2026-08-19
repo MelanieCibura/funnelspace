@@ -1,0 +1,229 @@
+/* =========================================================
+   Funnelspace Design System — colors & type foundations
+   ---------------------------------------------------------
+   Visual DNA: editorial-isometric, black/white/gray with one
+   signature lime-yellow accent. Precise line-art feel,
+   dotted halftone textures, generous whitespace.
+   ========================================================= */
+
+/* ---------- Font faces ----------
+   Display / headings: Outfit (geometric humanist sans) — brand display face.
+   Body / UI: Lato — brand body face.
+   Mono: JetBrains Mono for code / metric chips.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Lato:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* ---------- Brand palette ---------- */
+  --fs-lime:        #D7F078;   /* signature accent, sampled from illustrations */
+  --fs-lime-soft:   #E6F5A3;
+  --fs-lime-deep:   #B8D14A;   /* pressed / hover-dark state */
+  --fs-lime-ink:    #2F3A00;   /* readable text on lime */
+
+  /* Neutrals (sampled from illustration line-art) */
+  --fs-ink:         #2A2D33;   /* primary text / outlines */
+  --fs-ink-soft:    #3F444C;
+  --fs-gray-700:    #5A6068;
+  --fs-gray-500:    #8A9098;
+  --fs-gray-400:    #B4B8BE;
+  --fs-gray-300:    #D4D7DC;
+  --fs-gray-200:    #E6E8EB;
+  --fs-gray-100:    #F1F2F4;
+  --fs-paper:       #FAFAF7;   /* warm off-white — the "page" color */
+  --fs-white:       #FFFFFF;
+
+  /* Semantic */
+  --fs-success:     #7FB23B;   /* derived from lime, darker for contrast */
+  --fs-warning:     #E6A13A;
+  --fs-danger:      #D6513E;
+  --fs-info:        #4A6FA5;
+
+  /* Foreground tokens */
+  --fg-1: var(--fs-ink);
+  --fg-2: var(--fs-ink-soft);
+  --fg-3: var(--fs-gray-500);
+  --fg-muted: var(--fs-gray-400);
+  --fg-on-accent: var(--fs-lime-ink);
+  --fg-inverse: var(--fs-white);
+
+  /* Background tokens */
+  --bg-1: var(--fs-paper);
+  --bg-2: var(--fs-white);
+  --bg-3: var(--fs-gray-100);
+  --bg-inset: var(--fs-gray-200);
+  --bg-ink: var(--fs-ink);
+  --bg-accent: var(--fs-lime);
+
+  /* Borders */
+  --border-1: var(--fs-gray-200);
+  --border-2: var(--fs-gray-300);
+  --border-strong: var(--fs-ink);
+
+  /* Dotted halftone — a signature illustration texture.
+     Use as background-image on ground planes. */
+  --fs-halftone:
+    radial-gradient(var(--fs-gray-300) 1px, transparent 1.2px) 0 0/8px 8px;
+  --fs-halftone-fine:
+    radial-gradient(var(--fs-gray-300) 0.8px, transparent 1px) 0 0/5px 5px;
+
+  /* ---------- Type scale ---------- */
+  --font-sans: 'Lato', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Outfit', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --text-xs:   12px;
+  --text-sm:   14px;
+  --text-base: 16px;
+  --text-md:   18px;
+  --text-lg:   20px;
+  --text-xl:   24px;
+  --text-2xl:  32px;
+  --text-3xl:  44px;
+  --text-4xl:  60px;
+  --text-5xl:  84px;
+
+  --lh-tight: 1.05;
+  --lh-snug:  1.2;
+  --lh-normal:1.45;
+  --lh-loose: 1.65;
+
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.02em;
+  --tracking-label: 0.08em;  /* for ALL-CAPS eyebrow labels */
+
+  /* ---------- Spacing (8pt-ish, slightly relaxed) ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+
+  /* ---------- Radii ---------- */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
+  --radius-pill: 999px;
+
+  /* ---------- Shadows (soft, diffused; never colored) ---------- */
+  --shadow-xs: 0 1px 2px rgba(42,45,51,0.06);
+  --shadow-sm: 0 2px 6px rgba(42,45,51,0.06), 0 1px 2px rgba(42,45,51,0.04);
+  --shadow-md: 0 10px 24px -8px rgba(42,45,51,0.12), 0 2px 6px rgba(42,45,51,0.05);
+  --shadow-lg: 0 24px 48px -16px rgba(42,45,51,0.18);
+  --shadow-inner: inset 0 1px 2px rgba(42,45,51,0.06);
+
+  /* ---------- Motion ---------- */
+  --ease-out: cubic-bezier(.2,.7,.2,1);
+  --ease-in-out: cubic-bezier(.6,.05,.2,.95);
+  --dur-fast: 120ms;
+  --dur-med:  220ms;
+  --dur-slow: 380ms;
+}
+
+/* =========================================================
+   Semantic typography — use THESE classes in product HTML
+   ========================================================= */
+
+html, body {
+  font-family: var(--font-sans);
+  color: var(--fg-1);
+  background: var(--bg-1);
+  font-feature-settings: 'ss01', 'cv11';
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.fs-display-xl, h1.fs-display {
+  font-family: var(--font-display);
+  font-size: var(--text-5xl);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+.fs-h1, h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+.fs-h2, h2 {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+.fs-h3, h3 {
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+  letter-spacing: -0.01em;
+}
+
+.fs-h4, h4 {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+}
+
+.fs-lead {
+  font-size: var(--text-lg);
+  line-height: var(--lh-normal);
+  color: var(--fg-2);
+  text-wrap: pretty;
+}
+
+.fs-body, p {
+  font-size: var(--text-base);
+  line-height: var(--lh-normal);
+  color: var(--fg-2);
+  text-wrap: pretty;
+}
+
+.fs-body-sm, small {
+  font-size: var(--text-sm);
+  line-height: var(--lh-normal);
+  color: var(--fg-3);
+}
+
+.fs-eyebrow {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+
+.fs-mono, code, kbd {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  color: var(--fg-1);
+}
+
+.fs-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-inset);
+  color: var(--fg-2);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.fs-chip--accent { background: var(--fs-lime); color: var(--fs-lime-ink); }
+.fs-chip--ink    { background: var(--fs-ink);  color: var(--fg-inverse); }

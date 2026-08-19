@@ -1,0 +1,1317 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Studio — Funnelspace</title>
+  <meta name="description" content="Beschreibe, was du brauchst — Funnelspace baut. Das AI Studio generiert Funnels, Landingpages, E-Mails und Automationen aus einer Text-Eingabe. Vibe Coding für Coaches, Trainer:innen und Creator:innen." />
+  <link rel="stylesheet" href="colors_and_type.css" />
+  <link rel="stylesheet" href="site.css" />
+  <style>
+    /* ── AI Studio Feature Page ─────────────────────────────── */
+
+    /* Hero */
+    .ai-hero {
+      background: var(--fs-ink); color: #fff;
+      padding: 96px 40px 88px; position: relative; overflow: hidden;
+    }
+    .ai-hero::before {
+      content: ""; position: absolute; inset: 0;
+      background-image: radial-gradient(rgba(215,240,120,0.06) 1px, transparent 1.2px);
+      background-size: 8px 8px; pointer-events: none;
+    }
+    .ai-hero__inner {
+      max-width: 1280px; margin: 0 auto; position: relative;
+      display: grid; grid-template-columns: 1.02fr 1fr; gap: 72px; align-items: center;
+    }
+    .ai-hero__eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--fs-lime);
+      background: rgba(215,240,120,0.1); border: 1px solid rgba(215,240,120,0.3);
+      padding: 6px 12px; border-radius: var(--radius-pill);
+      margin-bottom: 22px;
+    }
+    .ai-hero__eyebrow::before {
+      content: ""; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--fs-lime);
+      animation: ai-pulse 1.6s ease-in-out infinite;
+    }
+    @keyframes ai-pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+    .ai-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(44px, 5.2vw, 72px);
+      font-weight: 700; line-height: 1.04;
+      letter-spacing: -0.03em; text-wrap: balance; color: #fff;
+    }
+    .ai-hero h1 em { font-style: normal; color: var(--fs-lime); }
+    .ai-hero h1 .ai-h1-type {
+      font-style: italic; font-weight: 500;
+      border-bottom: 2px solid rgba(215,240,120,0.5);
+      padding: 0 2px;
+    }
+    .ai-hero__lead {
+      margin-top: 22px; font-size: 19px; line-height: 1.55;
+      color: rgba(255,255,255,0.7); max-width: 540px;
+    }
+    .ai-hero__cta { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+    .ai-hero__proof {
+      margin-top: 24px; display: flex; gap: 20px; flex-wrap: wrap;
+      font-size: 13px; color: rgba(255,255,255,0.5);
+    }
+    .ai-hero__proof span { display: flex; align-items: center; gap: 6px; }
+    .ai-hero__proof span::before {
+      content: ""; width: 10px; height: 10px; border-radius: 50%;
+      background: var(--fs-lime);
+    }
+
+    /* Hero prompt card */
+    .ai-hero__visual {
+      position: relative;
+      background: var(--fs-paper);
+      background-image: radial-gradient(var(--fs-gray-300) 1px, transparent 1.2px);
+      background-size: 10px 10px;
+      border-radius: var(--radius-xl);
+      padding: 22px;
+      display: flex; flex-direction: column; gap: 14px;
+      box-shadow: 0 40px 80px -20px rgba(0,0,0,0.45);
+      min-height: 520px;
+    }
+    .ai-prompt {
+      background: #fff; border: 1px solid var(--border-1);
+      border-radius: var(--radius-lg); padding: 14px 14px 12px;
+      display: flex; flex-direction: column; gap: 8px;
+      box-shadow: var(--shadow-sm);
+    }
+    .ai-prompt__label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--fg-3);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .ai-prompt__label::before {
+      content: ""; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--fs-lime-deep);
+    }
+    .ai-prompt__text {
+      font-family: var(--font-mono); font-size: 13px; line-height: 1.55;
+      color: var(--fs-ink);
+    }
+    .ai-prompt__text .ai-cursor {
+      display: inline-block; width: 8px; height: 15px;
+      background: var(--fs-ink); vertical-align: -2px; margin-left: 2px;
+      animation: ai-blink 1s steps(2) infinite;
+    }
+    @keyframes ai-blink { 0%,50%{opacity:1} 51%,100%{opacity:0} }
+    .ai-prompt__row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 10px; border-top: 1px solid var(--border-1);
+    }
+    .ai-prompt__chips { display: flex; gap: 6px; flex-wrap: wrap; }
+    .ai-prompt__chip {
+      font-size: 10px; font-weight: 600; padding: 3px 8px;
+      border-radius: 999px; background: var(--fs-gray-100); color: var(--fs-ink-soft);
+      display: inline-flex; align-items: center; gap: 4px;
+    }
+    .ai-prompt__chip--lime { background: var(--fs-lime); color: var(--fs-lime-ink); }
+    .ai-prompt__send {
+      background: var(--fs-ink); color: #fff; border-radius: 8px;
+      padding: 6px 10px; font-size: 11px; font-weight: 700;
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+
+    /* Hero output — generated funnel */
+    .ai-out {
+      background: #fff; border: 1px solid var(--border-1);
+      border-radius: var(--radius-lg); overflow: hidden;
+      flex: 1; display: flex; flex-direction: column;
+      box-shadow: var(--shadow-md);
+    }
+    .ai-out__bar {
+      display: flex; align-items: center; gap: 8px;
+      padding: 9px 12px; background: var(--fs-gray-100);
+      border-bottom: 1px solid var(--border-1);
+    }
+    .ai-out__dots { display: flex; gap: 4px; }
+    .ai-out__dots span { width: 9px; height: 9px; border-radius: 50%; background: var(--fs-gray-300); }
+    .ai-out__url {
+      flex: 1; font-family: var(--font-mono); font-size: 11px;
+      color: var(--fg-3); background: #fff; padding: 3px 10px;
+      border-radius: 999px; border: 1px solid var(--border-1);
+      text-align: center;
+    }
+    .ai-out__tag {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 3px 8px; border-radius: 999px;
+      background: var(--fs-lime); color: var(--fs-lime-ink);
+      display: inline-flex; align-items: center; gap: 4px;
+    }
+    .ai-out__body {
+      flex: 1; padding: 22px 22px 18px;
+      display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; align-items: center;
+      background:
+        linear-gradient(to bottom, #fff 0%, #fff 78%, transparent 100%),
+        radial-gradient(var(--fs-gray-200) 1px, transparent 1.2px);
+      background-size: 100% 100%, 6px 6px;
+    }
+    .ai-out__copy h4 {
+      font-family: var(--font-display); font-size: 22px; font-weight: 700;
+      line-height: 1.1; letter-spacing: -0.02em; color: var(--fs-ink);
+    }
+    .ai-out__copy h4 em { font-style: normal; background: var(--fs-lime); padding: 0 4px; border-radius: 4px; color: var(--fs-lime-ink); }
+    .ai-out__copy p { font-size: 12px; color: var(--fg-2); line-height: 1.5; margin-top: 8px; }
+    .ai-out__cta {
+      margin-top: 12px; display: inline-flex; align-items: center; gap: 6px;
+      background: var(--fs-ink); color: #fff; padding: 7px 12px;
+      border-radius: 8px; font-size: 11px; font-weight: 700;
+    }
+    .ai-out__form {
+      background: var(--fs-gray-100); border-radius: var(--radius-md);
+      padding: 12px; display: flex; flex-direction: column; gap: 7px;
+    }
+    .ai-out__form-row { height: 24px; background: #fff; border-radius: 4px; border: 1px solid var(--border-1); }
+    .ai-out__form-btn { height: 30px; background: var(--fs-lime); border-radius: 4px; display: grid; place-items: center; font-size: 11px; font-weight: 700; color: var(--fs-lime-ink); }
+
+    /* Float badges */
+    .ai-hero__badge {
+      position: absolute; background: #fff; color: var(--fs-ink);
+      border-radius: var(--radius-lg); padding: 11px 14px;
+      box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 10px;
+      font-size: 12px;
+    }
+    .ai-hero__badge--tl { top: -16px; right: -12px; }
+    .ai-hero__badge--bl { bottom: -14px; left: -18px; }
+    .ai-hero__badge-dot {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--fs-lime); color: var(--fs-lime-ink);
+      display: grid; place-items: center;
+    }
+    .ai-hero__badge-dot svg { width: 15px; height: 15px; }
+    .ai-hero__badge-label { font-size: 10px; color: var(--fg-3); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 700; }
+    .ai-hero__badge-val { font-size: 13px; font-weight: 700; font-family: var(--font-display); margin-top: 1px; }
+
+    /* Replaces-strip */
+    .ai-replaces {
+      background: rgba(255,255,255,0.04);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 22px 40px;
+    }
+    .ai-replaces__inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+    }
+    .ai-replaces__label { font-size: 12px; color: rgba(255,255,255,0.4); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+    .ai-replaces__items { display: flex; gap: 28px; flex-wrap: wrap; }
+    .ai-replaces__item {
+      font-family: var(--font-display); font-weight: 700; font-size: 16px;
+      color: rgba(255,255,255,0.4); letter-spacing: -0.01em;
+      text-decoration: line-through; text-decoration-color: rgba(215,240,120,0.5);
+      text-decoration-thickness: 2px;
+    }
+
+    /* Shared section */
+    .ai-sec { padding: 104px 40px; }
+    .ai-sec--alt { background: var(--fs-white); }
+    .ai-sec__inner { max-width: 1280px; margin: 0 auto; }
+    .ai-sec__head { max-width: 760px; margin: 0 auto 64px; text-align: center; }
+    .ai-eyebrow {
+      display: inline-block;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--fg-3); margin-bottom: 14px;
+    }
+    .ai-sec__head h2 {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 3.6vw, 52px);
+      font-weight: 700; letter-spacing: -0.03em; line-height: 1.08; text-wrap: balance;
+    }
+    .ai-sec__head h2 em { font-style: normal; background: var(--fs-lime); color: var(--fs-lime-ink); padding: 0 8px; border-radius: 6px; }
+    .ai-sec__head p { margin-top: 16px; font-size: 18px; color: var(--fg-2); line-height: 1.55; }
+
+    /* Big-idea strip: 3 steps under hero */
+    .ai-flow {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+      border-top: 1px solid var(--border-1);
+      border-bottom: 1px solid var(--border-1);
+      background: var(--fs-white);
+    }
+    .ai-flow__item {
+      padding: 44px 40px; position: relative;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .ai-flow__item + .ai-flow__item { border-left: 1px solid var(--border-1); }
+    .ai-flow__step {
+      font-family: var(--font-display); font-size: 14px; font-weight: 700;
+      letter-spacing: 0.04em; color: var(--fg-3);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .ai-flow__step-dot {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--fs-lime); color: var(--fs-lime-ink);
+      display: grid; place-items: center;
+      font-size: 12px; font-weight: 800;
+    }
+    .ai-flow__title { font-family: var(--font-display); font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--fs-ink); }
+    .ai-flow__body { font-size: 14px; color: var(--fg-2); line-height: 1.55; }
+    .ai-flow__tag {
+      align-self: flex-start;
+      font-family: var(--font-mono); font-size: 11px;
+      background: var(--fs-gray-100); color: var(--fs-ink);
+      padding: 3px 8px; border-radius: 4px;
+    }
+
+    /* Benefits grid (6 points) */
+    .ai-benefits {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+      background: var(--border-1); border: 1px solid var(--border-1);
+      border-radius: var(--radius-lg); overflow: hidden;
+    }
+    .ai-benefit {
+      background: var(--fs-white); padding: 36px 32px;
+      display: flex; flex-direction: column; gap: 14px;
+      transition: background var(--dur-med) var(--ease-out);
+    }
+    .ai-benefit:hover { background: var(--fs-paper); }
+    .ai-benefit__icon {
+      width: 44px; height: 44px; border-radius: var(--radius-sm);
+      background: var(--fs-lime); color: var(--fs-lime-ink);
+      display: grid; place-items: center; flex-shrink: 0;
+    }
+    .ai-benefit__icon svg { width: 22px; height: 22px; }
+    .ai-benefit h3 { font-family: var(--font-display); font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+    .ai-benefit p { font-size: 15px; color: var(--fg-2); line-height: 1.55; }
+
+    /* Feature row */
+    .ai-feat {
+      display: grid; grid-template-columns: 1fr 1.15fr; gap: 80px; align-items: center;
+      padding: 88px 0; border-top: 1px solid var(--border-1);
+    }
+    .ai-feat:first-of-type { border-top: none; padding-top: 0; }
+    .ai-feat--flip .ai-feat__media { order: -1; }
+    .ai-feat__eyebrow {
+      display: inline-block;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--fg-3); margin-bottom: 14px;
+    }
+    .ai-feat h3 {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 3vw, 42px);
+      font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; text-wrap: balance;
+    }
+    .ai-feat__body { margin-top: 16px; font-size: 17px; color: var(--fg-2); line-height: 1.55; }
+    .ai-feat ul { list-style: none; padding: 0; margin-top: 22px; display: flex; flex-direction: column; gap: 12px; }
+    .ai-feat li { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; color: var(--fg-2); line-height: 1.5; }
+    .ai-feat li svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 3px; color: var(--fs-lime-deep); }
+    .ai-feat__media {
+      background: var(--fs-paper);
+      background-image: radial-gradient(var(--fs-gray-300) 1px, transparent 1.2px);
+      background-size: 10px 10px;
+      border-radius: var(--radius-xl); padding: 28px;
+      border: 1px solid var(--border-1);
+      aspect-ratio: 5/4; position: relative; overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ── Mockup: Chat — prompt to build ─────────────────────── */
+    .mk-chat {
+      background: #fff; border-radius: var(--radius-lg);
+      border: 1px solid var(--border-1);
+      width: 100%; height: 100%;
+      padding: 14px; display: flex; flex-direction: column; gap: 10px;
+      box-shadow: var(--shadow-md); overflow: hidden;
+    }
+    .mk-chat__head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-bottom: 10px; border-bottom: 1px solid var(--border-1);
+    }
+    .mk-chat__title {
+      font-family: var(--font-display); font-weight: 700; font-size: 14px;
+      display: flex; align-items: center; gap: 8px; letter-spacing: -0.01em;
+    }
+    .mk-chat__title .mk-chat__spark {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--fs-lime); display: grid; place-items: center;
+    }
+    .mk-chat__title .mk-chat__spark svg { width: 11px; height: 11px; color: var(--fs-lime-ink); }
+    .mk-chat__status {
+      font-family: var(--font-mono); font-size: 10px; color: var(--fg-3);
+      display: flex; align-items: center; gap: 5px;
+    }
+    .mk-chat__status::before {
+      content: ""; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--fs-success);
+    }
+    .mk-chat__body { display: flex; flex-direction: column; gap: 8px; flex: 1; min-height: 0; overflow: hidden; }
+    .mk-msg {
+      display: flex; gap: 8px; align-items: flex-start;
+    }
+    .mk-msg__av {
+      width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+      background: var(--fs-ink); color: #fff;
+      display: grid; place-items: center; font-size: 9px; font-weight: 700;
+    }
+    .mk-msg--ai .mk-msg__av { background: var(--fs-lime); color: var(--fs-lime-ink); }
+    .mk-msg__bubble {
+      background: var(--fs-gray-100); border-radius: 10px;
+      padding: 8px 10px; font-size: 11px; line-height: 1.45;
+      color: var(--fs-ink); max-width: 82%;
+    }
+    .mk-msg--user .mk-msg__bubble { background: var(--fs-ink); color: #fff; }
+    .mk-msg--ai .mk-msg__bubble { background: var(--fs-paper); border: 1px solid var(--border-1); }
+    .mk-msg__bubble b { font-weight: 700; }
+    .mk-msg__artifact {
+      margin-top: 6px; display: flex; gap: 6px; flex-wrap: wrap;
+    }
+    .mk-art {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #fff; border: 1px solid var(--border-1);
+      border-radius: 6px; padding: 4px 7px; font-size: 10px; font-weight: 600;
+      color: var(--fs-ink);
+    }
+    .mk-art svg { width: 11px; height: 11px; color: var(--fs-lime-deep); }
+    .mk-chat__typing {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 6px 10px; background: var(--fs-paper);
+      border: 1px solid var(--border-1); border-radius: 10px;
+    }
+    .mk-chat__typing span {
+      width: 5px; height: 5px; border-radius: 50%; background: var(--fs-gray-500);
+      animation: mk-bounce 1.1s infinite ease-in-out;
+    }
+    .mk-chat__typing span:nth-child(2) { animation-delay: 0.15s; }
+    .mk-chat__typing span:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes mk-bounce { 0%,80%,100%{transform:translateY(0);opacity:0.4} 40%{transform:translateY(-4px);opacity:1} }
+    .mk-chat__input {
+      background: var(--fs-gray-100); border-radius: 10px;
+      padding: 9px 10px; display: flex; align-items: center; gap: 8px;
+      border: 1px solid var(--border-1);
+    }
+    .mk-chat__input-text {
+      flex: 1; font-size: 11px; color: var(--fg-3);
+      font-family: var(--font-mono);
+    }
+    .mk-chat__input-send {
+      width: 22px; height: 22px; border-radius: 6px;
+      background: var(--fs-ink); display: grid; place-items: center;
+    }
+    .mk-chat__input-send svg { width: 11px; height: 11px; color: #fff; }
+
+    /* ── Mockup: Inspector — select & tweak ─────────────────── */
+    .mk-insp {
+      background: #fff; border-radius: var(--radius-lg);
+      border: 1px solid var(--border-1);
+      width: 100%; height: 100%; padding: 0;
+      display: grid; grid-template-columns: 1.3fr 1fr;
+      box-shadow: var(--shadow-md); overflow: hidden;
+    }
+    .mk-insp__canvas {
+      background: var(--fs-paper);
+      background-image: radial-gradient(var(--fs-gray-300) 1px, transparent 1.2px);
+      background-size: 7px 7px;
+      padding: 18px 16px; display: flex; flex-direction: column; gap: 10px;
+      border-right: 1px solid var(--border-1);
+      position: relative; overflow: hidden;
+    }
+    .mk-insp__page {
+      background: #fff; border-radius: 8px; padding: 14px 14px 12px;
+      box-shadow: 0 4px 12px -4px rgba(0,0,0,0.08);
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .mk-insp__head {
+      font-family: var(--font-display); font-size: 15px; font-weight: 700;
+      letter-spacing: -0.01em; line-height: 1.15; color: var(--fs-ink);
+    }
+    .mk-insp__sub { font-size: 10px; color: var(--fg-2); line-height: 1.4; }
+    .mk-insp__block {
+      height: 36px; background: var(--fs-gray-100); border-radius: 6px;
+      position: relative;
+    }
+    .mk-insp__block--selected {
+      outline: 2px solid var(--fs-lime-deep); outline-offset: 2px;
+      background: var(--fs-lime-soft);
+    }
+    .mk-insp__block--selected::after {
+      content: "Überschrift"; position: absolute; top: -18px; left: -2px;
+      font-family: var(--font-mono); font-size: 9px; padding: 2px 6px;
+      background: var(--fs-ink); color: #fff; border-radius: 3px;
+      letter-spacing: 0.04em; text-transform: uppercase; font-weight: 700;
+    }
+    .mk-insp__btn {
+      align-self: flex-start; height: 26px; padding: 0 12px;
+      background: var(--fs-ink); color: #fff; border-radius: 4px;
+      display: grid; place-items: center; font-size: 10px; font-weight: 700;
+    }
+    .mk-insp__panel {
+      background: #fff; padding: 14px;
+      display: flex; flex-direction: column; gap: 12px;
+      overflow: hidden;
+    }
+    .mk-insp__panel-head {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--fg-3);
+      display: flex; align-items: center; gap: 6px;
+      padding-bottom: 8px; border-bottom: 1px solid var(--border-1);
+    }
+    .mk-insp__panel-head::before {
+      content: ""; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--fs-lime-deep);
+    }
+    .mk-insp__field { display: flex; flex-direction: column; gap: 5px; }
+    .mk-insp__field-lbl { font-size: 10px; font-weight: 700; color: var(--fs-ink-soft); }
+    .mk-insp__field-input {
+      padding: 6px 8px; background: var(--fs-gray-100); border-radius: 4px;
+      font-family: var(--font-mono); font-size: 10px; color: var(--fs-ink);
+      line-height: 1.4;
+    }
+    .mk-insp__ai-row {
+      display: flex; gap: 6px; margin-top: 2px;
+    }
+    .mk-insp__ai-chip {
+      font-size: 9px; font-weight: 700; padding: 3px 7px;
+      border-radius: 999px; background: var(--fs-lime); color: var(--fs-lime-ink);
+      display: inline-flex; align-items: center; gap: 4px;
+      letter-spacing: 0.02em;
+    }
+    .mk-insp__ai-chip svg { width: 9px; height: 9px; }
+    .mk-insp__ai-chip--ghost {
+      background: var(--fs-gray-100); color: var(--fs-ink-soft);
+    }
+    .mk-insp__history {
+      margin-top: auto; padding-top: 10px; border-top: 1px solid var(--border-1);
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .mk-insp__hist-row {
+      display: flex; align-items: center; gap: 6px; font-size: 10px; color: var(--fg-2);
+    }
+    .mk-insp__hist-row svg { width: 10px; height: 10px; flex-shrink: 0; color: var(--fs-gray-500); }
+    .mk-insp__hist-row b { color: var(--fs-ink); font-weight: 700; }
+
+    /* ── Mockup: Command palette / multi-output ─────────────── */
+    .mk-palette {
+      background: #fff; border-radius: var(--radius-lg);
+      border: 1px solid var(--border-1);
+      width: 100%; height: 100%; padding: 0;
+      display: flex; flex-direction: column;
+      box-shadow: var(--shadow-md); overflow: hidden;
+    }
+    .mk-palette__input {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 16px; border-bottom: 1px solid var(--border-1);
+      background: var(--fs-gray-100);
+    }
+    .mk-palette__icon {
+      width: 22px; height: 22px; border-radius: 6px;
+      background: var(--fs-lime); display: grid; place-items: center;
+    }
+    .mk-palette__icon svg { width: 12px; height: 12px; color: var(--fs-lime-ink); }
+    .mk-palette__text {
+      flex: 1; font-family: var(--font-mono); font-size: 12px;
+      color: var(--fs-ink); line-height: 1.3;
+    }
+    .mk-palette__text .mk-typed { border-right: 2px solid var(--fs-ink); animation: ai-blink 1s steps(2) infinite; padding-right: 2px; }
+    .mk-palette__shortcut {
+      font-family: var(--font-mono); font-size: 10px;
+      background: #fff; border: 1px solid var(--border-1);
+      padding: 2px 6px; border-radius: 4px; color: var(--fg-3);
+    }
+    .mk-palette__label {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--fg-3);
+      padding: 10px 16px 6px;
+    }
+    .mk-palette__list { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+    .mk-palette__item {
+      display: grid; grid-template-columns: 28px 1fr auto; gap: 10px;
+      padding: 9px 16px; align-items: center;
+      border-top: 1px solid var(--border-1);
+    }
+    .mk-palette__item:first-of-type { border-top: none; }
+    .mk-palette__item--active { background: var(--fs-lime); }
+    .mk-palette__item--active .mk-palette__dot { background: var(--fs-lime-ink); color: var(--fs-lime); }
+    .mk-palette__dot {
+      width: 26px; height: 26px; border-radius: 7px;
+      background: var(--fs-gray-100); display: grid; place-items: center;
+    }
+    .mk-palette__dot svg { width: 13px; height: 13px; color: var(--fs-ink); }
+    .mk-palette__name { font-size: 12px; font-weight: 700; color: var(--fs-ink); line-height: 1.2; }
+    .mk-palette__meta { font-size: 10px; color: var(--fg-3); margin-top: 2px; line-height: 1.3; }
+    .mk-palette__kind {
+      font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+      color: var(--fs-ink-soft); white-space: nowrap;
+    }
+    .mk-palette__item--active .mk-palette__name,
+    .mk-palette__item--active .mk-palette__meta,
+    .mk-palette__item--active .mk-palette__kind { color: var(--fs-lime-ink); }
+    .mk-palette__foot {
+      padding: 10px 16px; border-top: 1px solid var(--border-1);
+      display: flex; align-items: center; gap: 14px;
+      font-size: 10px; color: var(--fg-3);
+    }
+    .mk-palette__foot span { display: inline-flex; align-items: center; gap: 5px; }
+    .mk-palette__foot kbd {
+      font-family: var(--font-mono); font-size: 9px;
+      background: var(--fs-gray-100); border: 1px solid var(--border-1);
+      padding: 1px 5px; border-radius: 3px; color: var(--fs-ink);
+    }
+
+    /* ── Prompt Gallery ─────────────────────────────────────── */
+    .ai-gallery {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    .ai-gallery__card {
+      background: #fff; border: 1px solid var(--border-1);
+      border-radius: var(--radius-lg); overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: transform var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
+    }
+    .ai-gallery__card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .ai-gallery__kind {
+      font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 12px 20px; color: var(--fg-3);
+      display: flex; align-items: center; gap: 8px;
+      border-bottom: 1px solid var(--border-1);
+    }
+    .ai-gallery__kind::before {
+      content: ""; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--fs-lime-deep);
+    }
+    .ai-gallery__prompt {
+      padding: 20px 22px; font-family: var(--font-display);
+      font-size: 17px; font-weight: 500; line-height: 1.35;
+      color: var(--fs-ink); letter-spacing: -0.01em;
+      min-height: 150px;
+    }
+    .ai-gallery__prompt::before {
+      content: "„"; font-size: 28px; font-family: var(--font-display);
+      font-weight: 700; color: var(--fs-lime-deep); margin-right: 2px;
+      vertical-align: -4px;
+    }
+    .ai-gallery__prompt::after {
+      content: "\""; color: var(--fs-lime-deep); font-weight: 700;
+    }
+    .ai-gallery__out {
+      padding: 16px 22px; border-top: 1px solid var(--border-1);
+      background: var(--fs-paper);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px;
+    }
+    .ai-gallery__out-left {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12px; color: var(--fg-2);
+    }
+    .ai-gallery__out-left svg { width: 15px; height: 15px; color: var(--fs-lime-deep); }
+    .ai-gallery__out-time { font-family: var(--font-mono); font-size: 11px; color: var(--fs-ink); font-weight: 700; }
+
+    /* ── Guardrails — 4 cards ─────────────────────────── */
+    .ai-guard {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    }
+    .ai-guard__card {
+      background: #fff; border: 1px solid var(--border-1);
+      border-radius: var(--radius-lg); padding: 28px 24px;
+      display: flex; flex-direction: column; gap: 12px;
+      transition: transform var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
+    }
+    .ai-guard__card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .ai-guard__icon {
+      width: 40px; height: 40px; border-radius: var(--radius-sm);
+      background: var(--fs-ink); color: var(--fs-lime);
+      display: grid; place-items: center;
+    }
+    .ai-guard__icon svg { width: 20px; height: 20px; }
+    .ai-guard__card h4 { font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+    .ai-guard__card p { font-size: 13px; color: var(--fg-2); line-height: 1.5; }
+
+    /* Testimonials */
+    .ai-testi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+    .ai-testi {
+      background: var(--fs-white); border: 1px solid var(--border-1);
+      border-radius: var(--radius-lg); padding: 28px;
+      display: flex; flex-direction: column; gap: 18px;
+    }
+    .ai-testi--dark { background: var(--fs-ink); border-color: var(--fs-ink); }
+    .ai-testi--lime { background: var(--fs-lime); border-color: var(--fs-lime); }
+    .ai-testi__stars { color: var(--fs-lime-deep); font-size: 15px; letter-spacing: 2px; }
+    .ai-testi--dark .ai-testi__stars { color: var(--fs-lime); }
+    .ai-testi--lime .ai-testi__stars { color: var(--fs-lime-ink); }
+    .ai-testi blockquote {
+      font-size: 17px; line-height: 1.5; flex: 1;
+      font-family: var(--font-display); font-weight: 500; letter-spacing: -0.01em;
+      border: none; padding: 0; margin: 0; color: var(--fg-1);
+    }
+    .ai-testi--dark blockquote { color: #fff; }
+    .ai-testi--lime blockquote { color: var(--fs-lime-ink); }
+    .ai-testi__who { display: flex; align-items: center; gap: 12px; }
+    .ai-testi__avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--fs-lime); color: var(--fs-lime-ink);
+      display: grid; place-items: center;
+      font-size: 13px; font-weight: 700; flex-shrink: 0;
+    }
+    .ai-testi--lime .ai-testi__avatar { background: var(--fs-ink); color: #fff; }
+    .ai-testi--dark .ai-testi__avatar { background: #fff; color: var(--fs-ink); }
+    .ai-testi__name { font-size: 14px; font-weight: 700; }
+    .ai-testi--dark .ai-testi__name { color: #fff; }
+    .ai-testi__role { font-size: 12px; color: var(--fg-3); margin-top: 2px; }
+    .ai-testi--dark .ai-testi__role { color: rgba(255,255,255,0.5); }
+    .ai-testi--lime .ai-testi__role { color: rgba(47,58,0,0.65); }
+    .ai-testi__stat {
+      display: flex; align-items: baseline; gap: 8px;
+      padding-top: 16px; border-top: 1px solid var(--border-1);
+    }
+    .ai-testi--dark .ai-testi__stat { border-top-color: rgba(255,255,255,0.15); }
+    .ai-testi--lime .ai-testi__stat { border-top-color: rgba(47,58,0,0.15); }
+    .ai-testi__stat-num { font-family: var(--font-display); font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+    .ai-testi--dark .ai-testi__stat-num { color: var(--fs-lime); }
+    .ai-testi__stat-lbl { font-size: 12px; color: var(--fg-3); line-height: 1.3; }
+    .ai-testi--dark .ai-testi__stat-lbl { color: rgba(255,255,255,0.55); }
+    .ai-testi--lime .ai-testi__stat-lbl { color: rgba(47,58,0,0.7); }
+
+    /* FAQ */
+    .ai-faq { max-width: 820px; margin: 0 auto; }
+    .ai-faq__item { border-bottom: 1px solid var(--border-1); }
+    .ai-faq__item:first-child { border-top: 1px solid var(--border-1); }
+    .ai-faq__btn {
+      width: 100%; background: none; border: none; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 0; gap: 20px; text-align: left;
+      font-family: var(--font-display); font-size: 18px; font-weight: 600;
+      color: var(--fs-ink); letter-spacing: -0.01em;
+    }
+    .ai-faq__icon {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--fs-gray-100); flex-shrink: 0;
+      display: grid; place-items: center;
+      font-size: 18px; color: var(--fs-ink);
+      transition: background var(--dur-fast), transform var(--dur-med) var(--ease-out);
+    }
+    .ai-faq__item.open .ai-faq__icon { background: var(--fs-lime); transform: rotate(45deg); }
+    .ai-faq__body {
+      font-size: 15px; color: var(--fg-2); line-height: 1.65;
+      overflow: hidden; max-height: 0;
+      transition: max-height var(--dur-slow) var(--ease-out), padding var(--dur-slow) var(--ease-out);
+    }
+    .ai-faq__item.open .ai-faq__body { max-height: 500px; padding-bottom: 24px; }
+
+    /* Final CTA */
+    .ai-final {
+      background: var(--fs-ink); padding: 104px 40px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .ai-final::before {
+      content: ""; position: absolute; inset: 0;
+      background-image: radial-gradient(rgba(215,240,120,0.06) 1px, transparent 1.2px);
+      background-size: 8px 8px;
+    }
+    .ai-final__inner { position: relative; max-width: 760px; margin: 0 auto; }
+    .ai-final h2 {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 700; letter-spacing: -0.03em; color: #fff; text-wrap: balance;
+    }
+    .ai-final h2 em { font-style: normal; color: var(--fs-lime); }
+    .ai-final p { margin: 16px auto 0; font-size: 18px; color: rgba(255,255,255,0.6); }
+    .ai-final__btns { display: flex; gap: 12px; justify-content: center; margin-top: 36px; flex-wrap: wrap; }
+
+    /* ── Responsive ──────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .ai-hero__inner { grid-template-columns: 1fr; gap: 48px; }
+      .ai-hero__badge--tl { right: 0; top: -12px; }
+      .ai-hero__badge--bl { left: 0; bottom: -10px; }
+      .ai-flow { grid-template-columns: 1fr; }
+      .ai-flow__item + .ai-flow__item { border-left: none; border-top: 1px solid var(--border-1); }
+      .ai-benefits { grid-template-columns: 1fr 1fr; }
+      .ai-feat { grid-template-columns: 1fr; gap: 40px; }
+      .ai-feat--flip .ai-feat__media { order: 0; }
+      .ai-gallery { grid-template-columns: 1fr 1fr; }
+      .ai-guard { grid-template-columns: 1fr 1fr; }
+      .ai-testi-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .ai-hero { padding: 64px 22px 64px; }
+      .ai-sec { padding: 72px 22px; }
+      .ai-replaces { padding: 18px 22px; }
+      .ai-flow__item { padding: 32px 22px; }
+      .ai-benefits { grid-template-columns: 1fr; }
+      .ai-gallery { grid-template-columns: 1fr; }
+      .ai-guard { grid-template-columns: 1fr; }
+      .ai-final { padding: 72px 22px; }
+      .mk-insp { grid-template-columns: 1fr; }
+      .nav__links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="Nav.jsx"></script>
+  <script type="text/babel" src="Footer.jsx"></script>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    /* ── Icons ─────────────────────────────────────────────── */
+    const Icon = ({ d, size = 22 }) => (
+      <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">{d}</svg>
+    );
+    const ISpark = ({size=22}) => <Icon size={size} d={<><path d="M12 3v4"/><path d="M12 17v4"/><path d="M3 12h4"/><path d="M17 12h4"/><path d="M5.6 5.6l2.8 2.8"/><path d="M15.6 15.6l2.8 2.8"/><path d="M5.6 18.4l2.8-2.8"/><path d="M15.6 8.4l2.8-2.8"/></>} />;
+    const IWand = ({size=22}) => <Icon size={size} d={<><path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/><path d="M17.8 11.8L19 13"/><path d="M15 9h0"/><path d="M17.8 6.2L19 5"/><path d="M3 21l9-9"/><path d="M12.2 6.2L11 5"/></>} />;
+    const IType = ({size=22}) => <Icon size={size} d={<><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></>} />;
+    const ILayout = ({size=22}) => <Icon size={size} d={<><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></>} />;
+    const IRepeat = ({size=22}) => <Icon size={size} d={<><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></>} />;
+    const IBrand = ({size=22}) => <Icon size={size} d={<><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></>} />;
+    const IShield = ({size=22}) => <Icon size={size} d={<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>} />;
+    const ILock = ({size=22}) => <Icon size={size} d={<><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></>} />;
+    const IGit = ({size=22}) => <Icon size={size} d={<><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="12" r="2.5"/><path d="M6 8.5v7"/><path d="M18 9.5V8a2 2 0 0 0-2-2H9"/><path d="M9 14v-1"/></>} />;
+    const IEye = ({size=22}) => <Icon size={size} d={<><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></>} />;
+    const ICheck = ({size=18}) => <Icon size={size} d={<polyline points="20 6 9 17 4 12"/>} />;
+    const IArrow = ({size=16}) => <Icon size={size} d={<><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></>} />;
+    const ISend = ({size=12}) => <Icon size={size} d={<><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></>} />;
+    const IFunnel = ({size=13}) => <Icon size={size} d={<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>} />;
+    const IMail = ({size=13}) => <Icon size={size} d={<><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></>} />;
+    const IPage = ({size=13}) => <Icon size={size} d={<><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></>} />;
+    const IFlow = ({size=13}) => <Icon size={size} d={<><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></>} />;
+    const IClock = ({size=10}) => <Icon size={size} d={<><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></>} />;
+    const IUndo = ({size=10}) => <Icon size={size} d={<><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></>} />;
+
+    /* ── Content ──────────────────────────────────────────── */
+
+    const REPLACES = ['ChatGPT-Bastelei', 'Canva + Zapier', 'Copy-Agenturen', 'Webflow + Figma', 'Freelance-Coder:innen'];
+
+    const BENEFITS = [
+      { i: <IType />, t: 'Text rein, fertige Seite raus', d: 'Beschreibe dein Produkt in einem Satz. Du bekommst Landingpage, Formular und Dankeseite — direkt bearbeitbar.' },
+      { i: <IWand />, t: 'Kein Prompt-Studium nötig', d: 'Dein Studio versteht „mach die Headline knackiger" genauso wie „bau mir ein Webinar-Funnel". Keine Tricks, kein Jailbreaking.' },
+      { i: <IRepeat />, t: 'Iterieren in Sekunden', d: 'Klick auf jedes Element, sag, was anders soll. Die KI schreibt, layoutet und stylt neu — ohne dass du ein Template antastest.' },
+      { i: <IBrand />, t: 'Deine Marke, nicht generisch', d: 'Lädst du Farben, Fonts und Tonalität einmal hoch — alles Generierte klingt und sieht nach dir aus. Kein AI-Slop.' },
+      { i: <ILayout />, t: 'Nicht nur Seiten — ganze Funnels', d: 'Opt-In, Delivery, E-Mail-Sequenz, Checkout: Ein Prompt generiert die komplette Flow-Struktur, verknüpft im CRM.' },
+      { i: <IShield />, t: 'Nichts geht ohne dich live', d: 'Alles bleibt Entwurf, bis du es veröffentlichst. Keine versteckten Publishing-Aktionen, keine Datenlecks in fremde Modelle.' },
+    ];
+
+    const FLOW = [
+      { step: '01', title: 'Beschreibe dein Angebot', body: 'Ein Satz reicht: Produkt, Zielgruppe, Ziel. Je mehr Kontext du gibst, desto präziser das Ergebnis — aber weniger ist meist genug.', tag: 'Textfeld · 1 Prompt' },
+      { step: '02', title: 'Studio baut live', body: 'Headline, Subline, Sektionen, Formular, CTA, Farben — kohärent aus deiner Marke generiert. In unter 60 Sekunden.', tag: '~45 Sek. Build-Zeit' },
+      { step: '03', title: 'Du feilst, Studio hört zu', body: 'Wähle ein Element, sag, was anders soll. Inline-Edits, Version-History, Publish-Button. Fertig heißt hier: auf deiner Domain.', tag: 'Inline-Editing' },
+    ];
+
+    const GUARD = [
+      { i: <IEye />, t: 'Alles lesbar bleibt', d: 'Du siehst jederzeit, was generiert wurde. Keine Blackbox — jeder Block hat Prompt, Quelle und Editierbarkeit.' },
+      { i: <IGit />, t: 'Versionen & Rollback', d: 'Jede Änderung ist ein Schritt zurück. Vergleiche Entwürfe, stelle Versionen wieder her — auch Wochen später.' },
+      { i: <ILock />, t: 'Daten bleiben bei dir', d: 'Prompts und Inhalte werden nicht zum Training fremder Modelle verwendet. Server in der EU.' },
+      { i: <IShield />, t: 'Brand-Safe by Default', d: 'Regeln für verbotene Claims, Pflicht-Disclaimer und Tonalität. Dein Coach-Code of Conduct zählt mit.' },
+    ];
+
+    const GALLERY = [
+      { kind: 'Funnel', prompt: 'Baue mir einen 3-Tages-Challenge-Funnel für Achtsamkeits-Coaches. Opt-In, tägliche Mail, Verkaufsseite für 47€-Angebot.', out: '1 Landing · 4 Mails · 1 Checkout', time: '52 Sek.' },
+      { kind: 'Landingpage', prompt: 'Seite für mein Gruppen-Coaching „Launch in 6 Wochen". Zielgruppe: Solo-Coaches mit erstem Produkt. Ton: klar, keine Buzzwords.', out: '7 Sektionen · 1 Formular', time: '38 Sek.' },
+      { kind: 'E-Mail-Sequenz', prompt: 'Nurture-Sequenz für Webinar-Anmeldungen: 4 Mails, von Erinnerung bis Replay. Warm, ohne Dringlichkeits-Theater.', out: '4 Mails · 1 Automation', time: '29 Sek.' },
+      { kind: 'Sektion', prompt: 'Füg eine Testimonial-Sektion hinzu, mit 3 Stimmen aus meinem CRM-Tag „Alumni 2025". Zwei Absätze, Ergebnis-Zahl.', out: '1 Sektion · Live-Daten', time: '11 Sek.' },
+      { kind: 'Copy-Tweak', prompt: 'Die Headline klingt zu werblich. Mach sie konkreter, mit einem konkreten Ergebnis in Zahlen — aber ohne zu übertreiben.', out: '3 Varianten · A/B-Test', time: '8 Sek.' },
+      { kind: 'Automation', prompt: 'Wenn Tag „Kund:in-Premium" gesetzt wird → VIP-Welcome-Mail, Zugang zum Bonus-Kurs, Slack-Einladung für Kolleg:innen.', out: '1 Flow · 3 Aktionen', time: '14 Sek.' },
+    ];
+
+    const TESTIMONIALS = [
+      {
+        quote: '„Ich habe meinen Launch-Funnel zwischen zwei Kaffees gebaut. Was früher ein Wochenende und eine Canva-Abo war, sind jetzt 20 Minuten im Studio."',
+        name: 'Lena Osterwald', role: 'Business-Mentorin · Köln', initials: 'LO',
+        stat: '20 Min.', statLbl: 'Vom Prompt bis zum Live-Funnel',
+        tone: 'dark',
+      },
+      {
+        quote: '„Das Beste: Es klingt nach mir, nicht nach ChatGPT. Ich hab Tonalität und Worte einmal eingerichtet — jetzt schreibt das Studio wie ich."',
+        name: 'Till Ahrens', role: 'Copywriter & Coach · Hamburg', initials: 'TA',
+        stat: '0 × „unlock"', statLbl: 'keine AI-Floskeln mehr im Output',
+        tone: 'lime',
+      },
+      {
+        quote: '„Ich bin nicht technisch. Das Studio fragt mich nach Zielgruppe und Versprechen — dann baut es. Fehlt was, markiere ich es und sage es. Das war\'s."',
+        name: 'Priya Shankar', role: 'Ernährungstherapeutin', initials: 'PS',
+        stat: '4 Funnels', statLbl: 'in der ersten Woche — alleine gebaut',
+        tone: 'light',
+      },
+    ];
+
+    const FAQS = [
+      { q: 'Ist „Vibe Coding" nur ein Buzzword?', a: 'Wir meinen es wörtlich: Du beschreibst das Gefühl, das Ergebnis und den Kontext — das Studio übersetzt in fertige Seiten, Formulare und Flows. Du schreibst keine Prompts, du erklärst dein Business. Wer will, geht tief (Custom-Prompts, Brand-Dateien, eigene Blöcke). Wer nicht will, muss nicht.' },
+      { q: 'Welches Modell steckt darunter?', a: 'Das Studio nutzt eine Kombination aus Claude (Anthropic) für Copy und Struktur sowie eigenen Layout-Modellen für das Design-System. Welches Modell zum Einsatz kommt, entscheidet die Aufgabe automatisch — du bekommst das beste Ergebnis pro Schritt.' },
+      { q: 'Werden meine Daten zum Training verwendet?', a: 'Nein. Prompts, Inhalte, CRM-Daten und hochgeladene Brand-Dateien werden nicht zum Modell-Training genutzt — weder von uns noch von Drittanbietern. Alle Inferenz-Requests laufen über EU-Server mit AV-Vertrag.' },
+      { q: 'Kann ich bestehende Seiten nachträglich „vibe-coden"?', a: 'Ja. Jede bestehende Seite, jeder Funnel, jede E-Mail kann ins Studio übernommen werden. Du bekommst den gleichen Inline-Edit-Modus und alle KI-Tweaks — ohne dass das Original gelöscht wird.' },
+      { q: 'Was passiert, wenn die KI etwas Dummes macht?', a: 'Jede Änderung ist versioniert und umkehrbar. Du kannst pro Element zurücksetzen, den ganzen Entwurf rollbacken oder eine Version als „goldenen Stand" markieren. Nichts geht live, bis du bewusst veröffentlichst.' },
+      { q: 'Wie sieht es mit DSGVO und rechtlichen Claims aus?', a: 'Das Studio blockiert Heilsversprechen, unbelegte Umsatz-Claims und andere klassische Abmahn-Fallen automatisch. Pflicht-Disclaimer für Coaching, Beratung oder Gesundheit werden vorgeschlagen. Du entscheidest, was bleibt.' },
+      { q: 'Ist das AI Studio in jedem Plan enthalten?', a: 'Starter: 50 KI-Generierungen pro Monat. Business: unbegrenzt. Enterprise: unbegrenzt plus eigenes Brand-Modell, das auf deinen bisherigen Texten trainiert wird. Eine Generierung = ein Prompt, egal wie viele Blöcke.' },
+    ];
+
+    /* ── Hero: typing prompt ──────────────────────────────── */
+    const HERO_PROMPT = 'Baue mir einen Webinar-Funnel für mein Coaching „Freischwimmer". Zielgruppe: Angestellte, die sich selbstständig machen wollen.';
+    const TypingPrompt = () => {
+      const [i, setI] = useState(0);
+      useEffect(() => {
+        if (i >= HERO_PROMPT.length) return;
+        const t = setTimeout(() => setI(i + 1), i < 30 ? 55 : 28);
+        return () => clearTimeout(t);
+      }, [i]);
+      return (<>{HERO_PROMPT.slice(0, i)}<span className="ai-cursor"/></>);
+    };
+
+    /* ── Sections ─────────────────────────────────────────── */
+
+    const Hero = () => (
+      <>
+        <section className="ai-hero">
+          <div className="ai-hero__inner">
+            <div>
+              <span className="ai-hero__eyebrow">AI Studio · Beta</span>
+              <h1>Schreib's hin. <em>Funnelspace baut's.</em></h1>
+              <p className="ai-hero__lead">
+                Das AI Studio ist Vibe Coding für Coaches und Creator:innen: Beschreibe dein Angebot —
+                bekomm zurück eine fertige Landingpage, Funnel, E-Mail-Sequenz oder Automation.
+                Markenkonform, DSGVO-sauber, jederzeit editierbar.
+              </p>
+              <div className="ai-hero__cta">
+                <a href="#signup" className="btn btn--primary btn-lg">Kostenlos testen</a>
+                <a href="#demo" className="btn btn--ghost btn-lg" style={{borderColor:'rgba(255,255,255,0.3)', color:'#fff'}}>2-Min-Demo sehen</a>
+              </div>
+              <div className="ai-hero__proof">
+                <span>50 Generierungen gratis</span>
+                <span>Keine Kreditkarte nötig</span>
+                <span>Server in DE · EU-Inferenz</span>
+              </div>
+            </div>
+            <div className="ai-hero__visual">
+              <div className="ai-prompt">
+                <div className="ai-prompt__label">Du sagst</div>
+                <div className="ai-prompt__text"><TypingPrompt /></div>
+                <div className="ai-prompt__row">
+                  <div className="ai-prompt__chips">
+                    <span className="ai-prompt__chip ai-prompt__chip--lime">Brand: Freischwimmer</span>
+                    <span className="ai-prompt__chip">de-DE</span>
+                    <span className="ai-prompt__chip">Ton: warm</span>
+                  </div>
+                  <span className="ai-prompt__send"><ISend />Bauen</span>
+                </div>
+              </div>
+              <div className="ai-out">
+                <div className="ai-out__bar">
+                  <div className="ai-out__dots"><span/><span/><span/></div>
+                  <div className="ai-out__url">freischwimmer.coach/webinar</div>
+                  <span className="ai-out__tag">Live</span>
+                </div>
+                <div className="ai-out__body">
+                  <div className="ai-out__copy">
+                    <h4>In 90 Tagen <em>raus aus dem Hamsterrad</em>, rein in dein Business.</h4>
+                    <p>Kostenloses Webinar für Angestellte, die seit Jahren wissen: Das war's nicht.</p>
+                    <span className="ai-out__cta">Platz sichern <IArrow size={11}/></span>
+                  </div>
+                  <div className="ai-out__form">
+                    <div className="ai-out__form-row"/>
+                    <div className="ai-out__form-row"/>
+                    <div className="ai-out__form-btn">Jetzt anmelden</div>
+                  </div>
+                </div>
+              </div>
+              <div className="ai-hero__badge ai-hero__badge--tl">
+                <div className="ai-hero__badge-dot"><ISpark size={16}/></div>
+                <div>
+                  <div className="ai-hero__badge-label">Build-Zeit</div>
+                  <div className="ai-hero__badge-val">52 Sekunden</div>
+                </div>
+              </div>
+              <div className="ai-hero__badge ai-hero__badge--bl">
+                <div>
+                  <div className="ai-hero__badge-label">Generiert</div>
+                  <div className="ai-hero__badge-val">7 Sektionen · 4 Mails</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div className="ai-replaces">
+          <div className="ai-replaces__inner">
+            <span className="ai-replaces__label">Ersetzt</span>
+            <div className="ai-replaces__items">
+              {REPLACES.map(r => <span key={r} className="ai-replaces__item">{r}</span>)}
+            </div>
+          </div>
+        </div>
+      </>
+    );
+
+    const Flow = () => (
+      <div className="ai-flow">
+        {FLOW.map(f => (
+          <div key={f.step} className="ai-flow__item">
+            <div className="ai-flow__step"><span className="ai-flow__step-dot">{f.step.slice(-1)}</span>Schritt {f.step}</div>
+            <div className="ai-flow__title">{f.title}</div>
+            <div className="ai-flow__body">{f.body}</div>
+            <span className="ai-flow__tag">{f.tag}</span>
+          </div>
+        ))}
+      </div>
+    );
+
+    const Benefits = () => (
+      <section className="ai-sec ai-sec--alt">
+        <div className="ai-sec__inner">
+          <div className="ai-sec__head">
+            <div className="ai-eyebrow">Warum AI Studio</div>
+            <h2>Nicht noch ein <em>„Frag ChatGPT"</em>. Ein echtes Werkzeug.</h2>
+            <p>Sechs Dinge, die generische KI-Tools nicht liefern — und warum ein Studio, das dein Business kennt, schneller und besser ist.</p>
+          </div>
+          <div className="ai-benefits">
+            {BENEFITS.map(b => (
+              <div key={b.t} className="ai-benefit">
+                <div className="ai-benefit__icon">{b.i}</div>
+                <h3>{b.t}</h3>
+                <p>{b.d}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+
+    /* ── Mockups ──────────────────────────────────────── */
+
+    const ChatMock = () => (
+      <div className="mk-chat">
+        <div className="mk-chat__head">
+          <div className="mk-chat__title">
+            <span className="mk-chat__spark"><ISpark size={11}/></span>
+            Studio — Webinar-Funnel
+          </div>
+          <div className="mk-chat__status">bereit</div>
+        </div>
+        <div className="mk-chat__body">
+          <div className="mk-msg mk-msg--user">
+            <div className="mk-msg__av">L</div>
+            <div className="mk-msg__bubble">
+              Ich brauche einen <b>Webinar-Funnel</b> für mein Coaching „Freischwimmer". Ziel­gruppe: Angestellte, die sich selbstständig machen wollen.
+            </div>
+          </div>
+          <div className="mk-msg mk-msg--ai">
+            <div className="mk-msg__av">✦</div>
+            <div className="mk-msg__bubble">
+              <div>Baue einen 3-stufigen Funnel mit <b>Opt-In</b>, <b>Dankeseite</b> und <b>4 Erinnerungs­mails</b>. Nutze deine Marken­farben und den warmen Coaching-Ton.</div>
+              <div className="mk-msg__artifact">
+                <span className="mk-art"><IPage />Opt-In</span>
+                <span className="mk-art"><IPage />Danke</span>
+                <span className="mk-art"><IMail />4 Mails</span>
+                <span className="mk-art"><IFlow />Automation</span>
+              </div>
+            </div>
+          </div>
+          <div className="mk-msg mk-msg--user">
+            <div className="mk-msg__av">L</div>
+            <div className="mk-msg__bubble">Die Headline darf konkreter. „90 Tage raus aus dem Hamsterrad"?</div>
+          </div>
+          <div className="mk-msg mk-msg--ai">
+            <div className="mk-msg__av">✦</div>
+            <div className="mk-chat__typing"><span/><span/><span/></div>
+          </div>
+        </div>
+        <div className="mk-chat__input">
+          <div className="mk-chat__input-text">Beschreibe oder frage …</div>
+          <div className="mk-chat__input-send"><ISend size={10}/></div>
+        </div>
+      </div>
+    );
+
+    const InspectorMock = () => (
+      <div className="mk-insp">
+        <div className="mk-insp__canvas">
+          <div className="mk-insp__page">
+            <div className="mk-insp__block"/>
+            <div className="mk-insp__head">In 90 Tagen raus aus dem Hamsterrad.</div>
+            <div className="mk-insp__sub">Kostenloses Webinar für Angestellte, die seit Jahren wissen: Das war's nicht. Drei Schritte, ein klarer Plan.</div>
+            <div className="mk-insp__btn">Platz sichern</div>
+          </div>
+          <div className="mk-insp__block mk-insp__block--selected"/>
+          <div className="mk-insp__block"/>
+        </div>
+        <div className="mk-insp__panel">
+          <div className="mk-insp__panel-head">Element · Headline</div>
+          <div className="mk-insp__field">
+            <span className="mk-insp__field-lbl">Text</span>
+            <span className="mk-insp__field-input">In 90 Tagen raus aus dem Hamsterrad.</span>
+          </div>
+          <div className="mk-insp__ai-row">
+            <span className="mk-insp__ai-chip"><ISpark size={9}/>Kürzer</span>
+            <span className="mk-insp__ai-chip mk-insp__ai-chip--ghost">Klarer</span>
+            <span className="mk-insp__ai-chip mk-insp__ai-chip--ghost">Konkreter</span>
+          </div>
+          <div className="mk-insp__field">
+            <span className="mk-insp__field-lbl">Ton</span>
+            <span className="mk-insp__field-input">warm · direkt · kein Hype</span>
+          </div>
+          <div className="mk-insp__history">
+            <div className="mk-insp__hist-row"><IUndo /><b>v7</b> — Headline konkretisiert · vor 2 Min.</div>
+            <div className="mk-insp__hist-row"><IUndo /><b>v6</b> — Farb-Akzent getauscht · vor 4 Min.</div>
+            <div className="mk-insp__hist-row"><IUndo /><b>v5</b> — Subline gekürzt · vor 6 Min.</div>
+          </div>
+        </div>
+      </div>
+    );
+
+    const PaletteMock = () => (
+      <div className="mk-palette">
+        <div className="mk-palette__input">
+          <div className="mk-palette__icon"><ISpark size={11}/></div>
+          <div className="mk-palette__text">mach einen&nbsp;<span className="mk-typed">danke-seiten-flow für käufer:innen</span></div>
+          <div className="mk-palette__shortcut">⌘K</div>
+        </div>
+        <div className="mk-palette__label">Vorschläge · 4 Treffer</div>
+        <div className="mk-palette__list">
+          <div className="mk-palette__item mk-palette__item--active">
+            <div className="mk-palette__dot"><IFlow /></div>
+            <div>
+              <div className="mk-palette__name">Dankeseite + Welcome-Mail + Kursfreischaltung</div>
+              <div className="mk-palette__meta">Trigger: Kauf · 3 Aktionen · verknüpft mit CRM-Tag „Kund:in"</div>
+            </div>
+            <div className="mk-palette__kind">Flow</div>
+          </div>
+          <div className="mk-palette__item">
+            <div className="mk-palette__dot"><IPage /></div>
+            <div>
+              <div className="mk-palette__name">Nur Dankeseite mit Upsell</div>
+              <div className="mk-palette__meta">1 Seite · 1 Bump-Offer · 1 Video-Embed</div>
+            </div>
+            <div className="mk-palette__kind">Seite</div>
+          </div>
+          <div className="mk-palette__item">
+            <div className="mk-palette__dot"><IMail /></div>
+            <div>
+              <div className="mk-palette__name">4-teilige Welcome-Sequenz (D+1 bis D+7)</div>
+              <div className="mk-palette__meta">Onboarding · „So kommst du rein" · Erste Ergebnisse</div>
+            </div>
+            <div className="mk-palette__kind">Sequenz</div>
+          </div>
+          <div className="mk-palette__item">
+            <div className="mk-palette__dot"><IFunnel /></div>
+            <div>
+              <div className="mk-palette__name">Komplette Post-Purchase-Experience</div>
+              <div className="mk-palette__meta">Seite · Sequenz · Flow · Community-Einladung</div>
+            </div>
+            <div className="mk-palette__kind">Funnel</div>
+          </div>
+        </div>
+        <div className="mk-palette__foot">
+          <span><kbd>↑↓</kbd>navigieren</span>
+          <span><kbd>↵</kbd>bauen</span>
+          <span><kbd>esc</kbd>schließen</span>
+        </div>
+      </div>
+    );
+
+    const Feature1 = () => (
+      <div className="ai-feat">
+        <div>
+          <span className="ai-feat__eyebrow">Prompt → Funnel</span>
+          <h3>Denk laut. Das Studio baut mit.</h3>
+          <p className="ai-feat__body">
+            Du sprichst in ganzen Sätzen, nicht in Prompts. Das Studio fragt gezielt nach — Zielgruppe,
+            Versprechen, Preis — und generiert daraus ein ganzes Funnel-Gerüst. Inklusive Copy,
+            Formularen, Bildplatzhaltern und logischen Verknüpfungen zu CRM und E-Mail.
+          </p>
+          <ul>
+            <li><ICheck />Funnel, Landingpage, Sequenz oder Automation — du wählst</li>
+            <li><ICheck />Nachfragen, die dich schlauer machen — nicht das Gegenteil</li>
+            <li><ICheck />Artefakte erscheinen direkt im Canvas, nicht in einem Chat-Limbo</li>
+            <li><ICheck />Jede Antwort ist bearbeitbar — Text, Layout, Stil, Logik</li>
+          </ul>
+        </div>
+        <div className="ai-feat__media"><ChatMock /></div>
+      </div>
+    );
+
+    const Feature2 = () => (
+      <div className="ai-feat ai-feat--flip">
+        <div>
+          <span className="ai-feat__eyebrow">Inline Inspector</span>
+          <h3>Klick das Element. Sag, was anders soll.</h3>
+          <p className="ai-feat__body">
+            Jede Headline, jedes Bild, jedes Formularfeld hat einen KI-Kontext: Prompt, Ton, Versionsverlauf.
+            Ein Klick öffnet den Inspector. Ein Satz („kürzer", „weniger Verkaufsjargon") reicht — das
+            Studio schreibt neu, ohne dass du das restliche Layout anfasst.
+          </p>
+          <ul>
+            <li><ICheck />Block-genaue Tweaks ohne Template-Rebau</li>
+            <li><ICheck />Quick-Actions: Kürzer, Klarer, Konkreter — in einem Klick</li>
+            <li><ICheck />Versionshistorie pro Element, nicht nur für die ganze Seite</li>
+            <li><ICheck />Ton und Stil werden pro Brand gelernt — nicht jedes Mal neu erklärt</li>
+          </ul>
+        </div>
+        <div className="ai-feat__media"><InspectorMock /></div>
+      </div>
+    );
+
+    const Feature3 = () => (
+      <div className="ai-feat">
+        <div>
+          <span className="ai-feat__eyebrow">Command · ⌘K</span>
+          <h3>Ein Shortcut. Alles baubar.</h3>
+          <p className="ai-feat__body">
+            Drück ⌘K irgendwo in Funnelspace. Beschreibe, was du brauchst — eine Landingpage, eine Sequenz,
+            ein CRM-Segment, ein Automations-Flow. Das Studio schlägt Varianten vor und verknüpft direkt
+            mit dem, was schon existiert: Kontakte, Tags, Produkte, Kalender.
+          </p>
+          <ul>
+            <li><ICheck />Funktioniert überall: CRM, E-Mail, Kalender, Mitgliederbereich</li>
+            <li><ICheck />Kennt deine Daten: Tags, Produkte, bestehende Funnels</li>
+            <li><ICheck />Varianten statt Einzel-Output — du wählst, statt zu prompten</li>
+            <li><ICheck />Speichert nichts, bis du es willst — Vorschau ist standard</li>
+          </ul>
+        </div>
+        <div className="ai-feat__media"><PaletteMock /></div>
+      </div>
+    );
+
+    const Features = () => (
+      <section className="ai-sec">
+        <div className="ai-sec__inner">
+          <div className="ai-sec__head">
+            <div className="ai-eyebrow">So fühlt sich's an</div>
+            <h2>Drei Oberflächen, eine Idee: <em>sag's</em>, dann ist's da.</h2>
+          </div>
+          <Feature1 />
+          <Feature2 />
+          <Feature3 />
+        </div>
+      </section>
+    );
+
+    const Gallery = () => (
+      <section className="ai-sec ai-sec--alt">
+        <div className="ai-sec__inner">
+          <div className="ai-sec__head">
+            <div className="ai-eyebrow">Prompt-Galerie</div>
+            <h2>Sechs echte Sätze. Sechs fertige Artefakte.</h2>
+            <p>Was andere Coaches dem Studio gesagt haben — und was in Sekunden zurückkam. Klick's an und probier's mit deinen Worten.</p>
+          </div>
+          <div className="ai-gallery">
+            {GALLERY.map(g => (
+              <div key={g.prompt} className="ai-gallery__card">
+                <div className="ai-gallery__kind">{g.kind}</div>
+                <div className="ai-gallery__prompt">{g.prompt}</div>
+                <div className="ai-gallery__out">
+                  <div className="ai-gallery__out-left"><ISpark size={14}/><span>{g.out}</span></div>
+                  <span className="ai-gallery__out-time"><IClock /> {g.time}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+
+    const Guardrails = () => (
+      <section className="ai-sec">
+        <div className="ai-sec__inner">
+          <div className="ai-sec__head">
+            <div className="ai-eyebrow">Sicher, transparent, umkehrbar</div>
+            <h2>KI, der du deinen Launch anvertrauen kannst.</h2>
+            <p>Vibe Coding ist nur dann entspannt, wenn du weißt: du kannst jederzeit zurück. Deshalb ist das Studio konservativ gebaut — Veröffentlichung immer bewusst.</p>
+          </div>
+          <div className="ai-guard">
+            {GUARD.map(g => (
+              <div key={g.t} className="ai-guard__card">
+                <div className="ai-guard__icon">{g.i}</div>
+                <h4>{g.t}</h4>
+                <p>{g.d}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+
+    const Testimonials = () => (
+      <section className="ai-sec ai-sec--alt">
+        <div className="ai-sec__inner">
+          <div className="ai-sec__head">
+            <div className="ai-eyebrow">Stimmen aus der Beta</div>
+            <h2>Schon <em>430</em> Coaches bauen ihre Funnels per Text.</h2>
+          </div>
+          <div className="ai-testi-grid">
+            {TESTIMONIALS.map(t => (
+              <article key={t.name} className={`ai-testi${t.tone==='dark'?' ai-testi--dark':t.tone==='lime'?' ai-testi--lime':''}`}>
+                <div className="ai-testi__stars">★★★★★</div>
+                <blockquote>{t.quote}</blockquote>
+                <div className="ai-testi__stat">
+                  <div className="ai-testi__stat-num">{t.stat}</div>
+                  <div className="ai-testi__stat-lbl">{t.statLbl}</div>
+                </div>
+                <div className="ai-testi__who">
+                  <div className="ai-testi__avatar">{t.initials}</div>
+                  <div>
+                    <div className="ai-testi__name">{t.name}</div>
+                    <div className="ai-testi__role">{t.role}</div>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+
+    const FAQ = () => {
+      const [open, setOpen] = useState(0);
+      return (
+        <section className="ai-sec">
+          <div className="ai-sec__inner">
+            <div className="ai-sec__head">
+              <div className="ai-eyebrow">FAQ</div>
+              <h2>Häufige Fragen zum AI Studio.</h2>
+            </div>
+            <div className="ai-faq">
+              {FAQS.map((f, i) => (
+                <div key={i} className={`ai-faq__item${open === i ? ' open' : ''}`}>
+                  <button className="ai-faq__btn" onClick={() => setOpen(open === i ? -1 : i)}>
+                    {f.q}
+                    <span className="ai-faq__icon">+</span>
+                  </button>
+                  <div className="ai-faq__body">{f.a}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    const FinalCTA = () => (
+      <section className="ai-final">
+        <div className="ai-final__inner">
+          <h2>Beschreib's. <em>Bau's.</em> Launch es.</h2>
+          <p>50 KI-Generierungen gratis im Starter. Keine Kreditkarte. Dein erster Funnel ist in 20 Minuten live.</p>
+          <div className="ai-final__btns">
+            <a href="#signup" className="btn btn--primary btn-lg">AI Studio kostenlos testen</a>
+            <a href="#demo" className="btn btn--ghost btn-lg" style={{borderColor:'rgba(255,255,255,0.3)', color:'#fff'}}>2-Min-Demo sehen</a>
+          </div>
+        </div>
+      </section>
+    );
+
+    const AIStudioApp = () => (
+      <>
+        <Nav />
+        <main>
+          <Hero />
+          <Flow />
+          <Benefits />
+          <Features />
+          <Gallery />
+          <Guardrails />
+          <Testimonials />
+          <FAQ />
+          <FinalCTA />
+        </main>
+        <Footer />
+      </>
+    );
+    ReactDOM.createRoot(document.getElementById('root')).render(<AIStudioApp />);
+  </script>
+</body>
+</html>

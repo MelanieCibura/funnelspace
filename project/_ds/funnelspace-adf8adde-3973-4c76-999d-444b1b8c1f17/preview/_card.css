@@ -1,0 +1,35 @@
+/* Shared card frame styles for preview/*.html
+   These cards live ~700x150 (up to ~400) in the Design System pane.
+   Each card should render clean with no extra chrome. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: transparent; /* design system pane provides bg */
+  color: var(--fg-1);
+  font-family: var(--font-sans);
+}
+
+body.card {
+  padding: 20px 24px;
+  background: var(--bg-1);
+  min-height: 100%;
+}
+
+.row { display: flex; align-items: center; gap: 16px; }
+.col { display: flex; flex-direction: column; gap: 8px; }
+.stack-sm { display: flex; flex-direction: column; gap: 4px; }
+
+.muted { color: var(--fg-3); }
+.tiny { font-size: 11px; letter-spacing: 0.04em; color: var(--fg-3); text-transform: uppercase; font-weight: 600; }
+.mono { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); }
+
+.swatch {
+  width: 84px;
+  height: 84px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-1);
+  flex: none;
+}

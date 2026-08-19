@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>KI-Tools — Funnelspace</title>
+<meta name="description" content="Deine KI-Mitarbeiter in Funnelspace: Conversations AI, Voice AI, Reviews AI, Content AI, AI Studio, Workflow AI und mehr — gruppiert nach dem, was sie für dich übernehmen." />
+<link rel="stylesheet" href="colors_and_type.css" />
+<link rel="stylesheet" href="site.css" />
+<style>
+/* Hero */
+.kt-hero{padding:80px 40px 72px;position:relative;overflow:hidden}
+.kt-hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--fs-gray-300) 1px,transparent 1.2px);background-size:11px 11px;opacity:.55;pointer-events:none}
+.kt-hero__inner{max-width:1280px;margin:0 auto;position:relative;display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:center}
+.kt-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fs-ink);background:var(--fs-lime);padding:6px 12px;border-radius:var(--radius-pill);margin-bottom:22px}
+.kt-hero h1{font-family:var(--font-display);font-size:clamp(42px,5vw,70px);font-weight:700;line-height:1.04;letter-spacing:-.03em;text-wrap:balance}
+.kt-hero h1 em{font-style:normal;background:var(--fs-lime);color:var(--fs-lime-ink);padding:0 6px;border-radius:6px}
+.kt-hero__lead{margin-top:22px;font-size:19px;line-height:1.55;color:var(--fg-2);max-width:520px}
+.kt-hero__cta{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+.kt-hero__proof{margin-top:24px;display:flex;gap:20px;flex-wrap:wrap;font-size:13px;color:var(--fg-3)}
+.kt-hero__proof span{display:flex;align-items:center;gap:6px}
+.kt-hero__proof span::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--fs-lime);flex-shrink:0}
+.kt-panel{background:#fff;border:1px solid var(--border-1);border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);overflow:hidden}
+.kt-panel__bar{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border-1);background:var(--fs-gray-100)}
+.kt-panel__mark{width:22px;height:22px;border-radius:7px;background:var(--fs-lime);display:grid;place-items:center;color:var(--fs-lime-ink)}
+.kt-panel__mark svg{width:12px;height:12px}
+.kt-panel__title{font-family:var(--font-display);font-size:13px;font-weight:700;letter-spacing:-.01em}
+.kt-panel__kbd{margin-left:auto;font-family:var(--font-mono);font-size:10px;background:#fff;border:1px solid var(--border-1);padding:2px 6px;border-radius:4px;color:var(--fg-3)}
+.kt-panel__q{padding:16px;border-bottom:1px solid var(--border-1);font-family:var(--font-mono);font-size:12.5px;line-height:1.5;color:var(--fs-ink);min-height:62px}
+.kt-cursor{display:inline-block;width:7px;height:14px;background:var(--fs-ink);vertical-align:-2px;margin-left:2px;animation:kt-blink 1s steps(2) infinite}
+@keyframes kt-blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+.kt-panel__label{font-size:9px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--fg-3);padding:12px 16px 6px}
+.kt-panel__list{display:flex;flex-direction:column}
+.kt-row{display:grid;grid-template-columns:30px 1fr auto;gap:12px;align-items:center;padding:11px 16px;border-top:1px solid var(--border-1)}
+.kt-row--on{background:var(--fs-lime-soft)}
+.kt-row__dot{width:30px;height:30px;border-radius:9px;background:var(--fs-gray-100);display:grid;place-items:center;color:var(--fs-ink)}
+.kt-row--on .kt-row__dot{background:var(--fs-lime);color:var(--fs-lime-ink)}
+.kt-row__dot svg{width:15px;height:15px}
+.kt-row__name{font-size:12.5px;font-weight:700;line-height:1.2}
+.kt-row__meta{font-size:10.5px;color:var(--fg-3);margin-top:2px;line-height:1.3}
+.kt-row__time{font-family:var(--font-mono);font-size:10.5px;font-weight:600;color:var(--fs-ink-soft);white-space:nowrap}
+.kt-panel__foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-top:1px solid var(--border-1);background:var(--fs-paper)}
+.kt-panel__foot-txt{font-size:11px;color:var(--fg-3)}
+.kt-panel__foot-btn{background:var(--fs-ink);color:#fff;border-radius:8px;padding:7px 12px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:6px}
+/* Stat strip */
+.kt-strip{border-top:1px solid var(--border-1);border-bottom:1px solid var(--border-1);background:var(--fs-white)}
+.kt-strip__inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.kt-stat{padding:30px 40px}
+.kt-stat+.kt-stat{border-left:1px solid var(--border-1)}
+.kt-stat__num{font-family:var(--font-display);font-size:34px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.kt-stat__lbl{margin-top:8px;font-size:13px;color:var(--fg-2);line-height:1.4}
+/* Sections */
+.kt-sec{padding:100px 40px}
+.kt-sec--alt{background:var(--fs-white)}
+.kt-sec__inner{max-width:1280px;margin:0 auto}
+.kt-sec__head{max-width:740px;margin:0 auto 56px;text-align:center}
+.kt-sec__eyebrow{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-3);margin-bottom:14px}
+.kt-sec__head h2{font-family:var(--font-display);font-size:clamp(32px,3.5vw,50px);font-weight:700;letter-spacing:-.03em;line-height:1.08;text-wrap:balance}
+.kt-sec__head h2 em{font-style:normal;background:var(--fs-lime);color:var(--fs-lime-ink);padding:0 8px;border-radius:6px}
+.kt-sec__head p{margin-top:16px;font-size:18px;color:var(--fg-2);line-height:1.55}
+/* Problem */
+.kt-prob{display:grid;grid-template-columns:1fr 1.05fr;gap:64px;align-items:center;max-width:1280px;margin:0 auto}
+.kt-prob h2{font-family:var(--font-display);font-size:clamp(30px,3.2vw,46px);font-weight:700;letter-spacing:-.03em;line-height:1.1;text-wrap:balance}
+.kt-prob p{margin-top:18px;font-size:17px;line-height:1.65;color:var(--fg-2)}
+.kt-converge{display:grid;grid-template-columns:1fr 44px 1fr;gap:18px;align-items:center}
+.kt-mess{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kt-tool{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border-1);border-radius:var(--radius-sm);padding:9px 10px;font-size:12px;font-weight:600;color:var(--fg-3)}
+.kt-tool svg{width:14px;height:14px;flex-shrink:0;color:var(--fs-gray-400)}
+.kt-tool span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kt-conv-arrow{display:grid;place-items:center;color:var(--fs-gray-400)}
+.kt-conv-arrow svg{width:28px;height:28px}
+.kt-one{background:var(--fs-ink);border-radius:var(--radius-lg);padding:26px 24px;color:#fff;position:relative;overflow:hidden}
+.kt-one::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(215,240,120,.09) 1px,transparent 1.2px);background-size:8px 8px}
+.kt-one__logo{position:relative;width:38px;height:38px;border-radius:11px;background:var(--fs-lime);color:var(--fs-lime-ink);display:grid;place-items:center;margin-bottom:16px}
+.kt-one__t{position:relative;font-family:var(--font-display);font-size:22px;font-weight:700;letter-spacing:-.02em}
+.kt-one__d{position:relative;margin-top:10px;font-size:14px;line-height:1.55;color:rgba(255,255,255,.62)}
+.kt-one__list{position:relative;list-style:none;padding:0;margin:18px 0 0;display:flex;flex-direction:column;gap:8px}
+.kt-one__list li{display:flex;gap:9px;font-size:13px;color:rgba(255,255,255,.82);align-items:flex-start}
+.kt-one__list li svg{width:15px;height:15px;flex-shrink:0;margin-top:2px;color:var(--fs-lime)}
+/* Tool groups */
+.kt-group+.kt-group{margin-top:64px;padding-top:56px;border-top:1px solid var(--border-1)}
+.kt-group__head{display:flex;align-items:baseline;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+.kt-group__n{font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--fs-ink);background:var(--fs-lime);padding:3px 8px;border-radius:4px}
+.kt-group__title{font-family:var(--font-display);font-size:26px;font-weight:700;letter-spacing:-.02em}
+.kt-group__sub{font-size:15px;color:var(--fg-3);line-height:1.4}
+.kt-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.kt-card{background:#fff;border:1px solid var(--border-1);border-radius:var(--radius-lg);padding:22px;display:flex;flex-direction:column;gap:12px;text-decoration:none;color:inherit;transition:transform var(--dur-med) var(--ease-out),box-shadow var(--dur-med) var(--ease-out)}
+.kt-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.kt-card__art{width:100%;aspect-ratio:16/10;background:var(--fs-paper);background-image:radial-gradient(var(--fs-gray-300) 1px,transparent 1.2px);background-size:9px 9px;border-radius:var(--radius-md);display:grid;place-items:center;overflow:hidden;border:1px solid var(--border-1)}
+.kt-card__art img{max-height:120px;max-width:72%}
+.kt-card__top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.kt-card h3{font-family:var(--font-display);font-size:20px;font-weight:700;letter-spacing:-.02em}
+.kt-tag{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:var(--radius-pill);background:var(--fs-gray-100);color:var(--fs-ink-soft)}
+.kt-tag--live{background:var(--fs-lime);color:var(--fs-lime-ink)}
+.kt-card p{font-size:14px;color:var(--fg-2);line-height:1.55}
+.kt-card p b{color:var(--fs-ink);font-weight:700}
+.kt-card__link{margin-top:auto;padding-top:14px;border-top:1px solid var(--border-1);display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--fs-ink)}
+.kt-card__link svg{width:15px;height:15px;transition:transform var(--dur-fast) var(--ease-out)}
+.kt-card:hover .kt-card__link svg{transform:translateX(3px)}
+/* Summer of AI Banner */
+.kt-banner{max-width:1280px;margin:0 auto 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--fs-lime-soft);border:1px solid var(--fs-lime);border-radius:var(--radius-md);padding:14px 20px}
+.kt-banner__badge{font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;background:var(--fs-lime);color:var(--fs-lime-ink);padding:5px 10px;border-radius:var(--radius-pill)}
+.kt-banner__txt{font-size:14.5px;color:var(--fs-ink);font-weight:600}
+.kt-banner__note{font-size:12.5px;color:var(--fg-3);margin-left:auto}
+/* AI Studio Spotlight */
+.kt-spot{max-width:1280px;margin:0 auto;background:var(--fs-lime);border:2px solid var(--fs-ink);border-radius:var(--radius-xl);overflow:hidden;display:grid;grid-template-columns:1fr 1fr}
+.kt-spot__txt{padding:56px 48px}
+.kt-spot__eyebrow{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fs-lime-ink);opacity:.65}
+.kt-spot__txt h2{margin-top:14px;font-family:var(--font-display);font-size:clamp(30px,3.2vw,44px);font-weight:700;letter-spacing:-.03em;line-height:1.08;color:var(--fs-lime-ink);text-wrap:balance}
+.kt-spot__txt p{margin-top:18px;font-size:17px;line-height:1.6;color:var(--fs-lime-ink);opacity:.82;max-width:460px}
+.kt-spot__cta{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap}
+.kt-spot__visual{background:var(--fs-ink);padding:40px;display:flex;flex-direction:column;gap:12px;justify-content:center;position:relative;overflow:hidden}
+.kt-spot__visual::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(215,240,120,.08) 1px,transparent 1.2px);background-size:8px 8px}
+.kt-prompt{position:relative;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:var(--radius-md);padding:14px 16px;font-family:var(--font-mono);font-size:12.5px;line-height:1.5;color:#fff}
+.kt-prompt__l{display:block;font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--fs-lime);margin-bottom:8px;font-family:var(--font-sans);font-weight:700}
+.kt-steps{position:relative;display:flex;flex-direction:column;gap:8px}
+.kt-step{display:grid;grid-template-columns:22px 1fr auto;gap:11px;align-items:center;background:rgba(255,255,255,.04);border-radius:var(--radius-sm);padding:11px 13px}
+.kt-step__n{width:22px;height:22px;border-radius:50%;background:var(--fs-lime);color:var(--fs-lime-ink);display:grid;place-items:center;font-size:11px;font-weight:800}
+.kt-step__t{font-size:13px;font-weight:600;color:#fff}
+.kt-step__s{font-family:var(--font-mono);font-size:10.5px;color:var(--fs-lime)}
+/* Flow */
+.kt-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(255,255,255,.14);border-radius:var(--radius-lg);overflow:hidden}
+.kt-flow__step{background:var(--fs-ink);padding:26px 22px;display:flex;flex-direction:column;gap:10px}
+.kt-flow__n{width:26px;height:26px;border-radius:50%;background:var(--fs-lime);color:var(--fs-lime-ink);display:grid;place-items:center;font-size:12px;font-weight:800}
+.kt-flow__tool{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--fs-lime)}
+.kt-flow__t{font-family:var(--font-display);font-size:17px;font-weight:700;letter-spacing:-.01em;color:#fff;line-height:1.2}
+.kt-flow__d{font-size:13px;color:rgba(255,255,255,.6);line-height:1.5}
+.kt-flow__note{margin-top:28px;text-align:center;font-size:14px;color:rgba(255,255,255,.55)}
+.kt-flow__note b{color:#fff}
+/* Nutzen */
+.kt-benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.kt-benefit{display:flex;flex-direction:column;gap:14px;padding:30px 26px;background:#fff;border:1px solid var(--border-1);border-radius:var(--radius-lg)}
+.kt-benefit__icon{width:44px;height:44px;border-radius:50%;background:var(--fs-lime);color:var(--fs-lime-ink);display:grid;place-items:center}
+.kt-benefit__icon svg{width:21px;height:21px}
+.kt-benefit h3{font-family:var(--font-display);font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.25}
+.kt-benefit p{font-size:14.5px;line-height:1.6;color:var(--fg-2)}
+/* Preise */
+.kt-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+.kt-plan{background:#fff;border:1px solid var(--border-1);border-radius:var(--radius-lg);padding:30px 26px;display:flex;flex-direction:column;gap:16px}
+.kt-plan--hi{border:2px solid var(--fs-ink);box-shadow:var(--shadow-md);position:relative}
+.kt-plan__tag{position:absolute;top:-12px;left:26px;font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;background:var(--fs-lime);color:var(--fs-lime-ink);padding:5px 11px;border-radius:var(--radius-pill)}
+.kt-plan h3{font-family:var(--font-display);font-size:21px;font-weight:700;letter-spacing:-.02em}
+.kt-plan__price{display:flex;align-items:baseline;gap:6px}
+.kt-plan__amount{font-family:var(--font-display);font-size:40px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.kt-plan__per{font-size:14px;color:var(--fg-3)}
+.kt-plan__sub{font-size:14px;line-height:1.55;color:var(--fg-2);margin-top:-6px}
+.kt-plan__list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.kt-plan__list li{display:flex;gap:9px;align-items:flex-start;font-size:14px;line-height:1.5;color:var(--fg-2)}
+.kt-plan__list li svg{width:15px;height:15px;flex-shrink:0;margin-top:3px;color:var(--fs-lime-deep)}
+.kt-plan .btn{margin-top:auto}
+.kt-note{max-width:960px;margin:26px auto 0;font-size:13.5px;line-height:1.6;color:var(--fg-3);display:flex;gap:9px;align-items:flex-start}
+.kt-note svg{width:16px;height:16px;flex-shrink:0;margin-top:2px}
+/* FAQ */
+.kt-faq{max-width:820px;margin:0 auto}
+.kt-faq__item{border-bottom:1px solid var(--border-1)}
+.kt-faq__item:first-child{border-top:1px solid var(--border-1)}
+.kt-faq__btn{width:100%;background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:22px 0;gap:20px;text-align:left;font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--fs-ink);letter-spacing:-.01em}
+.kt-faq__icon{width:30px;height:30px;border-radius:50%;background:var(--fs-gray-100);flex-shrink:0;display:grid;place-items:center;font-size:18px;transition:background var(--dur-fast),transform var(--dur-med) var(--ease-out)}
+.kt-faq__item.open .kt-faq__icon{background:var(--fs-lime);transform:rotate(45deg)}
+.kt-faq__body{font-size:15px;color:var(--fg-2);line-height:1.65;overflow:hidden;max-height:0;transition:max-height var(--dur-slow) var(--ease-out),padding var(--dur-slow) var(--ease-out)}
+.kt-faq__item.open .kt-faq__body{max-height:460px;padding-bottom:22px}
+/* Final CTA */
+.kt-final{background:var(--fs-ink);padding:100px 40px;text-align:center;position:relative;overflow:hidden}
+.kt-final::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(215,240,120,.07) 1px,transparent 1.2px);background-size:8px 8px}
+.kt-final__inner{position:relative;max-width:740px;margin:0 auto}
+.kt-final h2{font-family:var(--font-display);font-size:clamp(34px,4vw,54px);font-weight:700;letter-spacing:-.03em;color:#fff;text-wrap:balance}
+.kt-final h2 em{font-style:normal;color:var(--fs-lime)}
+.kt-final p{margin:16px auto 0;font-size:18px;color:rgba(255,255,255,.6)}
+.kt-final__btns{display:flex;gap:12px;justify-content:center;margin-top:34px;flex-wrap:wrap}
+.kt-final__hint{margin-top:20px;font-size:13px;color:rgba(255,255,255,.45)}
+a{color:var(--fs-ink)}a:hover{color:var(--fs-lime-deep)}
+@media(max-width:1024px){
+.kt-hero__inner{grid-template-columns:1fr;gap:48px}
+.kt-strip__inner{grid-template-columns:1fr 1fr}
+.kt-stat:nth-child(3){border-left:none}
+.kt-stat:nth-child(n+3){border-top:1px solid var(--border-1)}
+.kt-prob{grid-template-columns:1fr;gap:40px}
+.kt-cards,.kt-benefits,.kt-plans{grid-template-columns:1fr 1fr}
+.kt-spot{grid-template-columns:1fr}
+.kt-flow{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+.kt-hero{padding:56px 22px}
+.kt-sec{padding:68px 22px}
+.kt-stat{padding:24px 22px}
+.kt-strip__inner{grid-template-columns:1fr}
+.kt-stat+.kt-stat{border-left:none;border-top:1px solid var(--border-1)}
+.kt-cards,.kt-benefits,.kt-plans,.kt-flow{grid-template-columns:1fr}
+.kt-converge{grid-template-columns:1fr;gap:14px}
+.kt-conv-arrow{transform:rotate(90deg)}
+.kt-spot__txt{padding:36px 24px}
+.kt-spot__visual{padding:24px}
+.kt-banner__note{margin-left:0}
+.kt-final{padding:68px 22px}
+.nav__links{display:none}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="Nav.jsx"></script>
+<script type="text/babel" src="Footer.jsx"></script>
+<script type="text/babel">
+const { useState, useEffect } = React;
+const Icon = ({ d, size = 20 }) => (
+  <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">{d}</svg>
+);
+const ISpark = ({size=20}) => <Icon size={size} d={<><path d="M12 3v4"/><path d="M12 17v4"/><path d="M3 12h4"/><path d="M17 12h4"/><path d="M5.6 5.6l2.8 2.8"/><path d="M15.6 15.6l2.8 2.8"/><path d="M5.6 18.4l2.8-2.8"/><path d="M15.6 8.4l2.8-2.8"/></>} />;
+const ICheck = ({size=15}) => <Icon size={size} d={<polyline points="20 6 9 17 4 12"/>} />;
+const IArrow = ({size=15}) => <Icon size={size} d={<><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></>} />;
+const IChat = ({size=15}) => <Icon size={size} d={<path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/>} />;
+const IPhone = ({size=15}) => <Icon size={size} d={<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.8.6a2 2 0 0 1 1.7 2z"/>} />;
+const IStar = ({size=15}) => <Icon size={size} d={<polygon points="12 2 15.1 8.6 22 9.6 17 14.5 18.2 21.4 12 18.1 5.8 21.4 7 14.5 2 9.6 8.9 8.6 12 2"/>} />;
+const IPen = ({size=15}) => <Icon size={size} d={<><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></>} />;
+const IPage = ({size=15}) => <Icon size={size} d={<><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></>} />;
+const IMail = ({size=15}) => <Icon size={size} d={<><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></>} />;
+const IFlow = ({size=15}) => <Icon size={size} d={<><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></>} />;
+const IHelp = ({size=20}) => <Icon size={size} d={<><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.4-1 .9-1 1.7"/><path d="M12 17h.01"/></>} />;
+const IClock = ({size=20}) => <Icon size={size} d={<><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></>} />;
+const IBox = ({size=20}) => <Icon size={size} d={<><path d="M21 8v10a2 2 0 0 1-1 1.7l-8 4-8-4A2 2 0 0 1 3 18V8"/><path d="M3.3 7L12 11l8.7-4L12 3z"/><path d="M12 11v11"/></>} />;
+const IInfo = ({size=16}) => <Icon size={size} d={<><circle cx="12" cy="12" r="9"/><path d="M12 16v-5"/><path d="M12 8h.01"/></>} />;
+const IChart = ({size=15}) => <Icon size={size} d={<><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 4-6"/></>} />;
+
+const HERO_PROMPT = 'Nimm Anrufe an, beantworte Anfragen und bau mir die Seite dafür.';
+const PANEL_ROWS = [
+  { i: <IPhone />, name: 'Anruf von +49 176 … angenommen', meta: 'Voice AI · qualifiziert, Termin Donnerstag 10:00 gebucht', time: 'live', on: true },
+  { i: <IChat />, name: 'Instagram-DM beantwortet', meta: 'Conversations AI · Lead getaggt „Warm", Antwort in 8 Sek.', time: '8 Sek.' },
+  { i: <IPen />, name: 'Follow-up-Mail geschrieben', meta: 'Content AI · Ton: locker, ohne Dringlichkeits-Theater', time: '11 Sek.' },
+  { i: <IPage />, name: 'Landingpage „Erstgespräch" entworfen', meta: 'AI Studio · 6 Sektionen, Marken-Kit angewandt', time: '42 Sek.' },
+];
+
+const STATS = [
+  { n: '4', l: 'KI-Agenten für Telefon, Chat, Bewertungen und Content' },
+  { n: '6', l: 'AI Assistants — von AI Studio bis Email AI' },
+  { n: '1', l: 'Login, ein Datenraum, kein Tool-Wechsel' },
+  { n: '0 $', l: 'Einstieg: Zahlung nach Verbrauch, nur Token-Kosten' },
+];
+
+const OLD_TOOLS = [
+  { i: <IPhone/>, n: 'Telefon-Service' }, { i: <IChat/>, n: 'Chat-Widget' },
+  { i: <IPen/>, n: 'KI-Texttool' }, { i: <IPage/>, n: 'Page-Builder' },
+  { i: <IStar/>, n: 'Bewertungs-Tool' }, { i: <IMail/>, n: 'Mail-Tool' },
+  { i: <IFlow/>, n: 'Automations-App' }, { i: <IChart/>, n: 'Reporting' },
+];
+
+const GROUPS = [
+  {
+    n: '01', title: 'Kommunizieren', sub: 'Jede Anfrage bekommt Antwort — auch nachts.',
+    tools: [
+      { name: 'Conversations AI', tag: 'AI Agent', tagLive: true, img: 'assets/illustrations/crm.png',
+        b: 'Antwortet und qualifiziert automatisch', r: ' — über Chat, SMS, Mail und Social-DMs, alles in einem Postfach.' },
+      { name: 'Voice AI', tag: 'AI Agent', tagLive: true, img: 'assets/illustrations/voice-ai.png',
+        b: 'Nimmt Anrufe mit natürlicher Stimme an', r: ' — qualifiziert dein Gegenüber und bucht Termine direkt in deinen Kalender.' },
+      { name: 'Reviews AI', tag: 'AI Agent', tagLive: true, img: 'assets/illustrations/bewertungen.png',
+        b: 'Fragt Bewertungen an und beantwortet sie', r: ' — Google und Facebook, in deinem Ton.' },
+    ],
+  },
+  {
+    n: '02', title: 'Content erstellen', sub: 'Texte, Mails und Seiten als fertigen Entwurf.',
+    tools: [
+      { name: 'Content AI', tag: 'AI Agent', tagLive: true, img: 'assets/illustrations/blog.png',
+        b: 'Erstellt Texte und Bilder auf Knopfdruck', r: ' — mit dem Kontext aus deinem CRM.' },
+      { name: 'Email AI', tag: 'AI Assistant', img: 'assets/illustrations/email.png',
+        b: 'Schreibt Betreffzeilen, Texte und ganze Kampagnen', r: ' — passend zu deinem Segment.' },
+      { name: 'Funnel AI', tag: 'AI Assistant', img: 'assets/illustrations/funnel.png',
+        b: 'Erzeugt Funnel- und Seiten-Entwürfe aus deiner Beschreibung', r: ' — Struktur, Texte und Formulare inklusive.' },
+    ],
+  },
+  {
+    n: '03', title: 'Automatisieren & steuern', sub: 'Damit deine KI genau weiß, was zu tun ist.',
+    tools: [
+      { name: 'Workflow AI', tag: 'AI Assistant', img: 'assets/illustrations/automation.png',
+        b: 'Bringt KI-Aktionen mitten in deine Automationen', r: ' — entscheiden, texten, taggen, weiterleiten.' },
+      { name: 'Prompt-Optimierer', tag: 'Infrastruktur', img: 'assets/illustrations/seo.png',
+        b: 'Verbessert deine Anweisungen', r: ' — aus einem Halbsatz wird ein präziser Auftrag, damit die KI bessere Ergebnisse liefert.' },
+      { name: 'Wissensdatenbank', tag: 'Infrastruktur', img: 'assets/illustrations/mitgliederbereich.png',
+        b: 'Speist die KI mit deinem Wissen', r: ' — Angebot, Preise, FAQ und Tonalität. So antwortet sie richtig und markengerecht.' },
+    ],
+  },
+  {
+    n: '04', title: 'Unterstützen', sub: 'Hilfe genau da, wo du gerade arbeitest.',
+    tools: [
+      { name: 'Ask AI', tag: 'AI Assistant', img: 'assets/illustrations/dashboard-funnelspace.png',
+        b: 'Dein KI-Assistent direkt im Tool', r: ' — für schnelle Fragen und Hilfe, ohne Support-Ticket.' },
+      { name: 'Formulare AI', tag: 'AI Assistant', img: 'assets/illustrations/quiz.png',
+        b: 'Erstellt Formulare passend zu deinem Ziel', r: ' — Felder, Logik und Danke-Seite gleich mit.' },
+    ],
+  },
+];
+
+const STUDIO_STEPS = [
+  { n: '1', t: 'Layout aufgebaut', s: '6 Sektionen' },
+  { n: '2', t: 'Texte geschrieben', s: 'Marken-Ton' },
+  { n: '3', t: 'Bilder gesetzt', s: '4 Motive' },
+  { n: '4', t: 'Funnel verknüpft', s: 'CRM + Mails' },
+];
+
+const FLOW = [
+  { n: '1', tool: 'AI Studio', t: 'Seite steht', d: 'Du beschreibst dein Erstgespräch — Layout, Texte und Formular entstehen im Dialog.' },
+  { n: '2', tool: 'Conversations AI', t: 'Anfragen beantwortet', d: 'Chat, DM und Mail werden beantwortet und qualifiziert, der Lead landet getaggt im CRM.' },
+  { n: '3', tool: 'Voice AI', t: 'Anruf angenommen', d: 'Wer lieber anruft, bekommt eine Stimme am Telefon — inklusive Terminbuchung.' },
+  { n: '4', tool: 'Email AI', t: 'Nachfass läuft', d: 'Betreff, Text und Sequenz für die Tage danach — geschrieben in deinem Ton.' },
+  { n: '5', tool: 'Reviews AI', t: 'Bewertung eingesammelt', d: 'Nach dem Termin fragt die KI nach einer Bewertung und beantwortet sie.' },
+];
+
+const BENEFITS = [
+  { i: <IClock />, t: 'Rund um die Uhr erreichbar', d: 'Anrufe, DMs und Chats werden auch um 22 Uhr beantwortet — ohne zusätzliches Personal und ohne Warteschleife.' },
+  { i: <ISpark />, t: 'Weniger Handarbeit', d: 'Texte, Seiten, Nachfass-Nachrichten und Bewertungs-Antworten entstehen als Entwurf. Du prüfst und gibst frei.' },
+  { i: <IBox />, t: 'Alles an einem Ort', d: 'Ein Login, ein Datenraum, kein Tool-Wechsel mehr — die KI arbeitet mit deinen echten Kontakten.' },
+];
+
+const PLANS = [
+  { n: 'Zahlung nach Verbrauch', amount: '0 $', per: '/ Monat + Token-Kosten', sub: 'Ideal zum Reinschnuppern: du zahlst nur, was die KI tatsächlich verbraucht.', f: ['Alle KI-Tools freigeschaltet', 'Abrechnung nach Token-Verbrauch', 'Keine Mindestlaufzeit', 'Voice-Minuten nach Nutzung'], cta: 'Kostenlos starten', style: 'btn btn--ghost' },
+  { n: 'AI Employee Growth', amount: '50 $', per: '/ Monat', sub: 'Feste Kontingente statt Verbrauchsrechnung — planbar für den laufenden Betrieb.', f: ['1.000 Conversations-Antworten', '100 Voice-Minuten', 'Reviews AI, Content AI & Wissensdatenbank inklusive', 'Alle AI Assistants'], cta: '14 Tage kostenlos testen', style: 'btn btn--primary', hi: true },
+  { n: 'AI Employee Unlimited', amount: '97 $', per: '/ Monat', sub: 'Alles unbegrenzt — für Teams, die die KI dauerhaft im Kundenkontakt einsetzen.', f: ['Conversations AI unbegrenzt', 'Voice AI unbegrenzt', 'Reviews AI, Content AI & Wissensdatenbank inklusive', 'Alle AI Assistants'], cta: '14 Tage kostenlos testen', style: 'btn btn--ink' },
+];
+
+const FAQS = [
+  { q: 'Was kostet die KI zusätzlich zum Funnelspace-Tarif?', a: '[Platzhalter — bitte bestätigen] Die KI-Pläne werden zusätzlich zu deinem Funnelspace-Tarif abgerechnet: entweder nach Verbrauch oder als AI Employee Growth bzw. Unlimited. Eigene API-Keys brauchst du nicht.' },
+  { q: 'Was ist der Unterschied zwischen Growth und Unlimited?', a: 'Growth enthält feste Kontingente — zum Beispiel 1.000 Conversations-Antworten und 100 Voice-Minuten pro Monat. Unlimited hebt diese Grenzen auf und ist für Teams gedacht, bei denen die KI dauerhaft im Kundenkontakt arbeitet. Reviews AI, Content AI und die Wissensdatenbank sind in beiden Plänen enthalten.' },
+  { q: 'Brauche ich technisches Wissen, um die KI einzurichten?', a: 'Nein. Du hinterlegst einmal in der Wissensdatenbank, was dein Angebot ist, wie du klingst und wann Termine möglich sind — den Rest übernehmen Vorlagen. Für Voice AI gibt es fertige Gesprächsleitfäden, die du nur anpasst.' },
+  { q: 'Kann die KI wirklich echte Anrufe annehmen?', a: 'Ja. Voice AI nimmt eingehende Anrufe mit natürlicher Stimme an, stellt deine Qualifizierungsfragen, bucht Termine in deinen Kalender und übergibt an dich, wenn es sinnvoll ist. Transkript und Zusammenfassung landen im CRM-Kontakt.' },
+  { q: 'Sind meine Daten sicher?', a: '[Platzhalter — bitte bestätigen] Verarbeitung in der EU, AV-Vertrag im Account hinterlegt. Deine Kundendaten und Prompts werden nicht zum Training fremder Modelle verwendet.' },
+];
+
+const Typing = () => {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    if (i >= HERO_PROMPT.length) return;
+    const t = setTimeout(() => setI(i + 1), i < 24 ? 52 : 26);
+    return () => clearTimeout(t);
+  }, [i]);
+  return (<>{HERO_PROMPT.slice(0, i)}<span className="kt-cursor"/></>);
+};
+
+const Hero = () => (
+  <section className="kt-hero">
+    <div className="kt-hero__inner">
+      <div>
+        <span className="kt-eyebrow">KI in Funnelspace</span>
+        <h1>Deine KI-Mitarbeiter. <em>Alle in Funnelspace.</em></h1>
+        <p className="kt-hero__lead">Anrufe annehmen, Leads beantworten, Content schreiben, Seiten bauen. Automatisch, an einem Ort.</p>
+        <div className="kt-hero__cta">
+          <a href="#signup" className="btn btn--primary btn-lg">14 Tage kostenlos testen</a>
+          <a href="#tools" className="btn btn--ghost btn-lg">Alle KI-Tools ansehen</a>
+        </div>
+        <div className="kt-hero__proof">
+          <span>Keine Kreditkarte nötig</span>
+          <span>Alle Tools freigeschaltet</span>
+          <span>Ohne Vertragsbindung</span>
+        </div>
+      </div>
+      <div className="kt-panel">
+        <div className="kt-panel__bar">
+          <span className="kt-panel__mark"><ISpark size={12}/></span>
+          <span className="kt-panel__title">KI-Assistenten</span>
+          <span className="kt-panel__kbd">⌘K</span>
+        </div>
+        <div className="kt-panel__q"><Typing /></div>
+        <div className="kt-panel__label">Vier Agenten übernehmen</div>
+        <div className="kt-panel__list">
+          {PANEL_ROWS.map(r => (
+            <div key={r.name} className={`kt-row${r.on ? ' kt-row--on' : ''}`}>
+              <span className="kt-row__dot">{r.i}</span>
+              <div>
+                <div className="kt-row__name">{r.name}</div>
+                <div className="kt-row__meta">{r.meta}</div>
+              </div>
+              <span className="kt-row__time">{r.time}</span>
+            </div>
+          ))}
+        </div>
+        <div className="kt-panel__foot">
+          <span className="kt-panel__foot-txt">Alles bleibt Entwurf, bis du freigibst.</span>
+          <span className="kt-panel__foot-btn">Entwürfe prüfen <IArrow size={12}/></span>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+const Strip = () => (
+  <div className="kt-strip">
+    <div className="kt-strip__inner">
+      {STATS.map(s => (
+        <div key={s.l} className="kt-stat">
+          <div className="kt-stat__num">{s.n}</div>
+          <div className="kt-stat__lbl">{s.l}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+const Problem = () => (
+  <section className="kt-sec kt-sec--alt">
+    <div className="kt-prob">
+      <div>
+        <div className="kt-sec__eyebrow">Das Problem</div>
+        <h2>Zehn Tools, zehn Logins, kein Überblick?</h2>
+        <p>Ein Dienst nimmt Anrufe an, ein zweiter beantwortet Chats, ein dritter schreibt Texte, ein vierter baut Seiten. Jeder kann eine Sache — und keiner weiß, was im anderen passiert ist.</p>
+        <p>Also verbindest du sie: Brücken, doppelte Kontaktlisten, Exporte, die niemand pflegt. Die Zeit, die die KI dir sparen sollte, steckt in der Verkabelung.</p>
+      </div>
+      <div className="kt-converge">
+        <div className="kt-mess">
+          {OLD_TOOLS.map(t => <div key={t.n} className="kt-tool">{React.cloneElement(t.i, {size:14})}<span>{t.n}</span></div>)}
+        </div>
+        <div className="kt-conv-arrow"><IArrow size={28} /></div>
+        <div className="kt-one">
+          <div className="kt-one__logo"><ISpark size={20}/></div>
+          <div className="kt-one__t">Funnelspace</div>
+          <div className="kt-one__d">Alle KI-Tools im selben System — mit deinen Kontakten, deinen Texten, deinem Kalender.</div>
+          <ul className="kt-one__list">
+            <li><ICheck />Ein Login, eine Rechnung</li>
+            <li><ICheck />Ein Datenraum für alle Agenten</li>
+            <li><ICheck />Keine API-Keys, keine Brücken</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+const Tools = () => (
+  <section className="kt-sec" id="tools">
+    <div className="kt-sec__inner">
+      <div className="kt-sec__head">
+        <div className="kt-sec__eyebrow">AI Agents & AI Assistants</div>
+        <h2>Deine <em>KI-Agenten</em> für den Alltag</h2>
+        <p>Sortiert nach dem, was sie übernehmen: kommunizieren, Content erstellen, automatisieren, unterstützen. Alle greifen auf denselben Datenraum zu.</p>
+      </div>
+      {GROUPS.map(g => (
+        <div key={g.n} className="kt-group">
+          <div className="kt-group__head">
+            <span className="kt-group__n">{g.n}</span>
+            <span className="kt-group__title">{g.title}</span>
+            <span className="kt-group__sub">{g.sub}</span>
+          </div>
+          <div className="kt-cards">
+            {g.tools.map(t => (
+              <div key={t.name} className="kt-card">
+                <div className="kt-card__art"><img src={t.img} alt="" /></div>
+                <div className="kt-card__top">
+                  <h3>{t.name}</h3>
+                  <span className={`kt-tag${t.tagLive ? ' kt-tag--live' : ''}`}>{t.tag}</span>
+                </div>
+                <p><b>{t.b}</b>{t.r}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+);
+
+const Studio = () => (
+  <section className="kt-sec kt-sec--alt">
+    <div className="kt-banner">
+      <span className="kt-banner__badge">Summer of AI</span>
+      <span className="kt-banner__txt">Alle AI Assistants bis 31. August kostenlos.</span>
+      <span className="kt-banner__note">[Platzhalter: nur zeigen, solange die Aktion läuft]</span>
+    </div>
+    <div className="kt-spot">
+      <div className="kt-spot__txt">
+        <div className="kt-spot__eyebrow">Spotlight</div>
+        <h2>AI Studio: Ganze Websites per Prompt</h2>
+        <p>Du beschreibst, was du brauchst — die KI baut Layout, Texte und Bilder. Komplette Funnels entstehen im Dialog statt per Drag-and-drop.</p>
+        <div className="kt-spot__cta">
+          <a href="ai-studio.html" className="btn btn--ink btn-lg">AI Studio ansehen <IArrow /></a>
+        </div>
+      </div>
+      <div className="kt-spot__visual">
+        <div className="kt-prompt">
+          <span className="kt-prompt__l">Dein Prompt</span>
+          Landingpage für mein Coaching-Erstgespräch, ruhig und klar, mit Terminbuchung.
+        </div>
+        <div className="kt-steps">
+          {STUDIO_STEPS.map(s => (
+            <div key={s.n} className="kt-step">
+              <span className="kt-step__n">{s.n}</span>
+              <span className="kt-step__t">{s.t}</span>
+              <span className="kt-step__s">{s.s}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+const Together = () => (
+  <section className="kt-sec section--ink">
+    <div className="kt-sec__inner">
+      <div className="kt-sec__head">
+        <div className="kt-sec__eyebrow" style={{color:'rgba(255,255,255,0.45)'}}>Ein Ablauf, fünf Tools</div>
+        <h2 style={{color:'#fff'}}>Einzeln nützlich. Zusammen ein <em>Team</em>.</h2>
+        <p style={{color:'rgba(255,255,255,0.65)'}}>Von der Seite bis zur Bewertung — und was die KI dabei übernimmt, während du arbeitest.</p>
+      </div>
+      <div className="kt-flow">
+        {FLOW.map(f => (
+          <div key={f.n} className="kt-flow__step">
+            <span className="kt-flow__n">{f.n}</span>
+            <span className="kt-flow__tool">{f.tool}</span>
+            <span className="kt-flow__t">{f.t}</span>
+            <span className="kt-flow__d">{f.d}</span>
+          </div>
+        ))}
+      </div>
+      <p className="kt-flow__note">Deine Aufgabe in dieser Kette: <b>prüfen und freigeben.</b></p>
+    </div>
+  </section>
+);
+
+const Benefits = () => (
+  <section className="kt-sec">
+    <div className="kt-sec__inner">
+      <div className="kt-sec__head">
+        <div className="kt-sec__eyebrow">Nutzen</div>
+        <h2>Was das für dich bedeutet</h2>
+      </div>
+      <div className="kt-benefits">
+        {BENEFITS.map(b => (
+          <div key={b.t} className="kt-benefit">
+            <div className="kt-benefit__icon">{b.i}</div>
+            <h3>{b.t}</h3>
+            <p>{b.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+const Plans = () => (
+  <section className="kt-sec kt-sec--alt" id="preise">
+    <div className="kt-sec__inner">
+      <div className="kt-sec__head">
+        <div className="kt-sec__eyebrow">Preise</div>
+        <h2>So kommst du an die KI</h2>
+        <p>Entweder nach Verbrauch oder mit festem Monatspreis. Reviews AI, Content AI und die Wissensdatenbank sind in beiden bezahlten Plänen enthalten.</p>
+      </div>
+      <div className="kt-plans">
+        {PLANS.map(p => (
+          <div key={p.n} className={`kt-plan${p.hi ? ' kt-plan--hi' : ''}`}>
+            {p.hi && <span className="kt-plan__tag">Beliebteste Wahl</span>}
+            <h3>{p.n}</h3>
+            <div className="kt-plan__price"><span className="kt-plan__amount">{p.amount}</span><span className="kt-plan__per">{p.per}</span></div>
+            <p className="kt-plan__sub">{p.sub}</p>
+            <ul className="kt-plan__list">{p.f.map(f => <li key={f}><ICheck />{f}</li>)}</ul>
+            <a href="#signup" className={p.style}>{p.cta}</a>
+          </div>
+        ))}
+      </div>
+      <p className="kt-note"><IInfo size={16} />Preise in USD. [Platzhalter: bestätigen, ob Funnelspace in EUR ausweist — und ob die Kontingente pro Monat oder pro Account gelten.]</p>
+      <div style={{marginTop:'24px',textAlign:'center'}}>
+        <a href="preise.html" className="btn btn--ink">Alle Funnelspace-Preise ansehen <IArrow /></a>
+      </div>
+    </div>
+  </section>
+);
+
+const FAQ = () => {
+  const [open, setOpen] = useState(0);
+  return (
+    <section className="kt-sec">
+      <div className="kt-sec__inner">
+        <div className="kt-sec__head">
+          <div className="kt-sec__eyebrow">FAQ</div>
+          <h2>Häufige Fragen</h2>
+        </div>
+        <div className="kt-faq">
+          {FAQS.map((f, i) => (
+            <div key={i} className={`kt-faq__item${open === i ? ' open' : ''}`}>
+              <button className="kt-faq__btn" onClick={() => setOpen(open === i ? -1 : i)}>
+                {f.q}<span className="kt-faq__icon">+</span>
+              </button>
+              <div className="kt-faq__body">{f.a}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const FinalCTA = () => (
+  <section className="kt-final">
+    <div className="kt-final__inner">
+      <h2>Bereit, dein <em>KI-Team</em> einzustellen?</h2>
+      <p>Alle KI-Agenten und Assistants freigeschaltet, in 15 Minuten eingerichtet.</p>
+      <div className="kt-final__btns">
+        <a href="#signup" className="btn btn--primary btn-lg">14 Tage kostenlos testen</a>
+        <a href="ai-studio.html" className="btn btn--ghost btn-lg" style={{borderColor:'rgba(255,255,255,0.3)',color:'#fff'}}>AI Studio ansehen</a>
+      </div>
+      <p className="kt-final__hint">Keine Kreditkarte nötig · ohne Vertragsbindung <span style={{opacity:.7}}>[Platzhalter prüfen]</span></p>
+    </div>
+  </section>
+);
+
+const KIToolsApp = () => (
+  <>
+    <Nav />
+    <main>
+      <Hero />
+      <Strip />
+      <Problem />
+      <Tools />
+      <Studio />
+      <Together />
+      <Benefits />
+      <Plans />
+      <FAQ />
+      <FinalCTA />
+    </main>
+    <Footer />
+  </>
+);
+ReactDOM.createRoot(document.getElementById('root')).render(<KIToolsApp />);
+</script>
+</body>
+</html>

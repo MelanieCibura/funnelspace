@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kalender — Funnelspace</title>
+<meta name="description" content="Buchungslink teilen, Slot wählen, fertig. Der Funnelspace-Kalender prüft deine Verfügbarkeit, erinnert automatisch und legt jeden Termin direkt im CRM an." />
+<link rel="stylesheet" href="colors_and_type.css" />
+<link rel="stylesheet" href="site.css" />
+<style>
+/* ── Kalender-Seite ─────────────────────────────────────── */
+.kal-hero{padding:88px 40px 72px;position:relative;overflow:hidden;background:var(--fs-paper)}
+.kal-hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--fs-gray-300) 1px,transparent 1.2px);background-size:26px 26px;opacity:.55;pointer-events:none}
+.kal-hero__inner{max-width:1280px;margin:0 auto;position:relative;display:grid;grid-template-columns:1fr 1.02fr;gap:64px;align-items:center}
+.kal-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fs-ink);background:var(--fs-lime);padding:6px 12px;border-radius:var(--radius-pill);margin-bottom:22px}
+.kal-hero h1{font-family:var(--font-display);font-size:clamp(42px,4.9vw,66px);font-weight:700;line-height:1.04;letter-spacing:-.03em;text-wrap:balance}
+.kal-hero h1 em{font-style:normal;white-space:nowrap;background:linear-gradient(var(--fs-lime),var(--fs-lime)) left .78em/100% .34em no-repeat;padding:0 2px}
+.kal-hero__lead{margin-top:22px;font-size:19px;line-height:1.55;color:var(--fg-2);max-width:500px}
+.kal-hero__cta{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+.kal-hero__proof{margin-top:26px;display:flex;gap:22px;flex-wrap:wrap;font-size:13px;color:var(--fg-3)}
+.kal-hero__proof span{display:flex;align-items:center;gap:7px}
+.kal-hero__proof>span::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--fs-lime);border:1px solid var(--fs-lime-deep)}
+
+/* Booking widget */
+.bk{background:#fff;border:1px solid var(--border-1);border-radius:var(--radius-xl);box-shadow:0 30px 60px -28px rgba(42,45,51,.35);overflow:hidden}
+.bk__bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--border-1);background:var(--fs-paper)}
+.bk__dots{display:flex;gap:5px}
+.bk__dots i{width:9px;height:9px;border-radius:50%;background:var(--fs-gray-300);display:block}
+.bk__url{flex:1;text-align:center;font-family:var(--font-mono,monospace);font-size:11px;color:var(--fg-3);background:#fff;border:1px solid var(--border-1);border-radius:var(--radius-pill);padding:4px 12px}
+.bk__body{display:grid;grid-template-columns:1.15fr .85fr;min-height:396px}
+.bk__left{padding:24px 22px;border-right:1px solid var(--border-1)}
+.bk__host{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.bk__ava{width:42px;height:42px;border-radius:50%;background:var(--fs-ink);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px;font-family:var(--font-display)}
+.bk__hostname{font-size:13px;color:var(--fg-3)}
+.bk__title{font-family:var(--font-display);font-weight:700;font-size:19px;letter-spacing:-.01em;line-height:1.2;margin-top:2px}
+.bk__meta{display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--fg-2)}
+.bk__meta>div{display:flex;align-items:center;gap:9px}
+.bk__meta svg{width:15px;height:15px;color:var(--fs-ink-soft);flex-shrink:0}
+.bk__cal{margin-top:20px;border-top:1px solid var(--border-1);padding-top:18px}
+.bk__month{display:flex;align-items:center;justify-content:space-between;font-family:var(--font-display);font-weight:700;font-size:14px;margin-bottom:12px}
+.bk__nav{display:flex;gap:6px;color:var(--fg-3)}
+.bk__grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.bk__dow{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-3);text-align:center;padding-bottom:4px}
+.bk__day{aspect-ratio:1;border-radius:8px;display:grid;place-items:center;font-size:12px;font-weight:600;color:var(--fs-gray-400);border:1px solid transparent}
+.bk__day--free{color:var(--fs-ink);background:var(--fs-gray-100);cursor:pointer;transition:background var(--dur-fast,.12s) ease,transform var(--dur-fast,.12s) ease}
+.bk__day--free:hover{background:var(--fs-lime-soft,#EDF8C9);transform:translateY(-1px)}
+.bk__day--sel{background:var(--fs-ink);color:#fff}
+.bk__right{padding:24px 20px;display:flex;flex-direction:column;background:var(--fs-paper)}
+.bk__rlabel{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-3);margin-bottom:12px}
+.bk__slots{display:flex;flex-direction:column;gap:8px;overflow:hidden}
+.bk__slot{background:#fff;border:1px solid var(--border-1);border-radius:var(--radius-md);padding:11px 14px;font-size:14px;font-weight:600;font-family:var(--font-display);color:var(--fs-ink);cursor:pointer;text-align:center;transition:border-color .12s ease,transform .12s ease,background .12s ease}
+.bk__slot:hover{border-color:var(--fs-ink);transform:translateY(-2px)}
+.bk__slot--taken{color:var(--fs-gray-400);text-decoration:line-through;cursor:not-allowed;background:var(--fs-gray-100);border-style:dashed}
+.bk__slot--taken:hover{transform:none;border-color:var(--border-1)}
+.bk__tz{margin-top:auto;padding-top:14px;font-size:11px;color:var(--fg-3);display:flex;align-items:center;gap:6px}
+.bk__done{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;height:100%;padding:8px}
+.bk__check{width:52px;height:52px;border-radius:50%;background:var(--fs-lime);display:grid;place-items:center;color:var(--fs-lime-ink)}
+.bk__check svg{width:26px;height:26px}
+.bk__donetitle{font-family:var(--font-display);font-weight:700;font-size:17px;letter-spacing:-.01em}
+.bk__donetext{font-size:12.5px;color:var(--fg-2);line-height:1.5}
+.bk__trail{margin-top:6px;display:flex;flex-direction:column;gap:6px;width:100%}
+.bk__trailitem{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border-1);border-radius:var(--radius-sm);padding:7px 9px;font-size:11px;color:var(--fg-2);text-align:left}
+.bk__trailitem b{color:var(--fs-ink)}
+.bk__trailitem svg{width:13px;height:13px;color:var(--fs-lime-deep);flex-shrink:0}
+.bk__again{background:none;border:none;font-size:11px;color:var(--fg-3);text-decoration:underline;cursor:pointer;margin-top:2px;font-family:var(--font-sans)}
+
+/* Replaces */
+.kal-replaces{background:var(--fs-ink);padding:20px 40px}
+.kal-replaces__inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:30px;flex-wrap:wrap}
+.kal-replaces__label{font-size:12px;color:rgba(255,255,255,.45);font-weight:600;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.kal-replaces__items{display:flex;gap:26px;flex-wrap:wrap}
+.kal-replaces__items>span{font-family:var(--font-display);font-weight:700;font-size:16px;color:rgba(255,255,255,.42);text-decoration:line-through;text-decoration-color:rgba(215,240,120,.55);text-decoration-thickness:2px}
+
+/* Sections */
+.kal-sec{padding:104px 40px}
+.kal-sec--white{background:var(--fs-white,#fff)}
+.kal-sec--ink{background:var(--fs-ink)}
+.kal-sec__inner{max-width:1280px;margin:0 auto}
+.kal-head{max-width:720px;margin:0 auto 56px;text-align:center}
+.kal-head--left{margin:0 0 48px;text-align:left}
+.kal-kicker{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-3);margin-bottom:14px}
+.kal-head h2{font-family:var(--font-display);font-size:clamp(34px,3.6vw,52px);font-weight:700;letter-spacing:-.03em;line-height:1.08;text-wrap:balance}
+.kal-head h2 em{font-style:normal;background:var(--fs-lime);color:var(--fs-lime-ink);padding:0 8px;border-radius:6px}
+.kal-head p{margin-top:16px;font-size:18px;color:var(--fg-2);line-height:1.55}
+.kal-sec--ink .kal-head h2{color:#fff}
+.kal-sec--ink .kal-head p{color:rgba(255,255,255,.6)}
+.kal-sec--ink .kal-kicker{color:var(--fs-lime)}
+
+/* ── Tagesplan (Kernstück) ───────────────────────────────── */
+.day{position:relative;max-width:960px;margin:0 auto}
+.day__rail{position:absolute;left:96px;top:8px;bottom:8px;width:1px;background:rgba(255,255,255,.16)}
+.day__now{position:absolute;left:88px;right:0;display:flex;align-items:center;transition:top .38s cubic-bezier(.22,.61,.36,1);pointer-events:none}
+.day__now-lbl{width:88px;text-align:right;font-family:var(--font-mono,monospace);font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--fs-lime-ink);background:var(--fs-lime);border-radius:var(--radius-pill);padding:2px 0}
+.day__now-line{flex:1;height:1px;background:var(--fs-lime);position:relative}
+.day__items{display:flex;flex-direction:column;gap:14px}
+.evt{display:grid;grid-template-columns:88px 1fr;gap:32px;align-items:start;position:relative}
+.evt__time{font-family:var(--font-mono,monospace);font-size:13px;font-weight:700;color:rgba(255,255,255,.42);text-align:right;padding-top:20px;letter-spacing:-.01em;transition:color .22s ease}
+.evt.is-now .evt__time{color:var(--fs-lime)}
+.evt__time span{display:block;padding:2px 8px 2px 0;border-radius:var(--radius-pill);transition:background .22s ease,color .22s ease}
+.evt.is-now .evt__time span{background:var(--fs-lime);color:var(--fs-lime-ink);font-size:10px;letter-spacing:.06em}
+.evt__card{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1);border-left:3px solid rgba(255,255,255,.18);border-radius:var(--radius-md);padding:18px 22px;transition:background .22s ease,border-color .22s ease,transform .22s ease}
+.evt.is-now .evt__card{background:#fff;border-color:#fff;border-left-color:var(--fs-lime);transform:translateX(4px)}
+.evt__top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.evt__chip{font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:var(--radius-pill);background:rgba(215,240,120,.14);color:var(--fs-lime);border:1px solid rgba(215,240,120,.3)}
+.evt.is-now .evt__chip{background:var(--fs-lime);color:var(--fs-lime-ink);border-color:var(--fs-lime-deep)}
+.evt__auto{font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:rgba(255,255,255,.32)}
+.evt.is-now .evt__auto{color:var(--fg-3)}
+.evt h3{font-family:var(--font-display);font-size:20px;font-weight:700;letter-spacing:-.015em;color:rgba(255,255,255,.9);line-height:1.25}
+.evt.is-now h3{color:var(--fs-ink)}
+.evt p{margin-top:7px;font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.5);max-width:60ch}
+.evt.is-now p{color:var(--fg-2)}
+.day__foot{margin-top:44px;display:grid;grid-template-columns:88px 1fr;gap:32px}
+.day__sum{background:var(--fs-lime);color:var(--fs-lime-ink);border-radius:var(--radius-md);padding:22px 24px;display:flex;gap:34px;flex-wrap:wrap;align-items:center}
+.day__sum b{display:block;font-family:var(--font-display);font-size:26px;letter-spacing:-.02em;line-height:1}
+.day__sum>div>span{font-size:12.5px;opacity:.75;display:block;margin-top:4px}
+
+/* Buchungsarten */
+.types{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.type{background:#fff;border:1px solid var(--border-1);border-radius:var(--radius-lg);padding:26px;display:flex;flex-direction:column;gap:16px;transition:transform .22s ease,box-shadow .22s ease}
+.type:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.type__art{background:var(--fs-paper);border-radius:var(--radius-md);padding:16px;display:flex;flex-direction:column;gap:7px;min-height:132px;justify-content:center}
+.trow{display:flex;gap:6px}
+.tblock{flex:1;border-radius:5px;height:20px;background:var(--fs-gray-200);display:flex;align-items:center;padding:0 7px;font-size:9px;font-weight:700;color:var(--fs-ink-soft);letter-spacing:.02em;overflow:hidden;white-space:nowrap}
+.tblock--lime{background:var(--fs-lime);color:var(--fs-lime-ink)}
+.tblock--ink{background:var(--fs-ink);color:#fff}
+.tblock--ghost{background:transparent;border:1px dashed var(--fs-gray-300);color:var(--fs-gray-400)}
+.type h3{font-family:var(--font-display);font-size:19px;font-weight:700;letter-spacing:-.01em}
+.type p{font-size:14px;color:var(--fg-2);line-height:1.55}
+.type__use{margin-top:auto;font-size:12px;color:var(--fg-3);border-top:1px solid var(--border-1);padding-top:12px}
+.type__use b{color:var(--fs-ink);font-weight:700}
+
+/* Regeln */
+.rules{display:grid;grid-template-columns:1fr 1.05fr;gap:72px;align-items:center}
+.rules ul{list-style:none;padding:0;margin:26px 0 0;display:flex;flex-direction:column;gap:14px}
+.rules li{display:flex;gap:12px;font-size:15.5px;color:var(--fg-2);line-height:1.5}
+.rules li svg{width:18px;height:18px;flex-shrink:0;margin-top:3px;color:var(--fs-lime-deep)}
+.rules li b{color:var(--fs-ink)}
+.panel{background:#fff;border:1px solid var(--border-1);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);overflow:hidden}
+.panel__head{padding:14px 18px;border-bottom:1px solid var(--border-1);font-family:var(--font-display);font-weight:700;font-size:14px;display:flex;justify-content:space-between;align-items:center}
+.panel__head span{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--fs-lime-ink);background:var(--fs-lime);padding:3px 8px;border-radius:var(--radius-pill)}
+.setting{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 18px;border-bottom:1px solid var(--border-1)}
+.setting:last-child{border-bottom:none}
+.setting__l{font-size:13.5px;font-weight:600;color:var(--fs-ink)}
+.setting__d{font-size:11.5px;color:var(--fg-3);margin-top:2px}
+.setting__v{font-family:var(--font-display);font-weight:700;font-size:13px;background:var(--fs-gray-100);border-radius:var(--radius-xs);padding:5px 10px;white-space:nowrap}
+.setting__v--lime{background:var(--fs-lime);color:var(--fs-lime-ink)}
+.toggle{width:38px;height:22px;border-radius:999px;background:var(--fs-ink);position:relative;flex-shrink:0}
+.toggle::after{content:"";position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:#fff}
+.hours{display:flex;gap:5px;padding:14px 18px 18px}
+.hcol{flex:1;text-align:center}
+.hcol i{display:block;font-style:normal;font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-3);margin-bottom:5px}
+.hbar{height:52px;border-radius:6px;background:var(--fs-gray-100);position:relative;overflow:hidden}
+.hbar b{position:absolute;left:3px;right:3px;background:var(--fs-lime);border-radius:4px;display:block}
+.hbar--off{background:repeating-linear-gradient(45deg,var(--fs-gray-100),var(--fs-gray-100) 4px,#fff 4px,#fff 8px)}
+
+/* Integration */
+.ints{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.int{background:#fff;border:1px solid var(--border-1);border-radius:var(--radius-lg);padding:24px;display:flex;flex-direction:column;gap:12px;transition:transform .22s ease,box-shadow .22s ease}
+.int:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.int__art{aspect-ratio:16/10;background:var(--fs-paper);background-image:radial-gradient(var(--fs-gray-300) 1px,transparent 1.2px);background-size:8px 8px;border-radius:var(--radius-md);display:grid;place-items:center}
+.int__art img{max-height:78%;max-width:78%;object-fit:contain}
+.int h4{font-family:var(--font-display);font-size:17px;font-weight:700;letter-spacing:-.01em}
+.int p{font-size:13px;color:var(--fg-2);line-height:1.5}
+
+/* Testimonial split */
+.voices{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.voice{border:1px solid var(--border-1);border-radius:var(--radius-lg);padding:30px;display:flex;flex-direction:column;gap:18px;background:#fff}
+.voice--lime{background:var(--fs-lime);border-color:var(--fs-lime)}
+.voice blockquote{margin:0;padding:0;border:none;font-family:var(--font-display);font-weight:500;font-size:20px;line-height:1.42;letter-spacing:-.015em;color:var(--fg-1);flex:1}
+.voice__who{display:flex;align-items:center;gap:12px}
+.voice__ava{width:40px;height:40px;border-radius:50%;background:var(--fs-ink);color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px;flex-shrink:0}
+.voice--lime .voice__ava{background:var(--fs-ink)}
+.voice__n{font-size:14px;font-weight:700}
+.voice__r{font-size:12px;color:var(--fg-3);margin-top:2px}
+.voice--lime .voice__r{color:rgba(47,58,0,.7)}
+
+/* FAQ */
+.faq{max-width:820px;margin:0 auto}
+.faq__i{border-bottom:1px solid var(--border-1)}
+.faq__i:first-child{border-top:1px solid var(--border-1)}
+.faq__b{width:100%;background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;text-align:left;font-family:var(--font-display);font-size:18px;font-weight:600;color:var(--fs-ink);letter-spacing:-.01em}
+.faq__ic{width:30px;height:30px;border-radius:50%;background:var(--fs-gray-100);flex-shrink:0;display:grid;place-items:center;font-size:18px;transition:background .12s ease,transform .22s ease}
+.faq__i.open .faq__ic{background:var(--fs-lime);transform:rotate(45deg)}
+.faq__body{font-size:15px;color:var(--fg-2);line-height:1.65;overflow:hidden;max-height:0;transition:max-height .38s ease,padding .38s ease}
+.faq__i.open .faq__body{max-height:400px;padding-bottom:22px}
+
+/* Final: Einladung */
+.invite-sec{background:var(--fs-paper);padding:104px 40px;position:relative;overflow:hidden}
+.invite-sec::before{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--fs-gray-300) 1px,transparent 1.2px);background-size:26px 26px;opacity:.55}
+.invite{position:relative;max-width:620px;margin:0 auto;background:#fff;border:2px solid var(--fs-ink);border-radius:var(--radius-lg);overflow:hidden;box-shadow:0 30px 60px -30px rgba(42,45,51,.4)}
+.invite__strip{background:var(--fs-ink);color:rgba(255,255,255,.65);padding:10px 24px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:flex;justify-content:space-between;gap:12px}
+.invite__strip b{color:var(--fs-lime)}
+.invite__body{padding:34px 34px 30px;display:grid;grid-template-columns:76px 1fr;gap:24px;align-items:start}
+.invite__date{border:1px solid var(--border-1);border-radius:var(--radius-md);text-align:center;overflow:hidden}
+.invite__date i{display:block;font-style:normal;background:var(--fs-lime);color:var(--fs-lime-ink);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 0}
+.invite__date b{display:block;font-family:var(--font-display);font-size:30px;padding:10px 0 12px;letter-spacing:-.02em}
+.invite h2{font-family:var(--font-display);font-size:clamp(26px,3vw,34px);font-weight:700;letter-spacing:-.025em;line-height:1.14;text-wrap:balance}
+.invite p{margin-top:12px;font-size:15.5px;color:var(--fg-2);line-height:1.55}
+.invite__btns{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
+.invite__note{padding:0 34px 30px;font-size:12px;color:var(--fg-3);display:flex;gap:18px;flex-wrap:wrap}
+.invite__note>span{display:flex;align-items:center;gap:6px}
+.invite__note svg{width:13px;height:13px;color:var(--fs-lime-deep)}
+
+a{color:var(--fs-ink)}
+a:hover{color:var(--fs-lime-deep)}
+
+@media(max-width:1024px){
+.kal-hero__inner{grid-template-columns:1fr;gap:44px}
+.bk__body{grid-template-columns:1fr}
+.bk__left{border-right:none;border-bottom:1px solid var(--border-1)}
+.rules{grid-template-columns:1fr;gap:40px}
+.types{grid-template-columns:1fr}
+.ints{grid-template-columns:1fr 1fr}
+.voices{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+.kal-hero{padding:56px 22px 56px}
+.kal-sec,.invite-sec{padding:72px 22px}
+.kal-replaces{padding:16px 22px}
+.evt{grid-template-columns:56px 1fr;gap:16px}
+.evt__time{font-size:11px;padding-top:18px}
+.day__rail{left:64px}
+.day__now{left:56px}
+.day__foot{grid-template-columns:56px 1fr;gap:16px}
+.ints{grid-template-columns:1fr}
+.invite__body{grid-template-columns:1fr;padding:26px 22px 22px}
+.invite__note{padding:0 22px 24px}
+.nav__links{display:none}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="Nav.jsx"></script>
+<script type="text/babel" src="Footer.jsx"></script>
+<script type="text/babel">
+const {useState,useRef,useEffect} = React;
+
+const Icon = ({d,size=18}) => (<svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">{d}</svg>);
+const IClock = p => <Icon size={p.size} d={<><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></>} />;
+const IVideo = p => <Icon size={p.size} d={<><rect x="2" y="6" width="14" height="12" rx="2"/><polygon points="22 8 16 12 22 16 22 8"/></>} />;
+const IGlobe = p => <Icon size={p.size} d={<><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/></>} />;
+const ICheck = p => <Icon size={p.size} d={<polyline points="20 6 9 17 4 12"/>} />;
+const IChevL = p => <Icon size={p.size||14} d={<polyline points="15 18 9 12 15 6"/>} />;
+const IChevR = p => <Icon size={p.size||14} d={<polyline points="9 18 15 12 9 6"/>} />;
+
+/* ── Interaktives Buchungs-Widget ───────────────────────── */
+const SLOTS = ['09:00','09:30','10:30','11:00','14:00','14:30','16:00'];
+const TAKEN = ['10:30','14:00'];
+
+const BookingWidget = () => {
+  const [day,setDay] = useState(14);
+  const [booked,setBooked] = useState(null);
+  const days = Array.from({length:35},(_,i)=>i-2);
+  const free = [3,4,5,6,9,10,11,12,13,16,17,18,19,20,23,24,25];
+  return (
+    <div className="bk">
+      <div className="bk__bar">
+        <div className="bk__dots"><i/><i/><i/></div>
+        <div className="bk__url">funnelspace.de/lena/erstgespraech</div>
+      </div>
+      <div className="bk__body">
+        <div className="bk__left">
+          <div className="bk__host">
+            <div className="bk__ava">LM</div>
+            <div>
+              <div className="bk__hostname">Lena Mertens</div>
+              <div className="bk__title">Erstgespräch · 30 Min.</div>
+            </div>
+          </div>
+          <div className="bk__meta">
+            <div><IClock size={15} />30 Minuten</div>
+            <div><IVideo size={15} />Videocall — Link kommt automatisch</div>
+            <div><IGlobe size={15} />Europe/Berlin (deine Zeitzone)</div>
+          </div>
+          <div className="bk__cal">
+            <div className="bk__month">Oktober 2026<span className="bk__nav"><IChevL /><IChevR /></span></div>
+            <div className="bk__grid">
+              {['Mo','Di','Mi','Do','Fr','Sa','So'].map(d=><div key={d} className="bk__dow">{d}</div>)}
+              {days.map(n=>{
+                const valid = n>0 && n<=31;
+                const isFree = free.includes(n);
+                const cls = 'bk__day' + (valid&&isFree?' bk__day--free':'') + (valid&&n===day?' bk__day--sel':'');
+                return <div key={n} className={cls} onClick={()=>{if(valid&&isFree){setDay(n);setBooked(null);}}}>{valid?n:''}</div>;
+              })}
+            </div>
+          </div>
+        </div>
+        <div className="bk__right">
+          {booked ? (
+            <div className="bk__done">
+              <div className="bk__check"><ICheck size={26} /></div>
+              <div className="bk__donetitle">Gebucht.</div>
+              <div className="bk__donetext">Dienstag, {day}. Oktober · {booked} Uhr</div>
+              <div className="bk__trail">
+                <div className="bk__trailitem"><ICheck size={13} /><span>Bestätigung &amp; Kalendereintrag <b>raus</b></span></div>
+                <div className="bk__trailitem"><ICheck size={13} /><span>Kontakt im <b>CRM</b> angelegt, Tag „Erstgespräch"</span></div>
+                <div className="bk__trailitem"><ICheck size={13} /><span>Erinnerung geplant: <b>1 Tag &amp; 1 Stunde vorher</b></span></div>
+              </div>
+              <button className="bk__again" onClick={()=>setBooked(null)}>anderen Termin wählen</button>
+            </div>
+          ) : (
+            <>
+              <div className="bk__rlabel">Di, {day}. Oktober</div>
+              <div className="bk__slots">
+                {SLOTS.map(s=>{
+                  const taken = TAKEN.includes(s);
+                  return <button key={s} className={'bk__slot'+(taken?' bk__slot--taken':'')} onClick={()=>!taken&&setBooked(s)}>{s}</button>;
+                })}
+              </div>
+              <div className="bk__tz"><IGlobe size={12} />Zeiten in deiner Zeitzone · Puffer automatisch berücksichtigt</div>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ── Tagesplan ───────────────────────────────────────────── */
+const EVENTS = [
+  {t:'07:58', chip:'Buchung', auto:'ohne dich', h:'Anna bucht — während du noch Kaffee kochst.', p:'Dein Buchungslink zeigt nur Slots, die wirklich frei sind. Externe Kalender werden live geprüft, doppelt gebucht wird nichts.'},
+  {t:'07:59', chip:'CRM', auto:'automatisch', h:'Der Kontakt liegt im CRM, bevor du ihn öffnest.', p:'Name, Quelle, Antworten aus dem Buchungsformular und der Tag „Erstgespräch" — alles direkt am Kontakt, ohne Übertragen.'},
+  {t:'09:15', chip:'Puffer', auto:'Regel aktiv', h:'15 Minuten Luft nach jedem Call. Ungefragt.', p:'Puffer vor und nach Terminen, Mindest-Vorlaufzeit und ein Tageslimit sorgen dafür, dass dein Kalender atmen kann.'},
+  {t:'10:00', chip:'E-Mail', auto:'automatisch', h:'Erinnerung raus — an sie, nicht von dir.', p:'Bestätigung, Reminder 24 Stunden und 1 Stunde vorher, plus Videolink. No-Shows fallen dadurch messbar seltener aus.'},
+  {t:'11:00', chip:'Call', auto:'läuft', h:'Der Call startet, der Link liegt schon im Termin.', p:'Zoom, Google Meet oder dein eigener Raum. Notizen tippst du direkt in den Termin — sie landen im Kontakt-Verlauf.'},
+  {t:'11:34', chip:'Automation', auto:'Trigger', h:'Nach dem Call startet die Follow-up-Sequenz.', p:'Status setzen: „Angebot" → E-Mail-Sequenz läuft an, Deal wandert in die Pipeline. Du machst nichts weiter als einen Klick.'},
+  {t:'15:00', chip:'Fokuszeit', auto:'geschützt', h:'Nachmittags ist zu. Für alle.', p:'Blocke Fokus-Slots, Tage oder ganze Wochen. Was blockiert ist, taucht in keinem Buchungslink auf.'},
+];
+
+const DayPlan = () => {
+  const [active,setActive] = useState(0);
+  const refs = useRef([]);
+  const wrap = useRef(null);
+  const [nowTop,setNowTop] = useState(0);
+  useEffect(()=>{
+    const onScroll = () => {
+      const mid = window.innerHeight*0.42;
+      let best=0,bd=1e9;
+      refs.current.forEach((el,i)=>{
+        if(!el) return;
+        const r = el.getBoundingClientRect();
+        const d = Math.abs(r.top+r.height/2-mid);
+        if(d<bd){bd=d;best=i;}
+      });
+      setActive(best);
+      const el = refs.current[best], w = wrap.current;
+      if(el&&w){
+        const t = el.querySelector('.evt__time span'), tr = t.getBoundingClientRect();
+        setNowTop(tr.top + tr.height/2 - w.getBoundingClientRect().top);
+      }
+    };
+    onScroll();
+    window.addEventListener('scroll',onScroll,{passive:true});
+    window.addEventListener('resize',onScroll);
+    return ()=>{window.removeEventListener('scroll',onScroll);window.removeEventListener('resize',onScroll);};
+  },[]);
+  return (
+    <section className="kal-sec kal-sec--ink" id="tagesplan">
+      <div className="kal-sec__inner">
+        <div className="kal-head">
+          <div className="kal-kicker">Dienstag, 14. Oktober</div>
+          <h2>Ein Tag, an dem der Kalender <em>arbeitet</em>.</h2>
+          <p>Nicht eine Liste von Funktionen — sondern dein Tag, so wie er mit Funnelspace tatsächlich abläuft. Scroll dich durch.</p>
+        </div>
+        <div className="day" ref={wrap}>
+          <div className="day__rail" />
+          <div className="day__now" style={{top:nowTop}}>
+            <div className="day__now-line" />
+          </div>
+          <div className="day__items">
+            {EVENTS.map((e,i)=>(
+              <article key={e.t} ref={el=>refs.current[i]=el} className={'evt'+(active===i?' is-now':'')}>
+                <div className="evt__time"><span>{e.t}</span></div>
+                <div className="evt__card">
+                  <div className="evt__top">
+                    <span className="evt__chip">{e.chip}</span>
+                    <span className="evt__auto">{e.auto}</span>
+                  </div>
+                  <h3>{e.h}</h3>
+                  <p>{e.p}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+          <div className="day__foot">
+            <div />
+            <div className="day__sum">
+              <div><b>0</b><span>Mails „Passt Dienstag 11 Uhr?"</span></div>
+              <div><b>0</b><span>Doppelbuchungen</span></div>
+              <div><b>~4 Std.</b><span>weniger Koordination pro Woche</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/* ── Buchungsarten ──────────────────────────────────────── */
+const Types = () => (
+  <section className="kal-sec kal-sec--white">
+    <div className="kal-sec__inner">
+      <div className="kal-head">
+        <div className="kal-kicker">Buchungsarten</div>
+        <h2>Für jede Art von Termin die passende Seite.</h2>
+        <p>Ein Kalender, beliebig viele Buchungslinks — jeder mit eigenen Regeln, Fragen und Erinnerungen.</p>
+      </div>
+      <div className="types">
+        <div className="type">
+          <div className="type__art">
+            <div className="trow"><span className="tblock tblock--lime">Erstgespräch · 30 Min.</span></div>
+            <div className="trow"><span className="tblock tblock--ghost">frei</span></div>
+            <div className="trow"><span className="tblock">Strategie · 60 Min.</span></div>
+            <div className="trow"><span className="tblock tblock--ghost">frei</span></div>
+          </div>
+          <h3>Einzeltermin</h3>
+          <p>Klassisch 1:1. Dauer, Puffer, Formularfragen und Preis pro Terminart frei einstellbar.</p>
+          <div className="type__use"><b>Gut für:</b> Erstgespräche, Coaching-Sessions, Beratung</div>
+        </div>
+        <div className="type">
+          <div className="type__art">
+            <div className="trow"><span className="tblock tblock--ink">Gruppen-Q&amp;A · Do 18:00</span></div>
+            <div className="trow"><span className="tblock">12 / 20 Plätze</span></div>
+            <div className="trow"><span className="tblock tblock--lime">Warteliste aktiv</span></div>
+            <div className="trow"><span className="tblock tblock--ghost">nächster Termin: 21.10.</span></div>
+          </div>
+          <h3>Gruppentermin</h3>
+          <p>Mehrere Teilnehmende auf einem Slot, mit Platzlimit und automatischer Warteliste.</p>
+          <div className="type__use"><b>Gut für:</b> Q&amp;A-Calls, Workshops, Live-Sessions im Kurs</div>
+        </div>
+        <div className="type">
+          <div className="type__art">
+            <div className="trow"><span className="tblock tblock--lime">Lena</span><span className="tblock">Ben</span></div>
+            <div className="trow"><span className="tblock">Ben</span><span className="tblock tblock--lime">Lena</span></div>
+            <div className="trow"><span className="tblock tblock--ink">nächste:r im Team</span></div>
+            <div className="trow"><span className="tblock tblock--ghost">gleichmäßig verteilt</span></div>
+          </div>
+          <h3>Team-Verteilung</h3>
+          <p>Anfragen wandern reihum ans Team oder gezielt an die zuständige Person im CRM.</p>
+          <div className="type__use"><b>Gut für:</b> Sales-Teams, Support-Slots, Agenturen</div>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+/* ── Regeln ─────────────────────────────────────────────── */
+const Rules = () => (
+  <section className="kal-sec">
+    <div className="kal-sec__inner">
+      <div className="rules">
+        <div>
+          <div className="kal-kicker">Regeln &amp; Verfügbarkeit</div>
+          <h2 style={{fontFamily:'var(--font-display)',fontSize:'clamp(32px,3.4vw,46px)',fontWeight:700,letterSpacing:'-.03em',lineHeight:1.1,textWrap:'balance'}}>Dein Kalender sagt Nein, damit du es nicht musst.</h2>
+          <p style={{marginTop:16,fontSize:17,color:'var(--fg-2)',lineHeight:1.55,maxWidth:'46ch'}}>Einmal eingerichtet, verteidigt Funnelspace deine Woche: Puffer, Grenzen, Fokuszeiten und Zeitzonen laufen im Hintergrund mit.</p>
+          <ul>
+            <li><ICheck /><span><b>Puffer &amp; Vorlaufzeit</b> — nie wieder ein Call in zehn Minuten oder drei Termine am Stück.</span></li>
+            <li><ICheck /><span><b>Tageslimit</b> — maximal so viele Gespräche pro Tag, wie du wirklich schaffst.</span></li>
+            <li><ICheck /><span><b>Kalender-Sync</b> — Google, Outlook und iCloud in beide Richtungen, in Echtzeit.</span></li>
+            <li><ICheck /><span><b>Zeitzonen automatisch</b> — deine Kund:innen sehen ihre Uhrzeit, du deine.</span></li>
+            <li><ICheck /><span><b>Bezahlte Termine</b> — Slot nur nach Zahlung, direkt über Stripe.</span></li>
+          </ul>
+        </div>
+        <div className="panel">
+          <div className="panel__head">Verfügbarkeit · Lena Mertens<span>aktiv</span></div>
+          <div className="setting"><div><div className="setting__l">Puffer nach dem Termin</div><div className="setting__d">Zeit zum Durchatmen und Notieren</div></div><div className="setting__v setting__v--lime">15 Min.</div></div>
+          <div className="setting"><div><div className="setting__l">Mindest-Vorlaufzeit</div><div className="setting__d">Keine Buchung auf den letzten Drücker</div></div><div className="setting__v">4 Std.</div></div>
+          <div className="setting"><div><div className="setting__l">Max. Termine pro Tag</div><div className="setting__d">Danach schließt der Link automatisch</div></div><div className="setting__v">4</div></div>
+          <div className="setting"><div><div className="setting__l">Externe Kalender prüfen</div><div className="setting__d">Google · Outlook · iCloud</div></div><div className="toggle" /></div>
+          <div className="hours">
+            {[{d:'Mo',t:14,h:60},{d:'Di',t:8,h:74},{d:'Mi',t:20,h:40},{d:'Do',t:8,h:74},{d:'Fr',t:14,h:34},{d:'Sa',off:true},{d:'So',off:true}].map(c=>(
+              <div key={c.d} className="hcol"><i>{c.d}</i><div className={'hbar'+(c.off?' hbar--off':'')}>{!c.off && <b style={{top:c.t,height:c.h}} />}</div></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+/* ── Integrationen ──────────────────────────────────────── */
+const INTS = [
+  {img:'assets/illustrations/crm.png',t:'CRM',d:'Jede Buchung wird zum Kontakt mit Quelle, Tag und Termin-Historie.'},
+  {img:'assets/illustrations/email.png',t:'E-Mail',d:'Bestätigungen, Erinnerungen und Follow-ups laufen als Sequenz.'},
+  {img:'assets/illustrations/funnel.png',t:'Funnel',d:'Buchungsschritt direkt in den Funnel setzen — ohne Weiterleitung.'},
+  {img:'assets/illustrations/mitgliederbereich.png',t:'Mitgliederbereich',d:'Live-Calls und Sprechstunden erscheinen direkt im Kurs.'},
+];
+const Integrations = () => (
+  <section className="kal-sec kal-sec--white">
+    <div className="kal-sec__inner">
+      <div className="kal-head">
+        <div className="kal-kicker">Native Integration</div>
+        <h2>Ein Termin ist bei uns nie nur ein Termin.</h2>
+        <p>Der Kalender teilt sich die Datenbank mit dem Rest von Funnelspace. Keine Zapier-Kette, kein Datenverlust.</p>
+      </div>
+      <div className="ints">
+        {INTS.map(i=>(
+          <div key={i.t} className="int">
+            <div className="int__art"><img src={i.img} alt="" /></div>
+            <h4>{i.t}</h4>
+            <p>{i.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+const Voices = () => (
+  <section className="kal-sec">
+    <div className="kal-sec__inner">
+      <div className="kal-head"><div className="kal-kicker">Aus der Praxis</div><h2>Zwei Stimmen, ein voller Kalender.</h2></div>
+      <div className="voices">
+        <article className="voice voice--lime">
+          <blockquote>„Ich habe früher pro Erstgespräch vier Mails geschrieben. Heute schicke ich einen Link — und sehe den Termin im CRM, bevor ich zurückschreibe."</blockquote>
+          <div className="voice__who"><div className="voice__ava">LM</div><div><div className="voice__n">Lena Mertens</div><div className="voice__r">Business-Coach · Köln</div></div></div>
+        </article>
+        <article className="voice">
+          <blockquote>„Die Erinnerungen haben unsere No-Show-Quote von 22 auf 6 Prozent gedrückt. Allein das trägt das ganze Tool."</blockquote>
+          <div className="voice__who"><div className="voice__ava">TB</div><div><div className="voice__n">Tobias Brenner</div><div className="voice__r">Agenturinhaber · Leipzig</div></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+);
+
+const FAQS = [
+  {q:'Kann ich meinen Google- oder Outlook-Kalender verbinden?',a:'Ja, in beide Richtungen. Funnelspace liest deine bestehenden Termine, um Slots zu blockieren, und schreibt neue Buchungen direkt in deinen Kalender. Mehrere Kalender gleichzeitig sind möglich — etwa privat und geschäftlich.'},
+  {q:'Was passiert bei Absagen und Verschiebungen?',a:'Deine Kund:innen verschieben oder stornieren selbst über den Link in der Bestätigungsmail — innerhalb der Fristen, die du festlegst. Du bekommst eine Benachrichtigung, der Slot wird sofort wieder frei, und der Vorgang landet im Kontakt-Verlauf.'},
+  {q:'Kann ich für Termine Geld nehmen?',a:'Ja. Verknüpfe eine Terminart mit einem Preis, und der Slot wird erst nach erfolgreicher Zahlung über Stripe fest gebucht. Rechnung und Zahlungsstatus hängen am selben Kontakt wie der Termin.'},
+  {q:'Funktioniert das im Team?',a:'Ab dem Business-Plan: gemeinsame Buchungsseiten mit Round-Robin-Verteilung, gemeinsame Termine mit mehreren Gastgeber:innen und individuelle Verfügbarkeiten pro Person.'},
+  {q:'Wie ist das mit Zeitzonen?',a:'Automatisch. Buchende sehen ihre lokale Zeit, du deine. Bei Reisen stellst du deine Zeitzone einmal um, alle offenen Termine rechnen mit.'},
+  {q:'Ist der Kalender DSGVO-konform?',a:'Ja. Alle Termin- und Kontaktdaten liegen in deutschen Rechenzentren, mit Auftragsverarbeitungsvertrag, dokumentierten Einwilligungen und Lösch-Workflows.'},
+];
+const FAQ = () => {
+  const [open,setOpen] = useState(0);
+  return (
+    <section className="kal-sec kal-sec--white">
+      <div className="kal-sec__inner">
+        <div className="kal-head"><div className="kal-kicker">FAQ</div><h2>Häufige Fragen zum Kalender.</h2></div>
+        <div className="faq">
+          {FAQS.map((f,i)=>(
+            <div key={i} className={'faq__i'+(open===i?' open':'')}>
+              <button className="faq__b" onClick={()=>setOpen(open===i?-1:i)}>{f.q}<span className="faq__ic">+</span></button>
+              <div className="faq__body">{f.a}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Invite = () => (
+  <section className="invite-sec">
+    <div className="invite">
+      <div className="invite__strip"><span>Termineinladung</span><b>Zusage offen</b></div>
+      <div className="invite__body">
+        <div className="invite__date"><i>Heute</i><b>14</b></div>
+        <div>
+          <h2>Dein Start mit Funnelspace — 15 Minuten.</h2>
+          <p>Buchungsseite einrichten, Kalender verbinden, ersten Link teilen. Länger dauert es nicht.</p>
+          <div className="invite__btns">
+            <a href="#signup" className="btn btn--primary btn-lg">14 Tage kostenlos testen</a>
+            <a href="#demo" className="btn btn--ghost btn-lg">Live-Demo buchen</a>
+          </div>
+        </div>
+      </div>
+      <div className="invite__note">
+        <span><ICheck size={13} />Keine Kreditkarte</span>
+        <span><ICheck size={13} />Jederzeit kündbar</span>
+        <span><ICheck size={13} />DSGVO · hosted in DE</span>
+      </div>
+    </div>
+  </section>
+);
+
+const App = () => (
+  <>
+    <Nav />
+    <main>
+      <section className="kal-hero">
+        <div className="kal-hero__inner">
+          <div>
+            <span className="kal-eyebrow">Funnelspace · Kalender</span>
+            <h1>Dein Kalender füllt sich. <em>Ohne Mails</em> hin und her.</h1>
+            <p className="kal-hero__lead">Link teilen, Slot wählen, fertig. Funnelspace prüft deine Verfügbarkeit, erinnert automatisch und legt den Kontakt im CRM an — während du an etwas anderem arbeitest.</p>
+            <div className="kal-hero__cta">
+              <a href="#signup" className="btn btn--primary btn-lg">14 Tage kostenlos testen</a>
+              <a href="#tagesplan" className="btn btn--ghost btn-lg">So läuft ein Tag</a>
+            </div>
+            <div className="kal-hero__proof">
+              <span>In 15 Min. eingerichtet</span>
+              <span>Google · Outlook · iCloud</span>
+              <span>DSGVO · hosted in DE</span>
+            </div>
+          </div>
+          <BookingWidget />
+        </div>
+      </section>
+      <div className="kal-replaces">
+        <div className="kal-replaces__inner">
+          <span className="kal-replaces__label">Ersetzt</span>
+          <div className="kal-replaces__items">
+            {['Calendly','Doodle','TidyCal','Terminfindung per Mail'].map(r=><span key={r}>{r}</span>)}
+          </div>
+        </div>
+      </div>
+      <DayPlan />
+      <Types />
+      <Rules />
+      <Integrations />
+      <Voices />
+      <FAQ />
+    </main>
+    <Invite />
+    <Footer />
+  </>
+);
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

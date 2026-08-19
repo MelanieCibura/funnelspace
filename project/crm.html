@@ -1,0 +1,1070 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CRM — Funnelspace</title>
+  <meta name="description" content="Alle Kontakte, Deals und Follow-ups an einem Ort. Das Funnelspace-CRM arbeitet Hand in Hand mit deinen Funnels, E-Mails und dem Kalender." />
+  <link rel="stylesheet" href="colors_and_type.css" />
+  <link rel="stylesheet" href="site.css" />
+  <style>
+    /* ── CRM Feature Page ───────────────────────────────────── */
+
+    /* Hero */
+    .crm-hero {
+      background: var(--fs-ink); color: #fff;
+      padding: 96px 40px 88px; position: relative; overflow: hidden;
+    }
+    .crm-hero::before {
+      content: ""; position: absolute; inset: 0;
+      background-image: radial-gradient(rgba(215,240,120,0.06) 1px, transparent 1.2px);
+      background-size: 8px 8px; pointer-events: none;
+    }
+    .crm-hero__inner {
+      max-width: 1280px; margin: 0 auto; position: relative;
+      display: grid; grid-template-columns: 1.05fr 1fr; gap: 72px; align-items: center;
+    }
+    .crm-hero__eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--fs-lime);
+      background: rgba(215,240,120,0.1); border: 1px solid rgba(215,240,120,0.3);
+      padding: 6px 12px; border-radius: var(--radius-pill);
+      margin-bottom: 22px;
+    }
+    .crm-hero__eyebrow::before {
+      content: ""; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--fs-lime);
+    }
+    .crm-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(44px, 5.2vw, 72px);
+      font-weight: 700; line-height: 1.04;
+      letter-spacing: -0.03em; text-wrap: balance; color: #fff;
+    }
+    .crm-hero h1 em { font-style: normal; color: var(--fs-lime); }
+    .crm-hero__lead {
+      margin-top: 22px; font-size: 19px; line-height: 1.55;
+      color: rgba(255,255,255,0.7); max-width: 520px;
+    }
+    .crm-hero__cta { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+    .crm-hero__proof {
+      margin-top: 24px; display: flex; gap: 20px; flex-wrap: wrap;
+      font-size: 13px; color: rgba(255,255,255,0.5);
+    }
+    .crm-hero__proof span { display: flex; align-items: center; gap: 6px; }
+    .crm-hero__proof span::before {
+      content: ""; width: 12px; height: 12px; border-radius: 50%;
+      background: var(--fs-lime);
+    }
+    /* Hero illustration card */
+    .crm-hero__visual {
+      position: relative;
+      background: var(--fs-paper);
+      background-image: radial-gradient(var(--fs-gray-300) 1px, transparent 1.2px);
+      background-size: 10px 10px;
+      border-radius: var(--radius-xl);
+      padding: 24px; aspect-ratio: 1/0.95;
+      display: grid; place-items: center;
+      box-shadow: 0 40px 80px -20px rgba(0,0,0,0.4);
+    }
+    .crm-hero__visual img {
+      max-height: 82%; max-width: 82%; object-fit: contain;
+    }
+    .crm-hero__badge {
+      position: absolute; background: #fff; color: var(--fs-ink);
+      border-radius: var(--radius-lg); padding: 12px 16px;
+      box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 12px;
+    }
+    .crm-hero__badge--tl { top: 24px; left: -24px; }
+    .crm-hero__badge--br { bottom: 20px; right: -20px; }
+    .crm-hero__badge-dot {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--fs-lime); color: var(--fs-lime-ink);
+      display: grid; place-items: center;
+      font-weight: 700; font-family: var(--font-display); font-size: 14px;
+    }
+    .crm-hero__badge-label { font-size: 11px; color: var(--fg-3); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 600; }
+    .crm-hero__badge-val { font-size: 15px; font-weight: 700; font-family: var(--font-display); margin-top: 2px; }
+
+    /* Replaces-strip */
+    .crm-replaces {
+      background: rgba(255,255,255,0.04);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 22px 40px;
+    }
+    .crm-replaces__inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+    }
+    .crm-replaces__label { font-size: 12px; color: rgba(255,255,255,0.4); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+    .crm-replaces__items { display: flex; gap: 28px; flex-wrap: wrap; }
+    .crm-replaces__item {
+      font-family: var(--font-display); font-weight: 700; font-size: 16px;
+      color: rgba(255,255,255,0.4); letter-spacing: -0.01em;
+      text-decoration: line-through; text-decoration-color: rgba(215,240,120,0.5);
+      text-decoration-thickness: 2px;
+    }
+
+    /* Shared section */
+    .crm-sec { padding: 104px 40px; }
+    .crm-sec--alt { background: var(--fs-white); }
+    .crm-sec__inner { max-width: 1280px; margin: 0 auto; }
+    .crm-sec__head { max-width: 720px; margin: 0 auto 64px; text-align: center; }
+    .crm-sec__head--left { margin: 0 0 56px; text-align: left; }
+    .crm-eyebrow {
+      display: inline-block;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--fg-3); margin-bottom: 14px;
+    }
+    .crm-sec__head h2 {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 3.6vw, 52px);
+      font-weight: 700; letter-spacing: -0.03em; line-height: 1.08; text-wrap: balance;
+    }
+    .crm-sec__head h2 em { font-style: normal; background: var(--fs-lime); color: var(--fs-lime-ink); padding: 0 8px; border-radius: 6px; }
+    .crm-sec__head p { margin-top: 16px; font-size: 18px; color: var(--fg-2); line-height: 1.55; }
+
+    /* Benefits grid (6 points) */
+    .crm-benefits {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+      background: var(--border-1); border: 1px solid var(--border-1);
+      border-radius: var(--radius-lg); overflow: hidden;
+    }
+    .crm-benefit {
+      background: var(--fs-white); padding: 36px 32px;
+      display: flex; flex-direction: column; gap: 14px;
+      transition: background var(--dur-med) var(--ease-out);
+    }
+    .crm-benefit:hover { background: var(--fs-paper); }
+    .crm-benefit__icon {
+      width: 44px; height: 44px; border-radius: var(--radius-sm);
+      background: var(--fs-lime); color: var(--fs-lime-ink);
+      display: grid; place-items: center; flex-shrink: 0;
+    }
+    .crm-benefit__icon svg { width: 22px; height: 22px; }
+    .crm-benefit h3 { font-family: var(--font-display); font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+    .crm-benefit p { font-size: 15px; color: var(--fg-2); line-height: 1.55; }
+
+    /* Feature row */
+    .crm-feat {
+      display: grid; grid-template-columns: 1fr 1.15fr; gap: 80px; align-items: center;
+      padding: 88px 0; border-top: 1px solid var(--border-1);
+    }
+    .crm-feat:first-of-type { border-top: none; padding-top: 0; }
+    .crm-feat--flip .crm-feat__media { order: -1; }
+    .crm-feat__eyebrow {
+      display: inline-block;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--fg-3); margin-bottom: 14px;
+    }
+    .crm-feat h3 {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 3vw, 42px);
+      font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; text-wrap: balance;
+    }
+    .crm-feat__body { margin-top: 16px; font-size: 17px; color: var(--fg-2); line-height: 1.55; }
+    .crm-feat ul { list-style: none; padding: 0; margin-top: 22px; display: flex; flex-direction: column; gap: 12px; }
+    .crm-feat li { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; color: var(--fg-2); line-height: 1.5; }
+    .crm-feat li svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 3px; color: var(--fs-lime-deep); }
+    .crm-feat__media {
+      background: var(--fs-paper);
+      background-image: radial-gradient(var(--fs-gray-300) 1px, transparent 1.2px);
+      background-size: 10px 10px;
+      border-radius: var(--radius-xl); padding: 28px;
+      border: 1px solid var(--border-1);
+      aspect-ratio: 5/4; position: relative; overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ── Mockup: Pipeline Kanban ─────────────────────────── */
+    .mk-pipeline {
+      background: #fff; border-radius: var(--radius-lg);
+      border: 1px solid var(--border-1);
+      width: 100%; height: 100%;
+      padding: 14px; display: flex; flex-direction: column; gap: 10px;
+      box-shadow: var(--shadow-md); overflow: hidden;
+    }
+    .mk-pipeline__head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-bottom: 10px; border-bottom: 1px solid var(--border-1);
+    }
+    .mk-pipeline__title { font-family: var(--font-display); font-weight: 700; font-size: 14px; letter-spacing: -0.01em; }
+    .mk-pipeline__actions { display: flex; gap: 4px; }
+    .mk-pipeline__actions span {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--fs-gray-300);
+    }
+    .mk-pipeline__board { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; flex: 1; min-height: 0; }
+    .mk-col { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .mk-col__head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 6px 8px; border-radius: 6px; background: var(--fs-gray-100);
+      font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+      color: var(--fs-ink-soft);
+    }
+    .mk-col__count {
+      background: #fff; color: var(--fs-ink); font-weight: 700; padding: 2px 6px;
+      border-radius: 999px; font-size: 9px; letter-spacing: 0;
+    }
+    .mk-col--hot .mk-col__head { background: var(--fs-lime); color: var(--fs-lime-ink); }
+    .mk-col--hot .mk-col__count { background: rgba(255,255,255,0.5); }
+    .mk-card {
+      background: #fff; border: 1px solid var(--border-1);
+      border-radius: 8px; padding: 8px; display: flex; flex-direction: column; gap: 5px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+    .mk-card__name { font-size: 11px; font-weight: 700; color: var(--fs-ink); letter-spacing: -0.01em; line-height: 1.2; }
+    .mk-card__meta { font-size: 9px; color: var(--fg-3); line-height: 1.3; }
+    .mk-card__foot { display: flex; align-items: center; justify-content: space-between; margin-top: 2px; }
+    .mk-card__val { font-family: var(--font-display); font-weight: 700; font-size: 11px; color: var(--fs-ink); }
+    .mk-avatar {
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--fs-lime); color: var(--fs-lime-ink);
+      display: grid; place-items: center;
+      font-size: 8px; font-weight: 700;
+    }
+    .mk-avatar--ink { background: var(--fs-ink); color: #fff; }
+    .mk-avatar--gray { background: var(--fs-gray-300); color: var(--fs-ink); }
+    .mk-tag {
+      display: inline-block; padding: 1px 6px; border-radius: 999px;
+      font-size: 8px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+      background: var(--fs-gray-100); color: var(--fs-ink-soft); align-self: flex-start;
+    }
+    .mk-tag--hot { background: var(--fs-lime); color: var(--fs-lime-ink); }
+    .mk-tag--warm { background: #FFEFD4; color: #7C5200; }
+    .mk-tag--cold { background: #E5F1F9; color: #1E4C74; }
+
+    /* ── Mockup: Kontaktliste ───────────────────────────── */
+    .mk-list {
+      background: #fff; border-radius: var(--radius-lg);
+      border: 1px solid var(--border-1);
+      width: 100%; height: 100%; padding: 14px;
+      display: flex; flex-direction: column; gap: 10px;
+      box-shadow: var(--shadow-md); overflow: hidden;
+    }
+    .mk-list__head {
+      display: flex; align-items: center; gap: 10px;
+      padding-bottom: 10px; border-bottom: 1px solid var(--border-1);
+    }
+    .mk-list__search {
+      flex: 1; background: var(--fs-gray-100); border-radius: 8px;
+      padding: 6px 10px; font-size: 11px; color: var(--fg-3);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .mk-list__btn {
+      background: var(--fs-ink); color: #fff;
+      padding: 5px 10px; border-radius: 6px; font-size: 10px; font-weight: 700;
+    }
+    .mk-list__filters { display: flex; gap: 6px; flex-wrap: wrap; }
+    .mk-filter {
+      padding: 3px 8px; border-radius: 999px; font-size: 10px; font-weight: 600;
+      background: var(--fs-gray-100); color: var(--fs-ink-soft);
+    }
+    .mk-filter--active { background: var(--fs-ink); color: #fff; }
+    .mk-filter--lime { background: var(--fs-lime); color: var(--fs-lime-ink); }
+    .mk-list__table {
+      display: flex; flex-direction: column; gap: 4px; flex: 1; min-height: 0;
+    }
+    .mk-row {
+      display: grid; grid-template-columns: 1.4fr 1fr auto auto; gap: 10px;
+      padding: 8px 6px; border-radius: 6px; align-items: center;
+      transition: background var(--dur-fast);
+    }
+    .mk-row:hover { background: var(--fs-paper); }
+    .mk-row__who { display: flex; align-items: center; gap: 8px; }
+    .mk-row__who .mk-avatar { width: 22px; height: 22px; font-size: 9px; }
+    .mk-row__name { font-size: 11px; font-weight: 700; color: var(--fs-ink); line-height: 1.2; }
+    .mk-row__mail { font-size: 9px; color: var(--fg-3); }
+    .mk-row__tags { display: flex; gap: 3px; flex-wrap: wrap; }
+    .mk-row__val { font-family: var(--font-display); font-weight: 700; font-size: 11px; color: var(--fs-ink); text-align: right; }
+    .mk-row__stage {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+      padding: 3px 7px; border-radius: 999px;
+      background: var(--fs-gray-100); color: var(--fs-ink-soft); white-space: nowrap;
+    }
+    .mk-row__stage--lime { background: var(--fs-lime); color: var(--fs-lime-ink); }
+
+    /* ── Mockup: Deal Detail + Timeline ─────────────────── */
+    .mk-deal {
+      background: #fff; border-radius: var(--radius-lg);
+      border: 1px solid var(--border-1);
+      width: 100%; height: 100%; padding: 16px;
+      display: flex; flex-direction: column; gap: 12px;
+      box-shadow: var(--shadow-md); overflow: hidden;
+    }
+    .mk-deal__head {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+      padding-bottom: 12px; border-bottom: 1px solid var(--border-1);
+    }
+    .mk-deal__title { font-family: var(--font-display); font-weight: 700; font-size: 14px; line-height: 1.2; letter-spacing: -0.01em; }
+    .mk-deal__sub { font-size: 10px; color: var(--fg-3); margin-top: 2px; }
+    .mk-deal__val {
+      font-family: var(--font-display); font-weight: 700; font-size: 20px;
+      color: var(--fs-ink); letter-spacing: -0.02em; white-space: nowrap;
+    }
+    .mk-deal__stages { display: flex; gap: 4px; }
+    .mk-deal__stage {
+      flex: 1; height: 4px; border-radius: 999px; background: var(--fs-gray-200);
+    }
+    .mk-deal__stage--done { background: var(--fs-lime); }
+    .mk-deal__stage--curr { background: var(--fs-ink); }
+    .mk-deal__stage-labels { display: flex; gap: 4px; margin-top: 4px; }
+    .mk-deal__stage-lbl {
+      flex: 1; font-size: 8px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+      color: var(--fg-3); text-align: center;
+    }
+    .mk-deal__stage-lbl--curr { color: var(--fs-ink); }
+    .mk-tl { display: flex; flex-direction: column; gap: 10px; flex: 1; min-height: 0; }
+    .mk-tl__label { font-size: 9px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-3); }
+    .mk-tl__items { display: flex; flex-direction: column; gap: 8px; }
+    .mk-tl__item { display: flex; gap: 10px; align-items: flex-start; }
+    .mk-tl__dot {
+      width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+      background: var(--fs-gray-100); display: grid; place-items: center;
+    }
+    .mk-tl__dot svg { width: 11px; height: 11px; color: var(--fs-ink-soft); }
+    .mk-tl__dot--lime { background: var(--fs-lime); }
+    .mk-tl__dot--lime svg { color: var(--fs-lime-ink); }
+    .mk-tl__text { font-size: 11px; line-height: 1.35; color: var(--fs-ink); }
+    .mk-tl__text b { font-weight: 700; }
+    .mk-tl__time { font-size: 9px; color: var(--fg-3); margin-top: 1px; }
+
+    /* ── Integration section ────────────────────────────── */
+    .crm-int {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    }
+    .crm-int__card {
+      background: #fff; border: 1px solid var(--border-1);
+      border-radius: var(--radius-lg); padding: 28px 24px;
+      display: flex; flex-direction: column; gap: 12px;
+      transition: transform var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
+    }
+    .crm-int__card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .crm-int__art {
+      width: 100%; aspect-ratio: 16/10;
+      background: var(--fs-paper);
+      background-image: radial-gradient(var(--fs-gray-300) 1px, transparent 1.2px);
+      background-size: 8px 8px;
+      border-radius: var(--radius-md);
+      display: grid; place-items: center; overflow: hidden;
+    }
+    .crm-int__art img { max-height: 80%; max-width: 80%; object-fit: contain; }
+    .crm-int__card h4 { font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+    .crm-int__card p { font-size: 13px; color: var(--fg-2); line-height: 1.5; }
+    .crm-int__link {
+      margin-top: auto; font-size: 13px; font-weight: 700; color: var(--fs-ink);
+      display: inline-flex; align-items: center; gap: 4px; text-decoration: none;
+      transition: gap var(--dur-fast) var(--ease-out);
+    }
+    .crm-int__link:hover { gap: 8px; }
+
+    /* Testimonials */
+    .crm-testi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+    .crm-testi {
+      background: var(--fs-white); border: 1px solid var(--border-1);
+      border-radius: var(--radius-lg); padding: 28px;
+      display: flex; flex-direction: column; gap: 18px;
+    }
+    .crm-testi--dark { background: var(--fs-ink); border-color: var(--fs-ink); }
+    .crm-testi--lime { background: var(--fs-lime); border-color: var(--fs-lime); }
+    .crm-testi__stars { color: var(--fs-lime-deep); font-size: 15px; letter-spacing: 2px; }
+    .crm-testi--dark .crm-testi__stars { color: var(--fs-lime); }
+    .crm-testi--lime .crm-testi__stars { color: var(--fs-lime-ink); }
+    .crm-testi blockquote {
+      font-size: 17px; line-height: 1.5; flex: 1;
+      font-family: var(--font-display); font-weight: 500; letter-spacing: -0.01em;
+      border: none; padding: 0; margin: 0; color: var(--fg-1);
+    }
+    .crm-testi--dark blockquote { color: #fff; }
+    .crm-testi--lime blockquote { color: var(--fs-lime-ink); }
+    .crm-testi__who { display: flex; align-items: center; gap: 12px; }
+    .crm-testi__avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--fs-lime); color: var(--fs-lime-ink);
+      display: grid; place-items: center;
+      font-size: 13px; font-weight: 700; flex-shrink: 0;
+    }
+    .crm-testi--lime .crm-testi__avatar { background: var(--fs-ink); color: #fff; }
+    .crm-testi--dark .crm-testi__avatar { background: #fff; color: var(--fs-ink); }
+    .crm-testi__name { font-size: 14px; font-weight: 700; }
+    .crm-testi--dark .crm-testi__name { color: #fff; }
+    .crm-testi__role { font-size: 12px; color: var(--fg-3); margin-top: 2px; }
+    .crm-testi--dark .crm-testi__role { color: rgba(255,255,255,0.5); }
+    .crm-testi--lime .crm-testi__role { color: rgba(47,58,0,0.65); }
+    .crm-testi__stat {
+      display: flex; align-items: baseline; gap: 8px;
+      padding-top: 16px; border-top: 1px solid var(--border-1);
+    }
+    .crm-testi--dark .crm-testi__stat { border-top-color: rgba(255,255,255,0.15); }
+    .crm-testi--lime .crm-testi__stat { border-top-color: rgba(47,58,0,0.15); }
+    .crm-testi__stat-num { font-family: var(--font-display); font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+    .crm-testi--dark .crm-testi__stat-num { color: var(--fs-lime); }
+    .crm-testi__stat-lbl { font-size: 12px; color: var(--fg-3); line-height: 1.3; }
+    .crm-testi--dark .crm-testi__stat-lbl { color: rgba(255,255,255,0.55); }
+    .crm-testi--lime .crm-testi__stat-lbl { color: rgba(47,58,0,0.7); }
+
+    /* FAQ */
+    .crm-faq { max-width: 820px; margin: 0 auto; }
+    .crm-faq__item { border-bottom: 1px solid var(--border-1); }
+    .crm-faq__item:first-child { border-top: 1px solid var(--border-1); }
+    .crm-faq__btn {
+      width: 100%; background: none; border: none; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 0; gap: 20px; text-align: left;
+      font-family: var(--font-display); font-size: 18px; font-weight: 600;
+      color: var(--fs-ink); letter-spacing: -0.01em;
+    }
+    .crm-faq__icon {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--fs-gray-100); flex-shrink: 0;
+      display: grid; place-items: center;
+      font-size: 18px; color: var(--fs-ink);
+      transition: background var(--dur-fast), transform var(--dur-med) var(--ease-out);
+    }
+    .crm-faq__item.open .crm-faq__icon { background: var(--fs-lime); transform: rotate(45deg); }
+    .crm-faq__body {
+      font-size: 15px; color: var(--fg-2); line-height: 1.65;
+      overflow: hidden; max-height: 0;
+      transition: max-height var(--dur-slow) var(--ease-out), padding var(--dur-slow) var(--ease-out);
+    }
+    .crm-faq__item.open .crm-faq__body { max-height: 400px; padding-bottom: 24px; }
+
+    /* Final CTA */
+    .crm-final {
+      background: var(--fs-ink); padding: 104px 40px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .crm-final::before {
+      content: ""; position: absolute; inset: 0;
+      background-image: radial-gradient(rgba(215,240,120,0.06) 1px, transparent 1.2px);
+      background-size: 8px 8px;
+    }
+    .crm-final__inner { position: relative; max-width: 760px; margin: 0 auto; }
+    .crm-final h2 {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 700; letter-spacing: -0.03em; color: #fff; text-wrap: balance;
+    }
+    .crm-final h2 em { font-style: normal; color: var(--fs-lime); }
+    .crm-final p { margin: 16px auto 0; font-size: 18px; color: rgba(255,255,255,0.6); }
+    .crm-final__btns { display: flex; gap: 12px; justify-content: center; margin-top: 36px; flex-wrap: wrap; }
+
+    /* ── Responsive ──────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .crm-hero__inner { grid-template-columns: 1fr; gap: 48px; }
+      .crm-hero__badge--tl { left: -12px; }
+      .crm-hero__badge--br { right: -8px; }
+      .crm-benefits { grid-template-columns: 1fr 1fr; }
+      .crm-feat { grid-template-columns: 1fr; gap: 40px; }
+      .crm-feat--flip .crm-feat__media { order: 0; }
+      .crm-int { grid-template-columns: 1fr 1fr; }
+      .crm-testi-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .crm-hero { padding: 64px 22px 64px; }
+      .crm-sec { padding: 72px 22px; }
+      .crm-replaces { padding: 18px 22px; }
+      .crm-benefits { grid-template-columns: 1fr; }
+      .crm-int { grid-template-columns: 1fr; }
+      .crm-final { padding: 72px 22px; }
+      .mk-pipeline__board { grid-template-columns: repeat(2, 1fr); }
+      .nav__links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="Nav.jsx"></script>
+  <script type="text/babel" src="Footer.jsx"></script>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    /* ── Inline icons (Lucide-style, stroke 1.75) ─────────────── */
+    const Icon = ({ d, size = 22 }) => (
+      <svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">{d}</svg>
+    );
+    const IUsers = () => <Icon d={<><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></>} />;
+    const IFilter = () => <Icon d={<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>} />;
+    const IZap = () => <Icon d={<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>} />;
+    const IMail = () => <Icon d={<><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></>} />;
+    const ITrend = () => <Icon d={<><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></>} />;
+    const IShield = () => <Icon d={<><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></>} />;
+    const ICheck = () => <Icon size={18} d={<polyline points="20 6 9 17 4 12"/>} />;
+    const IArrow = () => <Icon size={16} d={<><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></>} />;
+    const ISearch = () => <Icon size={11} d={<><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></>} />;
+    const IMailSm = () => <Icon size={11} d={<><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></>} />;
+    const IPhone = () => <Icon size={11} d={<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.34 1.78.65 2.61a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.47-1.22a2 2 0 0 1 2.11-.45c.83.31 1.71.53 2.61.65A2 2 0 0 1 22 16.92z"/>} />;
+    const ICal = () => <Icon size={11} d={<><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></>} />;
+    const IDoc = () => <Icon size={11} d={<><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></>} />;
+
+    /* ── Content ──────────────────────────────────────────────── */
+
+    const HEADLINE_VARIANTS = {
+      ordnung: {
+        eyebrow: 'Funnelspace · CRM',
+        h1: (<>Alle Kontakte, Deals und Follow-ups <em>an einem Ort</em>.</>),
+        lead: 'Kein Google Sheet mehr, keine verlorenen Leads. Dein CRM weiß, woher jeder Kontakt kommt — und was als Nächstes zu tun ist.',
+      },
+      lead: {
+        eyebrow: 'Funnelspace · CRM',
+        h1: (<>Nie wieder einen Lead <em>vergessen</em>.</>),
+        lead: 'Jeder Funnel-Kontakt landet automatisch in deinem CRM, mit Tags, Quelle und nächster Aktion. Du machst keinen Nachfass-Fehler mehr.',
+      },
+      integration: {
+        eyebrow: 'Funnelspace · CRM',
+        h1: (<>Das CRM, das mit deinem <em>Funnel</em> spricht.</>),
+        lead: 'Opt-In, E-Mail-Sequenz und Pipeline — eine Datenbank, eine Wahrheit. Tags fließen automatisch zwischen deinen Tools.',
+      },
+    };
+
+    const BENEFITS = [
+      { i: <IUsers />, t: 'Alle Kontakte auf einen Blick', d: 'Eine saubere Datenbank statt fünf Excel-Listen. Mit Verlauf, Tags und Quelle für jeden Lead.' },
+      { i: <IFilter />, t: 'Smarte Segmente & Tags', d: 'Filtere deine Liste nach Funnel, Interesse, Umsatz oder Aktivität. Segmente werden live aktualisiert.' },
+      { i: <IZap />, t: 'Automationen ohne Code', d: 'Trigger-basierte Flows: Tag setzen, Pipeline verschieben, E-Mail-Sequenz starten — alles ohne Zapier.' },
+      { i: <IMail />, t: 'Direkt aus dem CRM mailen', d: 'Einzel-Mails oder komplette Sequenzen. Die Kommunikation landet automatisch im Kontakt-Verlauf.' },
+      { i: <ITrend />, t: 'Pipeline, die mitdenkt', d: 'Visueller Kanban-Board. Deals nach Phase, Wert und Wahrscheinlichkeit — mit klaren nächsten Schritten.' },
+      { i: <IShield />, t: 'DSGVO-konform, hosted in DE', d: 'Alle Kontaktdaten in deutschen Rechenzentren. Opt-In-Protokolle, Lösch-Workflows und Export inklusive.' },
+    ];
+
+    const REPLACES = ['HubSpot', 'Pipedrive', 'Monday CRM', 'ActiveCampaign CRM', 'Excel-Tabellen'];
+
+    const INTEGRATIONS = [
+      { img: 'assets/illustrations/funnel.png', t: 'Funnel', d: 'Jeder Opt-In landet als Lead mit Quelle und Tag — ohne Umweg, ohne Zapier.', link: 'Mehr zu Funnels' },
+      { img: 'assets/illustrations/email.png', t: 'E-Mail', d: 'Sequenzen triggern bei Tag-Änderungen. Antworten landen im Kontakt-Verlauf.', link: 'Mehr zu E-Mail' },
+      { img: 'assets/illustrations/calendar.png', t: 'Kalender', d: 'Buchungen werden automatisch als Deal angelegt. Kein manuelles Übertragen mehr.', link: 'Mehr zum Kalender' },
+      { img: 'assets/illustrations/mitgliederbereich.png', t: 'Mitgliederbereich', d: 'Kauf → automatischer Zugang, Welcome-Sequenz und Tag „Kunde:in".', link: 'Mehr zum Mitgliederbereich' },
+    ];
+
+    const TESTIMONIALS = [
+      {
+        quote: '„Vorher hatte ich Google Sheets, HubSpot und ActiveCampaign — und trotzdem keine Ahnung, wer wann was gekauft hat. Heute: ein CRM, eine Wahrheit."',
+        name: 'Miriam Sattler', role: 'Business-Coach · Frankfurt', initials: 'MS',
+        stat: '3 Tools → 1', statLbl: 'Alles in Funnelspace konsolidiert',
+        tone: 'dark',
+      },
+      {
+        quote: '„Die Pipeline zeigt mir jeden Montag genau, wem ich nachhaken muss. Ich arbeite zwei Stunden pro Woche weniger — und schließe mehr Deals."',
+        name: 'Patrick Wagner', role: 'Online-Trainer · München', initials: 'PW',
+        stat: '+31 %', statLbl: 'Abschlussquote nach 2 Monaten',
+        tone: 'lime',
+      },
+      {
+        quote: '„Endlich ein CRM, das ich nicht erst zwei Wochen konfigurieren muss. Funnel angeschlossen, Tags gesetzt, läuft."',
+        name: 'Katharina Leister', role: 'Ernährungsberaterin', initials: 'KL',
+        stat: '15 Min.', statLbl: 'von Setup bis ersten Lead',
+        tone: 'light',
+      },
+    ];
+
+    const FAQS = [
+      { q: 'Kann ich meine bestehenden Kontakte importieren?', a: 'Ja. CSV-Import mit Mapping, oder direkt aus HubSpot, Pipedrive, ActiveCampaign und Mailchimp. Tags, Notizen und Custom Fields bleiben erhalten. Bei Listen über 10.000 Kontakten helfen wir dir persönlich beim Umzug — kostenlos.' },
+      { q: 'Wie viele Kontakte sind im Plan enthalten?', a: 'Das CRM ist in allen Funnelspace-Plänen enthalten — bis zu 10.000 Kontakte im Starter-Plan, unbegrenzt ab Business. Keine Paywall auf wichtige Features wie Segmente, Tags oder Automationen.' },
+      { q: 'Kann ich eigene Felder und Pipelines definieren?', a: 'Ja. Beliebig viele Custom Fields (Text, Zahl, Datum, Auswahl, Multi-Select), mehrere Pipelines mit frei definierbaren Phasen, und individuelle Tag-Strukturen. Du passt das CRM an dein Business an — nicht umgekehrt.' },
+      { q: 'Ist das DSGVO-konform?', a: 'Ja. Alle Daten liegen in deutschen Rechenzentren (Frankfurt, Berlin). Wir bieten Auftragsverarbeitungsverträge, dokumentierte Opt-In-Protokolle, Datenexport und automatisierte Lösch-Workflows bei Kundenabmeldungen.' },
+      { q: 'Spricht das CRM wirklich mit dem Rest von Funnelspace?', a: 'Das ist der ganze Punkt. Ein Funnel-Opt-In erzeugt den Kontakt, setzt Tags, startet eine E-Mail-Sequenz und legt bei Kauf einen Deal in der Pipeline an — automatisch. Keine Zwischenschicht, keine Zapier-Zapier, keine verlorenen Events.' },
+      { q: 'Kann ich mit meinem Team zusammen arbeiten?', a: 'Ja. Ab dem Business-Plan mehrere Nutzer:innen mit Rollen (Admin, Sales, Support), Deal-Zuweisungen, Team-Inbox und internen Notizen. Jede Aktion im CRM ist protokolliert.' },
+    ];
+
+    /* ── Mockups ─────────────────────────────────────────────── */
+
+    const PipelineMock = () => (
+      <div className="mk-pipeline">
+        <div className="mk-pipeline__head">
+          <div className="mk-pipeline__title">Pipeline · Herbst-Launch 2026</div>
+          <div className="mk-pipeline__actions"><span/><span/><span/></div>
+        </div>
+        <div className="mk-pipeline__board">
+          <div className="mk-col">
+            <div className="mk-col__head">Lead <span className="mk-col__count">14</span></div>
+            <div className="mk-card">
+              <span className="mk-tag mk-tag--cold">Cold</span>
+              <div className="mk-card__name">Julia Beck</div>
+              <div className="mk-card__meta">Opt-In · Webinar</div>
+              <div className="mk-card__foot"><span className="mk-card__val">—</span><span className="mk-avatar">JB</span></div>
+            </div>
+            <div className="mk-card">
+              <span className="mk-tag mk-tag--cold">Cold</span>
+              <div className="mk-card__name">Tim Renner</div>
+              <div className="mk-card__meta">Lead-Magnet PDF</div>
+              <div className="mk-card__foot"><span className="mk-card__val">—</span><span className="mk-avatar mk-avatar--gray">TR</span></div>
+            </div>
+          </div>
+          <div className="mk-col">
+            <div className="mk-col__head">Qualifiziert <span className="mk-col__count">8</span></div>
+            <div className="mk-card">
+              <span className="mk-tag mk-tag--warm">Warm</span>
+              <div className="mk-card__name">Sabine Kühn</div>
+              <div className="mk-card__meta">Demo gebucht</div>
+              <div className="mk-card__foot"><span className="mk-card__val">€ 1.297</span><span className="mk-avatar">SK</span></div>
+            </div>
+            <div className="mk-card">
+              <span className="mk-tag mk-tag--warm">Warm</span>
+              <div className="mk-card__name">Leon Brandt</div>
+              <div className="mk-card__meta">Antwort auf Mail 3</div>
+              <div className="mk-card__foot"><span className="mk-card__val">€ 697</span><span className="mk-avatar mk-avatar--ink">LB</span></div>
+            </div>
+          </div>
+          <div className="mk-col mk-col--hot">
+            <div className="mk-col__head">Angebot <span className="mk-col__count">5</span></div>
+            <div className="mk-card">
+              <span className="mk-tag mk-tag--hot">Hot</span>
+              <div className="mk-card__name">Anna Peters</div>
+              <div className="mk-card__meta">Rückruf heute 15:30</div>
+              <div className="mk-card__foot"><span className="mk-card__val">€ 2.497</span><span className="mk-avatar">AP</span></div>
+            </div>
+            <div className="mk-card">
+              <span className="mk-tag mk-tag--hot">Hot</span>
+              <div className="mk-card__name">Max Hoffmann</div>
+              <div className="mk-card__meta">Angebot gesendet</div>
+              <div className="mk-card__foot"><span className="mk-card__val">€ 1.997</span><span className="mk-avatar mk-avatar--ink">MH</span></div>
+            </div>
+          </div>
+          <div className="mk-col">
+            <div className="mk-col__head">Abschluss <span className="mk-col__count">3</span></div>
+            <div className="mk-card">
+              <span className="mk-tag">Won</span>
+              <div className="mk-card__name">Jonas Braun</div>
+              <div className="mk-card__meta">Stripe bezahlt</div>
+              <div className="mk-card__foot"><span className="mk-card__val">€ 4.997</span><span className="mk-avatar">JB</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+
+    const ListMock = () => (
+      <div className="mk-list">
+        <div className="mk-list__head">
+          <div className="mk-list__search"><ISearch /><span>name oder e-mail …</span></div>
+          <span className="mk-list__btn">+ Kontakt</span>
+        </div>
+        <div className="mk-list__filters">
+          <span className="mk-filter mk-filter--active">Alle · 2.148</span>
+          <span className="mk-filter mk-filter--lime">Kund:in · 412</span>
+          <span className="mk-filter">Webinar · 687</span>
+          <span className="mk-filter">Newsletter · 1.049</span>
+          <span className="mk-filter">Cold Lead · 234</span>
+        </div>
+        <div className="mk-list__table">
+          {[
+            { i:'AP', n:'Anna Peters', e:'anna@peters-coaching.de', tags:['Hot','Webinar'], v:'€ 2.497', s:'Angebot', hot:true },
+            { i:'LB', n:'Leon Brandt', e:'l.brandt@mail.de', tags:['Newsletter'], v:'€ 697', s:'Qualifiziert' },
+            { i:'MH', n:'Max Hoffmann', e:'max@hoffmann.biz', tags:['Hot','Kund:in'], v:'€ 1.997', s:'Abschluss', hot:true },
+            { i:'SK', n:'Sabine Kühn', e:'sabine.kuehn@gmail.com', tags:['Demo'], v:'€ 1.297', s:'Qualifiziert' },
+            { i:'TR', n:'Tim Renner', e:'tim@renner.studio', tags:['Lead-Magnet'], v:'—', s:'Lead' },
+            { i:'JB', n:'Julia Beck', e:'julia.beck@work.de', tags:['Newsletter'], v:'—', s:'Lead' },
+          ].map((r,i) => (
+            <div key={i} className="mk-row">
+              <div className="mk-row__who">
+                <div className={`mk-avatar${i%2?' mk-avatar--ink':''}`}>{r.i}</div>
+                <div><div className="mk-row__name">{r.n}</div><div className="mk-row__mail">{r.e}</div></div>
+              </div>
+              <div className="mk-row__tags">
+                {r.tags.map(t => (
+                  <span key={t} className={`mk-tag${t==='Hot'?' mk-tag--hot':t==='Kund:in'?' mk-tag--warm':''}`}>{t}</span>
+                ))}
+              </div>
+              <div className="mk-row__val">{r.v}</div>
+              <div className={`mk-row__stage${r.hot?' mk-row__stage--lime':''}`}>{r.s}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+
+    const DealMock = () => (
+      <div className="mk-deal">
+        <div className="mk-deal__head">
+          <div>
+            <div className="mk-deal__title">Anna Peters — Launch-Coaching</div>
+            <div className="mk-deal__sub">Pipeline · Herbst-Launch · Letzter Kontakt vor 2 Tagen</div>
+          </div>
+          <div className="mk-deal__val">€ 2.497</div>
+        </div>
+        <div>
+          <div className="mk-deal__stages">
+            <div className="mk-deal__stage mk-deal__stage--done"/>
+            <div className="mk-deal__stage mk-deal__stage--done"/>
+            <div className="mk-deal__stage mk-deal__stage--curr"/>
+            <div className="mk-deal__stage"/>
+          </div>
+          <div className="mk-deal__stage-labels">
+            <span className="mk-deal__stage-lbl">Lead</span>
+            <span className="mk-deal__stage-lbl">Qualif.</span>
+            <span className="mk-deal__stage-lbl mk-deal__stage-lbl--curr">Angebot</span>
+            <span className="mk-deal__stage-lbl">Abschluss</span>
+          </div>
+        </div>
+        <div className="mk-tl">
+          <div className="mk-tl__label">Verlauf</div>
+          <div className="mk-tl__items">
+            <div className="mk-tl__item">
+              <div className="mk-tl__dot mk-tl__dot--lime"><IMailSm /></div>
+              <div>
+                <div className="mk-tl__text"><b>Angebot gesendet</b> — „Launch-Coaching Paket, 6 Wochen"</div>
+                <div className="mk-tl__time">Heute · 09:14 · automatisch aus Sequenz</div>
+              </div>
+            </div>
+            <div className="mk-tl__item">
+              <div className="mk-tl__dot"><IPhone /></div>
+              <div>
+                <div className="mk-tl__text"><b>Discovery Call</b> — 30 Min. · Notiz: „Starttermin Oktober"</div>
+                <div className="mk-tl__time">Gestern · 15:30</div>
+              </div>
+            </div>
+            <div className="mk-tl__item">
+              <div className="mk-tl__dot"><ICal /></div>
+              <div>
+                <div className="mk-tl__text"><b>Call gebucht</b> via Kalender-Link</div>
+                <div className="mk-tl__time">Vor 3 Tagen · 11:02</div>
+              </div>
+            </div>
+            <div className="mk-tl__item">
+              <div className="mk-tl__dot"><IDoc /></div>
+              <div>
+                <div className="mk-tl__text"><b>Lead erstellt</b> via Funnel „Masterclass Opt-In"</div>
+                <div className="mk-tl__time">Vor 9 Tagen</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+
+    /* ── Sections ────────────────────────────────────────────── */
+
+    const Hero = ({ variant }) => {
+      const v = HEADLINE_VARIANTS[variant];
+      return (
+        <>
+          <section className="crm-hero">
+            <div className="crm-hero__inner">
+              <div>
+                <span className="crm-hero__eyebrow">{v.eyebrow}</span>
+                <h1>{v.h1}</h1>
+                <p className="crm-hero__lead">{v.lead}</p>
+                <div className="crm-hero__cta">
+                  <a href="#signup" className="btn btn--primary btn-lg">14 Tage kostenlos testen</a>
+                  <a href="#demo" className="btn btn--ghost btn-lg" style={{borderColor:'rgba(255,255,255,0.3)', color:'#fff'}}>Demo ansehen</a>
+                </div>
+                <div className="crm-hero__proof">
+                  <span>Keine Kreditkarte nötig</span>
+                  <span>In 15 Min. einsatzbereit</span>
+                  <span>DSGVO · hosted in DE</span>
+                </div>
+              </div>
+              <div className="crm-hero__visual">
+                <img src="assets/illustrations/crm.png" alt="Funnelspace CRM Illustration" />
+                <div className="crm-hero__badge crm-hero__badge--tl">
+                  <div className="crm-hero__badge-dot">+3</div>
+                  <div>
+                    <div className="crm-hero__badge-label">Heute</div>
+                    <div className="crm-hero__badge-val">neue Leads</div>
+                  </div>
+                </div>
+                <div className="crm-hero__badge crm-hero__badge--br">
+                  <div>
+                    <div className="crm-hero__badge-label">Pipeline-Wert</div>
+                    <div className="crm-hero__badge-val">€ 18.490</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <div className="crm-replaces">
+            <div className="crm-replaces__inner">
+              <span className="crm-replaces__label">Ersetzt</span>
+              <div className="crm-replaces__items">
+                {REPLACES.map(r => <span key={r} className="crm-replaces__item">{r}</span>)}
+              </div>
+            </div>
+          </div>
+        </>
+      );
+    };
+
+    const Benefits = () => (
+      <section className="crm-sec crm-sec--alt">
+        <div className="crm-sec__inner">
+          <div className="crm-sec__head">
+            <div className="crm-eyebrow">Was du bekommst</div>
+            <h2>Ein CRM, das <em>nichts</em> vergisst.</h2>
+            <p>Sechs Dinge, die dir täglich Zeit sparen — ab dem ersten Login.</p>
+          </div>
+          <div className="crm-benefits">
+            {BENEFITS.map(b => (
+              <div key={b.t} className="crm-benefit">
+                <div className="crm-benefit__icon">{b.i}</div>
+                <h3>{b.t}</h3>
+                <p>{b.d}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+
+    const Feature1 = () => (
+      <div className="crm-feat">
+        <div>
+          <span className="crm-feat__eyebrow">Pipeline</span>
+          <h3>Sieh deinen Umsatz, bevor er passiert.</h3>
+          <p className="crm-feat__body">
+            Dein Kanban-Board zeigt jeden Deal nach Phase, Wert und Nächstem-Schritt — sortiert nach
+            Wahrscheinlichkeit. Du weißt jeden Montag, wo du den Telefonhörer abnehmen musst.
+          </p>
+          <ul>
+            <li><ICheck />Mehrere Pipelines (Verkauf, Onboarding, Coaching-Batches)</li>
+            <li><ICheck />Deal-Wert, Wahrscheinlichkeit & Close-Datum pro Karte</li>
+            <li><ICheck />Drag-&-Drop zwischen Phasen — Automation feuert automatisch</li>
+            <li><ICheck />Forecast-Zahl im Header, live berechnet</li>
+          </ul>
+        </div>
+        <div className="crm-feat__media"><PipelineMock /></div>
+      </div>
+    );
+
+    const Feature2 = () => (
+      <div className="crm-feat crm-feat--flip">
+        <div>
+          <span className="crm-feat__eyebrow">Kontakte & Segmente</span>
+          <h3>Filtere deine Liste wie ein Spreadsheet — mit Tempo.</h3>
+          <p className="crm-feat__body">
+            Kombiniere Tags, Quelle, Umsatz, letzter E-Mail-Klick und Custom Fields zu Segmenten, die
+            sich live aktualisieren. Aus jedem Segment: Mail-Sequenz, Export oder neue Zielgruppe.
+          </p>
+          <ul>
+            <li><ICheck />Live-Segmente: Regel einmal, Liste wächst automatisch</li>
+            <li><ICheck />Bulk-Aktionen: Tag setzen, Pipeline zuweisen, E-Mail senden</li>
+            <li><ICheck />CSV-Import mit Mapping oder Migration aus HubSpot & Co.</li>
+            <li><ICheck />Unbegrenzt Custom Fields — Business-konform strukturiert</li>
+          </ul>
+        </div>
+        <div className="crm-feat__media"><ListMock /></div>
+      </div>
+    );
+
+    const Feature3 = () => (
+      <div className="crm-feat">
+        <div>
+          <span className="crm-feat__eyebrow">Verlauf & Automation</span>
+          <h3>Jede Interaktion automatisch protokolliert.</h3>
+          <p className="crm-feat__body">
+            Geöffnete Mails, geklickte Links, gebuchte Calls, gezahlte Rechnungen — alles landet
+            chronologisch im Kontakt-Profil. Du greifst nie wieder ins Leere, weil du „nicht weißt,
+            wo ihr stehengeblieben seid".
+          </p>
+          <ul>
+            <li><ICheck />E-Mails, Calls, Notizen, Buchungen, Käufe in einer Timeline</li>
+            <li><ICheck />Trigger: Tag gesetzt → Sequenz startet → Deal verschiebt sich</li>
+            <li><ICheck />Erinnerungen für Follow-ups mit einem Klick</li>
+            <li><ICheck />Interne Notizen & Team-Mentions (@Kolleg:in)</li>
+          </ul>
+        </div>
+        <div className="crm-feat__media"><DealMock /></div>
+      </div>
+    );
+
+    const Features = () => (
+      <section className="crm-sec">
+        <div className="crm-sec__inner">
+          <div className="crm-sec__head">
+            <div className="crm-eyebrow">So funktioniert's</div>
+            <h2>Drei Bausteine. Ein flüssiger Arbeitstag.</h2>
+          </div>
+          <Feature1 />
+          <Feature2 />
+          <Feature3 />
+        </div>
+      </section>
+    );
+
+    const Integrations = () => (
+      <section className="crm-sec crm-sec--alt">
+        <div className="crm-sec__inner">
+          <div className="crm-sec__head">
+            <div className="crm-eyebrow">Native Integration</div>
+            <h2>Dein CRM spricht mit dem ganzen Stack.</h2>
+            <p>Keine Zapier-Bastelei. Funnelspace-Module teilen sich eine Datenbank — Daten fließen automatisch.</p>
+          </div>
+          <div className="crm-int">
+            {INTEGRATIONS.map(i => (
+              <div key={i.t} className="crm-int__card">
+                <div className="crm-int__art"><img src={i.img} alt="" /></div>
+                <h4>{i.t}</h4>
+                <p>{i.d}</p>
+                <a href="#" className="crm-int__link">{i.link} <IArrow /></a>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+
+    const Testimonials = () => (
+      <section className="crm-sec">
+        <div className="crm-sec__inner">
+          <div className="crm-sec__head">
+            <div className="crm-eyebrow">Stimmen aus der Praxis</div>
+            <h2>Schon 2.000+ Creator:innen arbeiten damit.</h2>
+          </div>
+          <div className="crm-testi-grid">
+            {TESTIMONIALS.map(t => (
+              <article key={t.name} className={`crm-testi${t.tone==='dark'?' crm-testi--dark':t.tone==='lime'?' crm-testi--lime':''}`}>
+                <div className="crm-testi__stars">★★★★★</div>
+                <blockquote>{t.quote}</blockquote>
+                <div className="crm-testi__stat">
+                  <div className="crm-testi__stat-num">{t.stat}</div>
+                  <div className="crm-testi__stat-lbl">{t.statLbl}</div>
+                </div>
+                <div className="crm-testi__who">
+                  <div className="crm-testi__avatar">{t.initials}</div>
+                  <div>
+                    <div className="crm-testi__name">{t.name}</div>
+                    <div className="crm-testi__role">{t.role}</div>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+
+    const FAQ = () => {
+      const [open, setOpen] = useState(0);
+      return (
+        <section className="crm-sec crm-sec--alt">
+          <div className="crm-sec__inner">
+            <div className="crm-sec__head">
+              <div className="crm-eyebrow">FAQ</div>
+              <h2>Häufige Fragen zum CRM.</h2>
+            </div>
+            <div className="crm-faq">
+              {FAQS.map((f, i) => (
+                <div key={i} className={`crm-faq__item${open === i ? ' open' : ''}`}>
+                  <button className="crm-faq__btn" onClick={() => setOpen(open === i ? -1 : i)}>
+                    {f.q}
+                    <span className="crm-faq__icon">+</span>
+                  </button>
+                  <div className="crm-faq__body">{f.a}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    const FinalCTA = () => (
+      <section className="crm-final">
+        <div className="crm-final__inner">
+          <h2>Starte mit einem CRM, das <em>mitarbeitet</em>.</h2>
+          <p>14 Tage kostenlos. Keine Kreditkarte. Dein erster Lead ist in 15 Minuten drin.</p>
+          <div className="crm-final__btns">
+            <a href="#signup" className="btn btn--primary btn-lg">Jetzt kostenlos starten</a>
+            <a href="#demo" className="btn btn--ghost btn-lg" style={{borderColor:'rgba(255,255,255,0.25)', color:'rgba(255,255,255,0.85)'}}>Live-Demo buchen</a>
+          </div>
+        </div>
+      </section>
+    );
+
+    /* ── Tweaks ──────────────────────────────────────────────── */
+
+    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+      "headlineVariant": "ordnung"
+    }/*EDITMODE-END*/;
+
+    const TweaksPanel = ({ state, setState, visible, onClose }) => {
+      if (!visible) return null;
+      const opts = [
+        { k:'ordnung', l:'Ordnung', d:'„… an einem Ort."' },
+        { k:'lead', l:'Lead-Angst', d:'„Nie wieder einen Lead vergessen."' },
+        { k:'integration', l:'Integration', d:'„… spricht mit deinem Funnel."' },
+      ];
+      return (
+        <div style={{
+          position:'fixed', bottom:20, right:20, zIndex:200,
+          background:'#fff', border:'1px solid var(--border-1)',
+          borderRadius: 'var(--radius-lg)', boxShadow:'var(--shadow-lg)',
+          padding:20, width:280, fontFamily:'var(--font-sans)'
+        }}>
+          <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:14}}>
+            <div style={{fontFamily:'var(--font-display)', fontWeight:700, fontSize:16}}>Tweaks</div>
+            <button onClick={onClose} style={{background:'none', border:'none', cursor:'pointer', fontSize:18, color:'var(--fg-3)'}}>×</button>
+          </div>
+          <div style={{fontSize:11, fontWeight:700, letterSpacing:'0.08em', textTransform:'uppercase', color:'var(--fg-3)', marginBottom:10}}>Hero-Headline</div>
+          <div style={{display:'flex', flexDirection:'column', gap:8}}>
+            {opts.map(o => (
+              <button key={o.k} onClick={() => {
+                const next = {...state, headlineVariant: o.k};
+                setState(next);
+                window.parent.postMessage({type:'__edit_mode_set_keys', edits:{headlineVariant:o.k}}, '*');
+              }} style={{
+                textAlign:'left', padding:'10px 12px',
+                border: state.headlineVariant===o.k ? '2px solid var(--fs-ink)' : '1px solid var(--border-1)',
+                background: state.headlineVariant===o.k ? 'var(--fs-lime)' : '#fff',
+                borderRadius: 10, cursor:'pointer', fontFamily:'var(--font-sans)'
+              }}>
+                <div style={{fontSize:13, fontWeight:700}}>{o.l}</div>
+                <div style={{fontSize:11, color:'var(--fg-3)', marginTop:2}}>{o.d}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    };
+
+    /* ── App ─────────────────────────────────────────────────── */
+
+    const App = () => {
+      const [state, setState] = useState(TWEAK_DEFAULTS);
+      const [tweaksVisible, setTweaksVisible] = useState(false);
+
+      React.useEffect(() => {
+        const handler = (e) => {
+          if (!e.data) return;
+          if (e.data.type === '__activate_edit_mode') setTweaksVisible(true);
+          if (e.data.type === '__deactivate_edit_mode') setTweaksVisible(false);
+        };
+        window.addEventListener('message', handler);
+        window.parent.postMessage({type:'__edit_mode_available'}, '*');
+        return () => window.removeEventListener('message', handler);
+      }, []);
+
+      return (
+        <>
+          <Nav />
+          <main>
+            <Hero variant={state.headlineVariant} />
+            <Benefits />
+            <Features />
+            <Integrations />
+            <Testimonials />
+            <FAQ />
+          </main>
+          <FinalCTA />
+          <Footer />
+          <TweaksPanel
+            state={state}
+            setState={setState}
+            visible={tweaksVisible}
+            onClose={() => {
+              setTweaksVisible(false);
+              window.parent.postMessage({type:'__edit_mode_dismissed'}, '*');
+            }}
+          />
+        </>
+      );
+    };
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

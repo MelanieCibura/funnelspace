@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Über Funnelspace — wer wir sind und warum es uns gibt</title>
+<meta name="description" content="Funnelspace ist das All-in-One-Tool für dein Online-Business — gebaut in Berlin von Leuten, die selbst fünf Tools zusammengeklebt haben. Unsere Geschichte, unser Team, unsere Prinzipien." />
+<link rel="stylesheet" href="colors_and_type.css" />
+<link rel="stylesheet" href="site.css" />
+<style>
+a{color:var(--fs-ink)}a:hover{color:var(--fs-lime-deep)}
+.ab-eyebrow{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-3);margin-bottom:14px}
+.ab-mark{background:var(--fs-lime);padding:0 .12em;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.ab-h2{font-family:var(--font-display);font-size:clamp(30px,3.4vw,46px);font-weight:700;line-height:1.08;letter-spacing:-.03em;text-wrap:balance}
+/* Hero */
+.ab-hero{position:relative;padding:84px 40px 0;border-bottom:1px solid var(--border-1);overflow:hidden}
+.ab-hero__inner{max-width:1080px;margin:0 auto;text-align:center}
+.ab-hero h1{font-family:var(--font-display);font-size:clamp(42px,5.4vw,74px);font-weight:800;line-height:1.03;letter-spacing:-.035em;text-wrap:balance}
+.ab-hero__lead{margin:22px auto 0;max-width:640px;font-size:19px;line-height:1.55;color:var(--fg-2)}
+.ab-hero__btns{display:flex;gap:14px;justify-content:center;margin-top:32px;flex-wrap:wrap}
+.ab-hero__art{max-width:1240px;margin:52px auto -1px;padding:0 0 0}
+.ab-hero__art img{width:100%;display:block}
+/* Ticker */
+.ab-ticker{background:var(--fs-ink);color:#fff;overflow:hidden;padding:14px 0}
+.ab-ticker__track{display:flex;gap:56px;width:max-content;animation:ab-scroll 42s linear infinite}
+.ab-ticker__track span{font-size:13px;font-weight:600;letter-spacing:.02em;color:rgba(255,255,255,.75);white-space:nowrap;display:flex;align-items:center;gap:56px}
+.ab-ticker__track span::after{content:"";width:5px;height:5px;border-radius:50%;background:var(--fs-lime)}
+@keyframes ab-scroll{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.ab-ticker__track{animation:none}}
+/* Mission */
+.ab-mission{padding:104px 40px;background:var(--fs-white);border-bottom:1px solid var(--border-1)}
+.ab-mission__inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:200px 1fr;gap:56px;align-items:start}
+.ab-mission__body p{font-size:20px;line-height:1.55;color:var(--fg-1)}
+.ab-mission__body p+p{margin-top:20px;font-size:17px;color:var(--fg-2)}
+.ab-under{border-bottom:4px solid var(--fs-lime);padding-bottom:1px}
+/* Timeline */
+.ab-time{padding:104px 40px}
+.ab-time__inner{max-width:1080px;margin:0 auto}
+.ab-time__head{max-width:620px;margin-bottom:56px}
+.ab-time__head p{margin-top:14px;font-size:18px;color:var(--fg-2);line-height:1.5}
+.ab-steps{display:flex;flex-direction:column}
+.ab-step{display:grid;grid-template-columns:120px 1fr;gap:40px;padding:28px 0;border-top:1px solid var(--border-1);align-items:start}
+.ab-step:last-child{border-bottom:1px solid var(--border-1)}
+.ab-step__yr{font-family:var(--font-mono,var(--font-display));font-size:15px;font-weight:600;color:var(--fs-ink);padding-top:4px}
+.ab-step h4{font-family:var(--font-display);font-size:22px;font-weight:700;letter-spacing:-.02em}
+.ab-step p{margin-top:8px;font-size:16px;line-height:1.55;color:var(--fg-2);max-width:680px}
+.ab-step--now .ab-step__yr{display:inline-flex;align-items:center;gap:8px}
+.ab-step--now .ab-step__yr::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--fs-lime-deep);box-shadow:0 0 0 4px rgba(215,240,120,.35)}
+/* Stats */
+.ab-stats{padding:0 40px 104px}
+.ab-stats__inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border-1);border:1px solid var(--border-1);border-radius:var(--radius-lg);overflow:hidden}
+.ab-stat{background:var(--fs-white);padding:30px 26px}
+.ab-stat strong{display:block;font-family:var(--font-display);font-size:40px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.ab-stat span{display:block;margin-top:10px;font-size:14px;line-height:1.45;color:var(--fg-2)}
+/* Founders */
+.ab-founders{padding:104px 40px;background:var(--fs-ink);color:#fff}
+.ab-founders__inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:72px;align-items:center}
+.ab-founders .ab-eyebrow{color:rgba(255,255,255,.45)}
+.ab-founders h2{font-family:var(--font-display);font-size:clamp(30px,3.2vw,44px);font-weight:700;line-height:1.08;letter-spacing:-.03em;text-wrap:balance}
+.ab-founders blockquote{margin:28px 0 0;padding:0 0 0 20px;border-left:3px solid var(--fs-lime);font-family:var(--font-display);font-size:21px;line-height:1.45;font-weight:500;color:#fff}
+.ab-founders__body{margin-top:24px;font-size:16px;line-height:1.6;color:rgba(255,255,255,.7)}
+.ab-who{display:flex;align-items:center;gap:16px;margin-top:32px}
+.ab-who__av{display:flex}
+.ab-who__av span{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;background:var(--fs-lime);color:var(--fs-lime-ink);border:2px solid var(--fs-ink)}
+.ab-who__av span+span{margin-left:-12px;background:var(--fs-gray-200);color:var(--fs-ink)}
+.ab-who strong{display:block;font-size:15px}
+.ab-who em{font-style:normal;font-size:13px;color:rgba(255,255,255,.55)}
+.ab-founders__art{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-xl);padding:18px}
+.ab-founders__art img{width:100%;display:block;border-radius:var(--radius-md)}
+/* Team */
+.ab-team{padding:104px 40px;background:var(--fs-white)}
+.ab-team__inner{max-width:1080px;margin:0 auto}
+.ab-team__head{display:flex;justify-content:space-between;align-items:end;gap:32px;margin-bottom:48px;flex-wrap:wrap}
+.ab-team__head p{margin-top:14px;font-size:18px;color:var(--fg-2);max-width:520px;line-height:1.5}
+.ab-team__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.ab-person{background:var(--fs-paper);border:1px solid var(--border-1);border-radius:var(--radius-lg);padding:22px;transition:transform var(--dur-med) var(--ease-out),box-shadow var(--dur-med) var(--ease-out)}
+.ab-person:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.ab-person__av{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-family:var(--font-display);font-size:16px;font-weight:700;background:var(--fs-gray-100);border:1px solid var(--border-2);color:var(--fs-ink);margin-bottom:18px}
+.ab-person--lime .ab-person__av{background:var(--fs-lime);border-color:var(--fs-lime-deep);color:var(--fs-lime-ink)}
+.ab-person strong{display:block;font-size:16px;font-weight:700}
+.ab-person em{font-style:normal;display:block;margin-top:3px;font-size:13px;color:var(--fg-3)}
+.ab-person p{margin-top:12px;font-size:14px;line-height:1.5;color:var(--fg-2)}
+/* Values */
+.ab-values{padding:104px 40px}
+.ab-values__inner{max-width:1080px;margin:0 auto}
+.ab-values__head{max-width:620px;margin-bottom:52px}
+.ab-values__grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.ab-value{display:grid;grid-template-columns:104px 1fr;gap:22px;align-items:start;background:var(--fs-white);border:1px solid var(--border-1);border-radius:var(--radius-lg);padding:26px}
+.ab-value img{width:104px;display:block}
+.ab-value h4{font-family:var(--font-display);font-size:20px;font-weight:700;letter-spacing:-.02em}
+.ab-value p{margin-top:9px;font-size:15px;line-height:1.55;color:var(--fg-2)}
+/* Made in Germany */
+.ab-de{padding:96px 40px;background:var(--fs-white);border-top:1px solid var(--border-1)}
+.ab-de__inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.ab-de__lead{margin-top:16px;font-size:17px;line-height:1.6;color:var(--fg-2)}
+.ab-facts{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ab-fact{background:var(--fs-paper);border:2px solid var(--border-strong);border-radius:var(--radius-md);padding:20px}
+.ab-fact strong{display:block;font-family:var(--font-display);font-size:17px;font-weight:700}
+.ab-fact span{display:block;margin-top:6px;font-size:13px;line-height:1.45;color:var(--fg-2)}
+/* Jobs */
+.ab-jobs{padding:96px 40px}
+.ab-jobs__inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center;background:var(--fs-paper);border:1px solid var(--border-1);border-radius:var(--radius-xl);padding:44px}
+.ab-jobs p{margin-top:12px;font-size:17px;color:var(--fg-2);line-height:1.55;max-width:560px}
+.ab-jobs__btns{display:flex;gap:12px;flex-wrap:wrap}
+@media (max-width:1024px){
+.ab-mission__inner{grid-template-columns:1fr;gap:24px}
+.ab-stats__inner{grid-template-columns:repeat(2,1fr)}
+.ab-founders__inner,.ab-de__inner{grid-template-columns:1fr;gap:40px}
+.ab-team__grid{grid-template-columns:repeat(2,1fr)}
+.ab-values__grid{grid-template-columns:1fr}
+.ab-jobs__inner{grid-template-columns:1fr}
+}
+@media (max-width:768px){
+.ab-hero{padding:56px 24px 0}
+.ab-mission,.ab-time,.ab-founders,.ab-team,.ab-values,.ab-de,.ab-jobs{padding-left:24px;padding-right:24px;padding-top:68px;padding-bottom:68px}
+.ab-stats{padding:0 24px 68px}
+.ab-step{grid-template-columns:1fr;gap:10px}
+.ab-team__grid{grid-template-columns:1fr}
+.ab-value{grid-template-columns:72px 1fr}
+.ab-value img{width:72px}
+.ab-facts{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="Nav.jsx"></script>
+<script type="text/babel" src="Footer.jsx"></script>
+<script type="text/babel">
+const TICKER = ['Gegründet 2021 in Berlin', '12.400+ Selbstständige und Teams', 'Entwickelt & gehostet in Deutschland', 'Support auf Deutsch, Ø 28 Minuten', '34 Menschen im Team', 'DSGVO ab Werk'];
+
+const AbHero = () => (
+  <header className="ab-hero" data-screen-label="Hero">
+    <div className="ab-hero__inner">
+      <p className="ab-eyebrow">Über Funnelspace</p>
+      <h1>Wir bauen das Tool, das wir selbst <span className="ab-mark">gebraucht hätten</span>.</h1>
+      <p className="ab-hero__lead">Funnelspace entsteht in Berlin — aus der Erfahrung, ein Online-Business mit fünf Tools, fünf Rechnungen und keinem Ansprechpartner zu führen.</p>
+      <div className="ab-hero__btns">
+        <a href="#geschichte" className="btn btn--ink btn-lg">Unsere Geschichte</a>
+        <a href="#team" className="btn btn--ghost btn-lg">Team kennenlernen</a>
+      </div>
+    </div>
+    <div className="ab-hero__art"><img src="assets/illustrations/bg.jpg" alt="Funnelspace — alle Werkzeuge deines Online-Business an einem Ort" /></div>
+  </header>
+);
+
+const AbTicker = () => (
+  <div className="ab-ticker" aria-hidden="true">
+    <div className="ab-ticker__track">
+      {[0, 1].map(k => <React.Fragment key={k}>{TICKER.map((t, i) => <span key={i}>{t}</span>)}</React.Fragment>)}
+    </div>
+  </div>
+);
+
+const AbMission = () => (
+  <section className="ab-mission" data-screen-label="Mission">
+    <div className="ab-mission__inner">
+      <p className="ab-eyebrow">Unsere Mission</p>
+      <div className="ab-mission__body">
+        <p>Selbstständige sollten ihre Zeit mit Kunden verbringen — nicht mit Technik, die nicht zusammenpasst. Wir geben dir eine Plattform, in der <span className="ab-under">alles ineinandergreift</span>, und Menschen, die dabei bleiben, bis es läuft.</p>
+        <p>Das heißt für uns: eine Datenbank statt fünf Exporte. Ein Preis statt fünf Abos. Vorlagen statt weißes Blatt. Und eine Antwort auf Deutsch, bevor der Tag rum ist. Wir bauen kein weiteres glänzendes Werkzeug — wir bauen das Fundament, auf dem du skalieren kannst, ohne dass dir das Setup um die Ohren fliegt.</p>
+      </div>
+    </div>
+  </section>
+);
+
+const STEPS = [
+  { y: '2019', t: 'Der Anfang war Frust', d: 'Lena verkauft Onlinekurse: Mailchimp für E-Mails, Calendly für Termine, ein Kursportal, ein Zahlungsanbieter, dazu drei Zapier-Automationen, die freitags gerne ausfielen. Jonas baut nebenbei die Workarounds.' },
+  { y: '2021', t: 'Funnelspace als Notlösung', d: 'Aus den Workarounds wird ein eigenes System — erst für Lenas Business, dann für 30 Bekannte, die dasselbe Problem haben. Im November die erste zahlende Kundin, die wir vorher nicht kannten.' },
+  { y: '2022', t: 'Ein Tool statt fünf', d: 'CRM, E-Mail, Funnel-Builder, Kalender und Mitgliederbereich laufen erstmals auf einer gemeinsamen Datenbank. Der Umzugsservice entsteht, weil niemand seine Listen von Hand migrieren will.' },
+  { y: '2024', t: 'Support wird Produkt', d: 'Wir stellen mehr Support- als Vertriebsleute ein und machen die Antwortzeit öffentlich. Dazu: Live-Calls zweimal pro Woche, über 1.000 Hilfeartikel und Trainings — alles auf Deutsch.' },
+  { y: '2026', t: '12.400 Businesses, dieselbe Frage', d: 'Vor jedem Feature fragen wir: Bringt das jemanden von „ich weiß, was zu tun ist“ zu „es läuft“? Wenn nicht, bauen wir es nicht.', now: true },
+];
+
+const AbTime = () => (
+  <section className="ab-time" id="geschichte" data-screen-label="Geschichte">
+    <div className="ab-time__inner">
+      <div className="ab-time__head">
+        <p className="ab-eyebrow">Unsere Geschichte</p>
+        <h2 className="ab-h2">Kein Startup-Pitch. Ein Problem, das wir selbst hatten.</h2>
+        <p>Funnelspace ist nicht am Whiteboard entstanden, sondern an einem Freitagabend, an dem wieder eine Automation stillstand.</p>
+      </div>
+      <div className="ab-steps">
+        {STEPS.map(s => (
+          <div className={'ab-step' + (s.now ? ' ab-step--now' : '')} key={s.y}>
+            <div className="ab-step__yr">{s.y}</div>
+            <div>
+              <h4>{s.t}</h4>
+              <p>{s.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+const STATS = [
+  { v: '12.400+', l: 'Selbstständige und Teams arbeiten täglich in Funnelspace' },
+  { v: '34', l: 'Menschen im Team — 19 davon im Support und in der Academy' },
+  { v: '28 Min.', l: 'durchschnittliche Antwortzeit im deutschsprachigen Support' },
+  { v: '100 %', l: 'Entwicklung und Hosting in Deutschland' },
+];
+
+const AbStats = () => (
+  <section className="ab-stats" data-screen-label="Zahlen">
+    <div className="ab-stats__inner">
+      {STATS.map((s, i) => <div className="ab-stat" key={i}><strong>{s.v}</strong><span>{s.l}</span></div>)}
+    </div>
+  </section>
+);
+
+const AbFounders = () => (
+  <section className="ab-founders" data-screen-label="Gründer">
+    <div className="ab-founders__inner">
+      <div>
+        <p className="ab-eyebrow">Die Gründer</p>
+        <h2>Gebaut von Leuten, die selbst fünf Tools zusammengeklebt haben</h2>
+        <blockquote>„Wir haben jahrelang Kurse verkauft — mit Mailchimp, Calendly, einem Kursportal und einer Rechnung, die nie zusammenpasste. Kaputt ging es immer freitags, und niemand hat abgehoben."</blockquote>
+        <p className="ab-founders__body">Lena hat zehn Jahre lang Onlinekurse und Coaching-Programme aufgebaut, Jonas kam aus der Softwareentwicklung. Seit 2021 bauen wir das Setup, das wir selbst gebraucht hätten — erst für uns, dann für 30 Bekannte, heute für über 12.000 Kundinnen und Kunden. Der Anspruch ist derselbe geblieben: ein Tool, ein Preis, und ein Team, das antwortet, bevor der Tag rum ist.</p>
+        <div className="ab-who">
+          <div className="ab-who__av"><span>LB</span><span>JR</span></div>
+          <div><strong>Lena Berger &amp; Jonas Roth</strong><em>Gründer, Funnelspace GmbH · Berlin</em></div>
+        </div>
+      </div>
+      <div className="ab-founders__art"><img src="assets/illustrations/dashboard-funnelspace.png" alt="Das Funnelspace-Dashboard" /></div>
+    </div>
+  </section>
+);
+
+const TEAM = [
+  { i: 'LB', n: 'Lena Berger', r: 'Gründerin, Produkt', d: 'Entscheidet, was gebaut wird — und was wir bewusst weglassen.', lime: true },
+  { i: 'JR', n: 'Jonas Roth', r: 'Gründer, Technik', d: 'Verantwortet Plattform, Infrastruktur und Hosting in Deutschland.' },
+  { i: 'MK', n: 'Mira Kessler', r: 'Leitung Support', d: 'Sorgt dafür, dass niemand länger als eine halbe Stunde wartet.' },
+  { i: 'TS', n: 'Tobias Schäfer', r: 'Academy & Vorlagen', d: 'Baut die Funnel-Vorlagen und Trainings, die du kopieren kannst.' },
+  { i: 'AN', n: 'Aylin Novak', r: 'Umzugsservice', d: 'Holt Listen, Kurse und Automationen aus alten Tools zu uns.' },
+  { i: 'DH', n: 'Daniel Hoffmann', r: 'Engineering', d: 'Funnel-Builder und E-Mail-Zustellbarkeit.' },
+  { i: 'SW', n: 'Sarah Wolter', r: 'Community', d: 'Moderiert die Live-Calls zweimal pro Woche.' },
+  { i: 'PL', n: 'Philipp Lang', r: 'Datenschutz & Recht', d: 'AVV, DSGVO-Prozesse, Double-Opt-In — damit du es nicht musst.' },
+];
+
+const AbTeam = () => (
+  <section className="ab-team" id="team" data-screen-label="Team">
+    <div className="ab-team__inner">
+      <div className="ab-team__head">
+        <div>
+          <p className="ab-eyebrow">Das Team</p>
+          <h2 className="ab-h2">34 Menschen, die dein Business kennen</h2>
+          <p>Mehr als die Hälfte von uns arbeitet direkt mit Kunden — im Support, in der Academy und im Umzugsservice.</p>
+        </div>
+        <a href="#jobs" className="btn btn--ghost">Offene Stellen</a>
+      </div>
+      <div className="ab-team__grid">
+        {TEAM.map(p => (
+          <div className={'ab-person' + (p.lime ? ' ab-person--lime' : '')} key={p.i}>
+            <div className="ab-person__av">{p.i}</div>
+            <strong>{p.n}</strong>
+            <em>{p.r}</em>
+            <p>{p.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+const VALUES = [
+  { img: 'assets/illustrations/crm.png', t: 'Ein Ort statt fünf', d: 'CRM, E-Mail, Funnels, Kalender und Mitgliederbereich sprechen dieselbe Sprache — und dieselbe Datenbank. Kein Export, kein Zwischentool.' },
+  { img: 'assets/illustrations/email.png', t: 'Antwort am selben Tag', d: 'Deutschsprachiger Support, im Schnitt unter 30 Minuten. Keine Bots, keine „Read the docs"-Antworten, keine Ticketnummer ohne Mensch.' },
+  { img: 'assets/illustrations/mitgliederbereich.png', t: 'Umsetzung statt Theorie', d: 'Vorlagen, Sequenzen und Trainings, die du kopierst und anpasst — damit aus „irgendwann" diese Woche wird.' },
+  { img: 'assets/illustrations/automation.png', t: 'Weglassen ist Arbeit', d: 'Jedes Feature muss sich rechtfertigen. Was niemanden weiterbringt, kommt raus — auch wenn wir es schon gebaut haben.' },
+];
+
+const AbValues = () => (
+  <section className="ab-values" data-screen-label="Prinzipien">
+    <div className="ab-values__inner">
+      <div className="ab-values__head">
+        <p className="ab-eyebrow">Wofür wir stehen</p>
+        <h2 className="ab-h2">Vier Prinzipien, an denen wir jede Entscheidung messen</h2>
+      </div>
+      <div className="ab-values__grid">
+        {VALUES.map((v, i) => (
+          <div className="ab-value" key={i}>
+            <img src={v.img} alt="" />
+            <div>
+              <h4>{v.t}</h4>
+              <p>{v.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
+const FACTS = [
+  { t: 'Serverstandort Frankfurt', d: 'Alle Daten liegen in deutschen Rechenzentren, ISO-27001-zertifiziert.' },
+  { t: 'AVV mit einem Klick', d: 'Auftragsverarbeitungsvertrag direkt im Konto — ohne E-Mail-Pingpong.' },
+  { t: 'Double-Opt-In eingebaut', d: 'Rechtssichere Anmeldeprozesse als Standard, nicht als Extra.' },
+  { t: 'Deutsches Unternehmen', d: 'Funnelspace GmbH, Berlin. Verträge, Rechnungen und Support auf Deutsch.' },
+];
+
+const AbDe = () => (
+  <section className="ab-de" data-screen-label="Made in Germany">
+    <div className="ab-de__inner">
+      <div>
+        <p className="ab-eyebrow">Standort &amp; Datenschutz</p>
+        <h2 className="ab-h2">In Deutschland gebaut. In Deutschland gehostet.</h2>
+        <p className="ab-de__lead">Wir haben Funnelspace für den deutschsprachigen Markt gebaut, nicht für ihn übersetzt. Das betrifft die Sprache im Support genauso wie die Frage, wo deine Kontaktdaten liegen.</p>
+      </div>
+      <div className="ab-facts">
+        {FACTS.map((f, i) => <div className="ab-fact" key={i}><strong>{f.t}</strong><span>{f.d}</span></div>)}
+      </div>
+    </div>
+  </section>
+);
+
+const AbJobs = () => (
+  <section className="ab-jobs" id="jobs" data-screen-label="Jobs">
+    <div className="ab-jobs__inner">
+      <div>
+        <p className="ab-eyebrow">Mitarbeiten</p>
+        <h2 className="ab-h2">Wir suchen Leute, die selbst schon verkauft haben</h2>
+        <p>Support, Academy und Engineering — remote innerhalb der EU oder im Büro in Berlin. Wenn du weißt, wie sich ein Freitagabend mit kaputter Automation anfühlt, passt du gut zu uns.</p>
+      </div>
+      <div className="ab-jobs__btns">
+        <a href="#stellen" className="btn btn--ink btn-lg">Offene Stellen ansehen</a>
+        <a href="#kontakt" className="btn btn--ghost btn-lg">Einfach schreiben</a>
+      </div>
+    </div>
+  </section>
+);
+
+const UeberApp = () => (
+  <>
+    <Nav />
+    <main>
+      <AbHero />
+      <AbTicker />
+      <AbMission />
+      <AbTime />
+      <AbStats />
+      <AbFounders />
+      <AbTeam />
+      <AbValues />
+      <AbDe />
+      <AbJobs />
+      <CtaBand />
+    </main>
+    <Footer />
+  </>
+);
+ReactDOM.createRoot(document.getElementById('root')).render(<UeberApp />);
+</script>
+</body>
+</html>
